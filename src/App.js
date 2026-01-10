@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { useTheme } from '@mui/material/styles';
@@ -27,7 +27,7 @@ import ProjectDetail from './components/pages/ProjectDetail';
 import './assets/styles/App.css';
 
 // Utils
-import { loadProjects } from './utils/projectLoader';
+import loadProjectsAsync from './utils/projectLoader';
 
 // Fullpage configuration
 const FULLPAGE_CREDITS = { enabled: true, label: '', position: 'right' };
@@ -221,13 +221,21 @@ function HomePage({ projects }) {
 }
 
 export default function App() {
-    // Load projects from markdown files
-    const projects = loadProjects();
+    // Load projects from markdown files asynchronously
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadProjectsAsync().then((loadedProjects) => {
+            setProjects(loadedProjects);
+            setLoading(false);
+        });
+    }, []);
 
     return (
         <BrowserRouter basename="/codertysmi.github.io">
             <Routes>
-                <Route path="/" element={<HomePage projects={projects} />} />
+                <Route path="/" element={<HomePage projects={projects} loading={loading} />} />
                 <Route path="/project/:slug" element={<ProjectDetail />} />
             </Routes>
         </BrowserRouter>

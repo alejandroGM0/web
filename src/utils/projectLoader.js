@@ -1,28 +1,47 @@
-// Import all project markdown files
-// Using require.context for dynamic imports in Create React App
+// Project loader using fetch to load markdown from public folder
 
-function importAllProjects() {
+const PROJECT_SLUGS = ['taskflow-pro', 'code-arena', 'blablacar-clone', 'spartbot'];
+
+/**
+ * Load all projects asynchronously from public folder
+ */
+export async function loadProjectsAsync() {
     try {
-        // This uses webpack's require.context to import all .md files
-        const context = require.context('../content/projects', false, /\.md$/);
+        const projects = await Promise.all(
+            PROJECT_SLUGS.map(async (slug) => {
+                try {
+                    // Use process.env.PUBLIC_URL for correct path in production
+                    const basePath = process.env.PUBLIC_URL || '';
+                    const response = await fetch(`${basePath}/content/projects/${slug}.md`);
 
-        const projects = context.keys().map((key) => {
-            const content = context(key);
-            const slug = key.replace('./', '').replace('.md', '');
+                    if (!response.ok) {
+                        console.warn(`Failed to load ${slug}: ${response.status}`);
+                        return null;
+                    }
 
-            // Parse frontmatter from the markdown content
-            const frontmatter = parseFrontmatter(content.default || content);
+                    const markdown = await response.text();
+                    const frontmatter = parseFrontmatter(markdown);
 
-            return {
-                slug,
-                ...frontmatter,
-                content: getContent(content.default || content),
-            };
-        });
+                    console.log('Loaded project:', slug, '| Title:', frontmatter.title);
 
-        return projects.filter(p => p.title); // Only return projects with valid title
+                    return {
+                        slug,
+                        ...frontmatter,
+                        content: getContent(markdown),
+                    };
+                } catch (err) {
+                    console.warn(`Error loading ${slug}:`, err);
+                    return null;
+                }
+            })
+        );
+
+        const validProjects = projects.filter(p => p && p.title);
+        console.log('Total projects loaded:', validProjects.length);
+
+        return validProjects.length > 0 ? validProjects : getDefaultProjects();
     } catch (error) {
-        console.warn('Could not load projects from markdown:', error);
+        console.warn('Could not load projects:', error);
         return getDefaultProjects();
     }
 }
@@ -30,7 +49,10 @@ function importAllProjects() {
 function parseFrontmatter(markdown) {
     if (typeof markdown !== 'string') return {};
 
-    const match = markdown.match(/^---\n([\s\S]*?)\n---/);
+    // Normalize line endings (handle both \r\n and \n)
+    const normalizedMarkdown = markdown.replace(/\r\n/g, '\n');
+
+    const match = normalizedMarkdown.match(/^---\n([\s\S]*?)\n---/);
     if (!match) return {};
 
     const frontmatter = {};
@@ -119,9 +141,9 @@ function getDefaultProjects() {
     ];
 }
 
+// Synchronous export for backwards compatibility (returns default projects)
 export function loadProjects() {
-    const projects = importAllProjects();
-    return projects.length > 0 ? projects : getDefaultProjects();
+    return getDefaultProjects();
 }
 
-export default loadProjects;
+export default loadProjectsAsync;

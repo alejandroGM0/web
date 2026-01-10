@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import SectionHeader from '../ui/SectionHeader';
 import TiltCard from '../ui/TiltCard';
 import { sectionSpacing } from '../../config/layout';
@@ -33,7 +30,7 @@ const getTechColor = (tech) => {
         'Firebase': '#ffca28',
         'GraphQL': '#e535ab',
     };
-    return colors[tech] || '#f97316'; // Default to orange
+    return colors[tech] || '#f97316';
 };
 
 // Badge type colors
@@ -49,7 +46,7 @@ const getBadgeStyle = (type) => {
 };
 
 /**
- * Single Project Card Component - Matching reference design
+ * Compact Project Card for 2x2 Grid
  */
 function ProjectCard({ project }) {
     const navigate = useNavigate();
@@ -58,7 +55,6 @@ function ProjectCard({ project }) {
         navigate(`/project/${project.slug}`);
     };
 
-    // Determine badge type
     const badgeType = project.badgeType || project.technologies[0] || 'Project';
     const badgeStyle = getBadgeStyle(badgeType);
 
@@ -67,8 +63,8 @@ function ProjectCard({ project }) {
             onClick={handleClick}
             sx={{
                 width: '100%',
-                maxWidth: '400px',
-                height: { xs: '420px', md: '480px' },
+                height: '100%',
+                minHeight: '220px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
@@ -77,21 +73,21 @@ function ProjectCard({ project }) {
                 border: '1px solid rgba(255, 255, 255, 0.08)',
                 transition: 'border-color 0.3s ease, transform 0.3s ease',
                 '&:hover': {
-                    borderColor: 'rgba(255, 255, 255, 0.15)',
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
                 },
             }}
         >
-            {/* Image Area - Takes up ~60% of card */}
+            {/* Image Area - 50% height */}
             <Box
                 sx={{
-                    height: '60%',
+                    height: '50%',
+                    minHeight: '100px',
                     position: 'relative',
                     borderRadius: '16px 16px 0 0',
                     overflow: 'hidden',
                     background: '#0d0d0d',
                 }}
             >
-                {/* Project Image or Placeholder */}
                 {project.heroImage ? (
                     <img
                         src={project.heroImage}
@@ -103,9 +99,8 @@ function ProjectCard({ project }) {
                         }}
                     />
                 ) : (
-                    // Placeholder with code preview style
                     <Box sx={{
-                        p: 2,
+                        p: 1.5,
                         height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
@@ -114,73 +109,70 @@ function ProjectCard({ project }) {
                     }}>
                         <Box sx={{
                             fontFamily: '"JetBrains Mono", monospace',
-                            fontSize: '0.7rem',
+                            fontSize: '0.6rem',
                             color: 'rgba(255,255,255,0.4)',
-                            lineHeight: 1.8,
+                            lineHeight: 1.6,
                         }}>
                             <div style={{ color: '#6b7280' }}>{'// ' + project.title}</div>
                             <div><span style={{ color: '#c084fc' }}>import</span> {'{'}App{'}'} <span style={{ color: '#c084fc' }}>from</span> <span style={{ color: '#86efac' }}>'./app'</span></div>
-                            <div><span style={{ color: '#c084fc' }}>const</span> <span style={{ color: '#60a5fa' }}>init</span> = () {'=>'} {'{'}</div>
-                            <div style={{ paddingLeft: '1rem' }}><span style={{ color: '#60a5fa' }}>render</span>({'<'}<span style={{ color: '#fbbf24' }}>App</span> {'/>'})</div>
-                            <div>{'}'}</div>
+                            <div><span style={{ color: '#60a5fa' }}>render</span>({'<'}<span style={{ color: '#fbbf24' }}>App</span> {'/>'})</div>
                         </Box>
                     </Box>
                 )}
 
-                {/* Badge in top-right corner */}
+                {/* Badge */}
                 <Box
                     sx={{
                         position: 'absolute',
-                        top: 12,
-                        right: 12,
+                        top: 8,
+                        right: 8,
                         backgroundColor: badgeStyle.bg,
                         color: badgeStyle.color,
-                        padding: '4px 12px',
-                        borderRadius: '6px',
-                        fontSize: '0.7rem',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        fontSize: '0.6rem',
                         fontWeight: 700,
                         border: `1px solid ${badgeStyle.border}`,
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
+                        letterSpacing: '0.3px',
                     }}
                 >
                     {badgeType}
                 </Box>
             </Box>
 
-            {/* Content Area */}
+            {/* Content Area - 50% height */}
             <Box
                 sx={{
                     flex: 1,
-                    p: 2.5,
+                    p: 1.5,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                 }}
             >
                 <Box>
-                    {/* Title */}
                     <Typography
-                        variant="h6"
+                        variant="subtitle1"
                         sx={{
                             color: 'white',
                             fontWeight: 700,
-                            mb: 1,
-                            fontSize: '1.15rem',
+                            mb: 0.5,
+                            fontSize: '0.95rem',
+                            lineHeight: 1.2,
                         }}
                     >
                         {project.title}
                     </Typography>
 
-                    {/* Description */}
                     <Typography
                         variant="body2"
                         sx={{
-                            color: 'rgba(255, 255, 255, 0.55)',
-                            fontSize: '0.85rem',
-                            lineHeight: 1.6,
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            fontSize: '0.75rem',
+                            lineHeight: 1.4,
                             display: '-webkit-box',
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
                         }}
@@ -189,8 +181,8 @@ function ProjectCard({ project }) {
                     </Typography>
                 </Box>
 
-                {/* Tech Tags at bottom with colored borders */}
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+                {/* Tech Tags */}
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
                     {project.technologies?.slice(0, 3).map((tech, i) => {
                         const color = getTechColor(tech);
                         return (
@@ -202,12 +194,12 @@ function ProjectCard({ project }) {
                                     backgroundColor: 'transparent',
                                     color: color,
                                     border: `1px solid ${color}`,
-                                    borderRadius: '6px',
-                                    fontSize: '0.7rem',
+                                    borderRadius: '4px',
+                                    fontSize: '0.6rem',
                                     fontWeight: 500,
-                                    height: '26px',
+                                    height: '20px',
                                     '& .MuiChip-label': {
-                                        px: 1.5,
+                                        px: 1,
                                     },
                                 }}
                             />
@@ -220,25 +212,10 @@ function ProjectCard({ project }) {
 }
 
 /**
- * Projects Section - Horizontal slider with navigation
+ * Projects Section - 2x2 Grid Layout (All projects visible)
  */
 export default function Projects({ isMobile, projects, page }) {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const projectsPerSlide = isMobile ? 1 : 3;
-    const totalSlides = Math.ceil(projects.length / projectsPerSlide);
-
-    const handlePrev = () => {
-        setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
-    };
-
-    const handleNext = () => {
-        setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
-    };
-
-    const getVisibleProjects = () => {
-        const start = currentSlide * projectsPerSlide;
-        return projects.slice(start, start + projectsPerSlide);
-    };
+    const isDebug = false;
 
     return (
         <Container
@@ -247,112 +224,58 @@ export default function Projects({ isMobile, projects, page }) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                py: sectionSpacing.py,
+                py: { xs: 2, md: 3 },
                 px: sectionSpacing.px,
+                height: '100%',
+                position: 'relative', // Context for debug absolute
             }}
         >
-            <Box>
-                <SectionHeader
-                    title="Featured Projects"
-                    subtitle="Explore a collection of high-performance applications built with modern technologies."
-                    mb={{ xs: 4, md: 6 }}
-                />
-
-                {/* Slider Container */}
-                <Box sx={{ position: 'relative' }}>
-                    {/* Projects Display */}
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            gap: { xs: 2, md: 4 },
-                            px: { xs: 0, md: 6 },
-                            minHeight: { xs: '440px', md: '500px' },
-                        }}
-                    >
-                        {getVisibleProjects().map((project, index) => (
-                            <ProjectCard key={`${currentSlide}-${index}`} project={project} />
-                        ))}
-                    </Box>
-
-                    {/* Navigation Arrows */}
-                    {totalSlides > 1 && (
-                        <>
-                            <IconButton
-                                onClick={handlePrev}
-                                sx={{
-                                    position: 'absolute',
-                                    left: { xs: -10, md: 0 },
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    bgcolor: 'rgba(249, 115, 22, 0.1)',
-                                    border: '1px solid rgba(249, 115, 22, 0.3)',
-                                    color: '#f97316',
-                                    '&:hover': {
-                                        bgcolor: 'rgba(249, 115, 22, 0.2)',
-                                        borderColor: 'rgba(249, 115, 22, 0.5)',
-                                    },
-                                }}
-                            >
-                                <ArrowBackIosNewIcon />
-                            </IconButton>
-
-                            <IconButton
-                                onClick={handleNext}
-                                sx={{
-                                    position: 'absolute',
-                                    right: { xs: -10, md: 0 },
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    bgcolor: 'rgba(249, 115, 22, 0.1)',
-                                    border: '1px solid rgba(249, 115, 22, 0.3)',
-                                    color: '#f97316',
-                                    '&:hover': {
-                                        bgcolor: 'rgba(249, 115, 22, 0.2)',
-                                        borderColor: 'rgba(249, 115, 22, 0.5)',
-                                    },
-                                }}
-                            >
-                                <ArrowForwardIosIcon />
-                            </IconButton>
-                        </>
-                    )}
-
-                    {/* Dots Indicator */}
-                    {totalSlides > 1 && (
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                gap: 1.5,
-                                mt: 4,
-                            }}
-                        >
-                            {Array.from({ length: totalSlides }).map((_, index) => (
-                                <Box
-                                    key={index}
-                                    onClick={() => setCurrentSlide(index)}
-                                    sx={{
-                                        width: currentSlide === index ? 24 : 8,
-                                        height: 8,
-                                        borderRadius: '4px',
-                                        bgcolor: currentSlide === index
-                                            ? '#f97316'
-                                            : 'rgba(255, 255, 255, 0.2)',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        '&:hover': {
-                                            bgcolor: currentSlide === index
-                                                ? '#f97316'
-                                                : 'rgba(255, 255, 255, 0.4)',
-                                        },
-                                    }}
-                                />
-                            ))}
-                        </Box>
-                    )}
+            {/* DEBUG OVERLAY - TEMPORARY */}
+            {isDebug && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: 9999,
+                        background: 'rgba(255, 0, 0, 0.8)',
+                        color: 'white',
+                        p: 1,
+                        fontSize: '12px',
+                        pointerEvents: 'none',
+                        maxWidth: '300px',
+                    }}
+                >
+                    <Typography variant="caption" sx={{ display: 'block', fontWeight: 'bold' }}>
+                        DEBUG INFO:
+                    </Typography>
+                    <div>Projects loaded: {projects.length}</div>
+                    <div>List: {projects.map(p => p.title).join(', ')}</div>
                 </Box>
+            )}
+
+            <SectionHeader
+                title="Featured Projects"
+                subtitle="High-performance applications built with modern technologies."
+                mb={{ xs: 2, md: 3 }}
+            />
+
+            {/* 2x2 Grid - All projects visible */}
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                        xs: 'repeat(2, 1fr)',
+                        md: 'repeat(4, 1fr)',
+                    },
+                    gap: { xs: 1.5, md: 2 },
+                    flex: 1,
+                    maxHeight: { xs: 'auto', md: '400px' },
+                }}
+            >
+                {projects.slice(0, 4).map((project, index) => (
+                    <ProjectCard key={index} project={project} />
+                ))}
             </Box>
         </Container>
     );

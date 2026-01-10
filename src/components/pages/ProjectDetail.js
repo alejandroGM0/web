@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -8,10 +8,8 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CodeIcon from '@mui/icons-material/Code';
 import LaunchIcon from '@mui/icons-material/Launch';
-import FlagIcon from '@mui/icons-material/Flag';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import TiltCard from '../ui/TiltCard';
-import { loadProjects } from '../../utils/projectLoader';
+import loadProjectsAsync from '../../utils/projectLoader';
 
 /**
  * ProjectDetail - Full page view matching reference design
@@ -19,8 +17,26 @@ import { loadProjects } from '../../utils/projectLoader';
 export default function ProjectDetail() {
     const { slug } = useParams();
     const navigate = useNavigate();
-    const projects = loadProjects();
-    const project = projects.find(p => p.slug === slug);
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadProjectsAsync().then((projects) => {
+            const found = projects.find(p => p.slug === slug);
+            setProject(found);
+            setLoading(false);
+        });
+    }, [slug]);
+
+    if (loading) {
+        return (
+            <Container maxWidth="md" sx={{ py: 8, textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ color: 'white' }}>
+                    Loading...
+                </Typography>
+            </Container>
+        );
+    }
 
     if (!project) {
         return (

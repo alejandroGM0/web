@@ -1,73 +1,141 @@
-import React, { useRef, useEffect } from 'react';
+import React, { forwardRef, useState, useRef, useCallback, useEffect } from 'react';
 import Box from '@mui/material/Box';
 
 /**
- * TiltCard - Glassmorphism card with vanilla JS tilt effect
- * Based on user's reference design - no external dependencies
+ * TiltCard - Glass morphism card with smooth tilt and subtle visible glow
  */
-export default function TiltCard({ children, sx = {}, onClick }) {
+const TiltCard = forwardRef(function TiltCard({ children, sx = {}, tiltEnabled = true, ...props }, ref) {
+    const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg)');
+    const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 });
+    const [isHovering, setIsHovering] = useState(false);
     const cardRef = useRef(null);
+    const animationRef = useRef(null);
+    const targetRef = useRef({ rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 });
+    const currentRef = useRef({ rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 });
 
-    useEffect(() => {
-        const card = cardRef.current;
-        if (!card) return;
+    const animate = useCallback(() => {
+        const lerp = (start, end, factor) => start + (end - start) * factor;
+        const smoothFactor = 0.1;
 
-        const handleMouseMove = (e) => {
-            const rect = card.getBoundingClientRect();
+        currentRef.current.rotateX = lerp(currentRef.current.rotateX, targetRef.current.rotateX, smoothFactor);
+        currentRef.current.rotateY = lerp(currentRef.current.rotateY, targetRef.current.rotateY, smoothFactor);
+        currentRef.current.glowX = lerp(currentRef.current.glowX, targetRef.current.glowX, smoothFactor);
+        currentRef.current.glowY = lerp(currentRef.current.glowY, targetRef.current.glowY, smoothFactor);
+
+        setTransform(`perspective(1000px) rotateX(${currentRef.current.rotateX}deg) rotateY(${currentRef.current.rotateY}deg)`);
+        setGlowPosition({ x: currentRef.current.glowX, y: currentRef.current.glowY });
+
+        const threshold = 0.01;
+        const needsAnimation =
+            Math.abs(currentRef.current.rotateX - targetRef.current.rotateX) > threshold ||
+            Math.abs(currentRef.current.rotateY - targetRef.current.rotateY) > threshold;
+
+        if (needsAnimation) {
+            animationRef.current = requestAnimationFrame(animate);
+        } else {
+            // CRITICAL FIX: Clear the animation ref when animation completes
+            animationRef.current = null;
+        }
+    }, []);
+
+    const handleMouseMove = (e) => {
+        if (!tiltEnabled || !cardRef.current) return;
+
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // More noticeable tilt effect
+        targetRef.current.rotateX = ((y - centerY) / centerY) * -3;
+        targetRef.current.rotateY = ((x - centerX) / centerX) * 3;
+        targetRef.current.glowX = (x / rect.width) * 100;
+        targetRef.current.glowY = (y / rect.height) * 100;
+
+        if (!animationRef.current) {
+            animationRef.current = requestAnimationFrame(animate);
+        }
+    };
+
+    const handleMouseEnter = (e) => {
+        setIsHovering(true);
+        // Start from mouse position
+        if (cardRef.current) {
+            const rect = cardRef.current.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+            currentRef.current.glowX = (x / rect.width) * 100;
+            currentRef.current.glowY = (y / rect.height) * 100;
+        }
+    };
 
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+    const handleMouseLeave = () => {
+        setIsHovering(false);
+        targetRef.current = { rotateX: 0, rotateY: 0, glowX: 50, glowY: 50 };
 
-            const factor = 5; // Tilt intensity
+        if (!animationRef.current) {
+            animationRef.current = requestAnimationFrame(animate);
+        }
+    };
 
-            const rotateX = ((y - centerY) / centerY) * factor * -1;
-            const rotateY = ((x - centerX) / centerX) * factor;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        };
-
-        const handleMouseLeave = () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-        };
-
-        card.addEventListener('mousemove', handleMouseMove);
-        card.addEventListener('mouseleave', handleMouseLeave);
-
+    // Cleanup animation frame on unmount
+    useEffect(() => {
         return () => {
-            card.removeEventListener('mousemove', handleMouseMove);
-            card.removeEventListener('mouseleave', handleMouseLeave);
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
         };
     }, []);
 
     return (
         <Box
-            ref={cardRef}
-            onClick={onClick}
-            sx={{
-                // Glassmorphism Base
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                boxShadow: '0 4px 24px -1px rgba(0, 0, 0, 0.2)',
-                borderRadius: '16px',
-
-                // Transition for smooth effects
-                transition: 'all 0.3s ease, transform 0.15s ease',
-
-                // Hover state
-                '&:hover': {
-                    borderColor: 'rgba(249, 115, 22, 0.5)', // Orange accent
-                    boxShadow: '0 8px 32px -1px rgba(249, 115, 22, 0.15)',
-                },
-
-                // User custom styles
-                ...sx,
+            ref={(node) => {
+                cardRef.current = node;
+                if (typeof ref === 'function') ref(node);
+                else if (ref) ref.current = node;
             }}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            sx={{
+                position: 'relative',
+                background: 'rgba(255, 255, 255, 0.02)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid',
+                borderColor: isHovering ? 'rgba(249, 115, 22, 0.35)' : 'rgba(255, 255, 255, 0.06)',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                transform: transform,
+                transformStyle: 'preserve-3d',
+                transition: 'border-color 0.3s ease',
+                // Subtle glow effect - visible but soft edges
+                '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: isHovering
+                        ? `radial-gradient(600px circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(249, 115, 22, 0.03), transparent 80%)`
+                        : 'transparent',
+                    pointerEvents: 'none',
+                    transition: 'opacity 0.3s ease',
+                    opacity: isHovering ? 1 : 0,
+                    zIndex: 0,
+                },
+                ...sx
+            }}
+            {...props}
         >
-            {children}
+            <Box sx={{ position: 'relative', zIndex: 1 }}>
+                {children}
+            </Box>
         </Box>
     );
-}
+});
+
+export default TiltCard;

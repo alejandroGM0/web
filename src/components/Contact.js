@@ -1,324 +1,186 @@
-import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from 'react-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Fade from '@mui/material/Fade';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import SendIcon from '@mui/icons-material/Send';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import CloseIcon from '@mui/icons-material/Close';
-import '../assets/styles/App.css';
-import SectionHeader from './ui/SectionHeader';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import SendIcon from '@mui/icons-material/Send';
+import { PrimaryButton } from './ui/Buttons';
 import TiltCard from './ui/TiltCard';
+import SectionHeader from './ui/SectionHeader';
 import { sectionSpacing, cardPadding } from '../config/layout';
 
-
-import { PrimaryButton } from './ui/Buttons';
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  '& .MuiInputBase-root': {
-    color: 'var(--color-text)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: '8px',
-  },
-  '& .MuiFormLabel-root': {
-    color: 'var(--color-text-secondary)',
-  },
+// Shared TextField styles
+const textFieldSx = {
   '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'var(--glass-border)',
-    },
-    '&:hover fieldset': {
-      borderColor: 'var(--color-primary)',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: 'var(--color-secondary)',
-    },
+    color: 'white',
+    backgroundColor: 'rgba(255,255,255,0.02)',
+    borderRadius: '12px',
+    '& fieldset': { borderColor: 'rgba(255,255,255,0.1)' },
+    '&:hover fieldset': { borderColor: 'rgba(249, 115, 22, 0.5)' },
+    '&.Mui-focused fieldset': { borderColor: '#f97316' },
   },
-  marginBottom: '12px',
-}));
+  '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
+  '& .MuiInputLabel-root.Mui-focused': { color: '#f97316' },
+};
 
-const ContactInfoItem = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  marginBottom: '1rem',
-  alignItems: 'flex-start',
-}));
-
-const IconBox = styled(Box)(({ theme }) => ({
-  backgroundColor: 'rgba(118, 75, 162, 0.15)',
-  borderRadius: '10px',
-  padding: '10px',
-  marginRight: '16px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: 'var(--color-secondary)',
-}));
-
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/51b6588de426f1e017039ada825e70f9";
-
-export default function Contact(props) {
-  const [status, setStatus] = useState();
-  const [animate, setAnimate] = useState(props.page === 5 || props.page === undefined);
-  const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
-  const toastTimer = useRef(null);
-
-  const toastAccentColor =
-    toast.severity === 'success'
-      ? '#22c55e'
-      : toast.severity === 'error'
-        ? '#ef4444'
-        : 'var(--color-secondary)';
-
-  useEffect(() => {
-    if (props.page === 5) setAnimate(true);
-  }, [props.page]);
+export default function Contact({ page, onShowNotification }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("SENDING");
+    setIsSubmitting(true);
 
-    // FormSubmit expects standard form-encoded payload (not JSON)
     const formData = new FormData(e.target);
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
+      const response = await fetch('https://formsubmit.co/ajax/51b6588de426f1e017039ada825e70f9', {
+        method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        setStatus("SUCCESS");
-        triggerToast('Message sent successfully!', 'success');
+        // Use callback to show notification in App.js (outside fullpage)
+        if (onShowNotification) {
+          onShowNotification(true, "Message sent successfully! I'll get back to you soon.");
+        }
         e.target.reset();
-        return;
+      } else {
+        throw new Error('Failed to send');
       }
-
-      let serverMessage = '';
-      try {
-        const body = await response.json();
-        serverMessage = body?.message || '';
-      } catch {
-        // ignore json parsing errors
+    } catch (error) {
+      if (onShowNotification) {
+        onShowNotification(false, 'Failed to send message. Please try again later.');
       }
-
-      setStatus("ERROR");
-      triggerToast(serverMessage || 'An error occurred while sending the message. Please try again.', 'error');
-    } catch {
-      setStatus("ERROR");
-      triggerToast('Network error while sending the message. Please try again.', 'error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  const triggerToast = (message, severity) => {
-    if (toastTimer.current) {
-      clearTimeout(toastTimer.current);
-    }
-    setToast({ open: true, message, severity });
-    toastTimer.current = setTimeout(() => {
-      setToast(prev => ({ ...prev, open: false }));
-    }, 6000);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (toastTimer.current) {
-        clearTimeout(toastTimer.current);
-      }
-    };
-  }, []);
-
-  const handleToastClose = () => {
-    if (toastTimer.current) {
-      clearTimeout(toastTimer.current);
-    }
-    setToast(prev => ({ ...prev, open: false }));
-  };
-
-  const contactInfo = [
-    {
-      icon: <MailOutlineIcon />,
-      title: 'Email',
-      content: 'alejandro3gps@gmail.com',
-      link: 'mailto:alejandro3gps@gmail.com'
-    },
-    {
-      icon: <LocationOnIcon />,
-      title: 'Location',
-      content: 'Aragon, Zaragoza, España',
-      link: null
-    }
-  ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: sectionSpacing.py, px: sectionSpacing.px }}>
-      <Fade in={animate} timeout={800}>
-        <Box>
-          <SectionHeader
-            title="Contact"
-            subtitle="Fill out the form below and I'll get back to you as soon as possible."
-            mb={2}
-          />
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      minHeight: '100%',
+      py: sectionSpacing.py,
+      px: sectionSpacing.px
+    }}>
+      {/* Main Content */}
+      <Container maxWidth="sm" sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <SectionHeader
+          title="Let's Connect"
+          subtitle="Have a project in mind? I'd love to hear about it."
+          mb={4}
+        />
 
-          <Grid container justifyContent="center">
-            <Grid item xs={12} md={8}>
-              <TiltCard sx={{ p: cardPadding, height: 'auto' }}>
-                <form onSubmit={handleSubmit}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <StyledTextField
-                        fullWidth
-                        required
-                        name="name"
-                        label="Name"
-                        variant="outlined"
-                        InputLabelProps={{ style: { color: 'rgba(255, 255, 255, 0.7)' } }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <StyledTextField
-                        fullWidth
-                        required
-                        name="email"
-                        label="Email"
-                        type="email"
-                        variant="outlined"
-                        InputLabelProps={{ style: { color: 'rgba(255, 255, 255, 0.7)' } }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        fullWidth
-                        name="subject"
-                        label="Subject"
-                        variant="outlined"
-                        InputLabelProps={{ style: { color: 'rgba(255, 255, 255, 0.7)' } }}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        fullWidth
-                        required
-                        name="message"
-                        label="Message"
-                        multiline
-                        rows={3}
-                        variant="outlined"
-                        InputLabelProps={{ style: { color: 'rgba(255, 255, 255, 0.7)' } }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sx={{ textAlign: 'center', mt: 1 }}>
-                      <PrimaryButton
-                        type="submit"
-                        variant="contained"
-                        endIcon={<SendIcon />}
-                        disabled={status === "SENDING"}
-                      >
-                        {status === "SENDING" ? "Sending..." : "Send Message"}
-                      </PrimaryButton>
-                    </Grid>
-                  </Grid>
-                </form>
-
-                <Box sx={{
-                  mt: 3,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 2,
-                  pt: 2,
-                  borderTop: '1px solid rgba(255, 255, 255, 0.1)'
-                }}>
-                  <IconButton
-                    component="a"
-                    href="https://github.com/alejandroGM0"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: 'var(--color-text-secondary)',
-                      transition: 'var(--transition-smooth)',
-                      '&:hover': {
-                        color: 'var(--color-primary)',
-                        transform: 'translateY(-3px)'
-                      }
-                    }}
-                  >
-                    <GitHubIcon />
-                  </IconButton>
-                  <Typography variant="body2" sx={{ color: 'var(--color-text-secondary)', opacity: 0.8 }}>
-                    © {new Date().getFullYear()} Alejandro Gasca. Built with React.
-                  </Typography>
-                </Box>
-              </TiltCard>
-            </Grid>
-          </Grid>
-
-        </Box>
-      </Fade>
-
-      {/* Render toast via portal so it escapes fullpage's overflow:hidden */}
-      {ReactDOM.createPortal(
-        <Fade in={toast.open} timeout={{ enter: 200, exit: 200 }}>
+        <TiltCard sx={{ p: cardPadding }}>
+          {/* Contact Form - FormSubmit */}
           <Box
-            role="status"
-            sx={{
-              position: 'fixed',
-              bottom: { xs: 16, md: 32 },
-              right: { xs: 16, md: 32 },
-              left: { xs: 16, md: 'auto' },
-              px: 2.5,
-              py: 1.5,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1.5,
-              minWidth: { xs: 'auto', md: 280 },
-              borderRadius: '12px',
-              backgroundColor: 'rgba(10, 15, 28, 0.95)',
-              border: '1px solid var(--glass-border)',
-              boxShadow: 'var(--glass-shadow)',
-              backdropFilter: 'blur(18px)',
-              zIndex: 9999,
-            }}
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
-            <Box
-              sx={{
-                width: 10,
-                height: 10,
-                borderRadius: '999px',
-                backgroundColor: toastAccentColor,
-                boxShadow: '0 0 12px rgba(249, 115, 22, 0.4)',
-                flex: '0 0 auto',
-              }}
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+
+            <TextField
+              name="name"
+              label="Name"
+              variant="outlined"
+              fullWidth
+              required
+              sx={textFieldSx}
             />
-            <Typography variant="body2" sx={{ color: 'var(--color-text)' }}>
-              {toast.message}
-            </Typography>
-            <IconButton
-              size="small"
-              onClick={handleToastClose}
+            <TextField
+              name="email"
+              label="Email"
+              variant="outlined"
+              fullWidth
+              type="email"
+              required
+              sx={textFieldSx}
+            />
+            <TextField
+              name="message"
+              label="Message"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              required
+              sx={textFieldSx}
+            />
+            <PrimaryButton
+              type="submit"
+              disabled={isSubmitting}
               sx={{
-                color: 'var(--color-text-secondary)',
-                '&:hover': { color: toastAccentColor },
+                mt: 1,
+                py: 1.5,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
-              <CloseIcon fontSize="small" />
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+              <SendIcon sx={{ fontSize: 18 }} />
+            </PrimaryButton>
+          </Box>
+
+          {/* Social Links */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 4, pt: 3, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <IconButton
+              href="https://github.com/alejandroGM0"
+              target="_blank"
+              sx={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                '&:hover': {
+                  background: 'rgba(249, 115, 22, 0.1)',
+                  borderColor: 'rgba(249, 115, 22, 0.3)'
+                }
+              }}
+            >
+              <GitHubIcon sx={{ color: 'white' }} />
+            </IconButton>
+            <IconButton
+              href="https://www.linkedin.com/in/alejandro-gasca-72608136b/"
+              target="_blank"
+              sx={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                '&:hover': {
+                  background: 'rgba(249, 115, 22, 0.1)',
+                  borderColor: 'rgba(249, 115, 22, 0.3)'
+                }
+              }}
+            >
+              <LinkedInIcon sx={{ color: 'white' }} />
             </IconButton>
           </Box>
-        </Fade>,
-        document.body
-      )}
-    </Container>
+        </TiltCard>
+      </Container>
+
+      {/* Footer */}
+      <Box
+        component="footer"
+        sx={{
+          textAlign: 'center',
+          py: 3,
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          mt: 4
+        }}
+      >
+        <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>
+          © {new Date().getFullYear()} Alejandro Gasca. All rights reserved.
+        </Typography>
+        <Typography sx={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.75rem', mt: 0.5 }}>
+          Built with React & ❤️
+        </Typography>
+      </Box>
+    </Box>
   );
 }
-

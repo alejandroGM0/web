@@ -1,85 +1,61 @@
+import React from 'react';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
 
 /**
- * Gradient button for primary actions (Submit, Demo, etc.)
+ * PrimaryButton - Orange gradient button
  */
-export const PrimaryButton = styled(Button)(({ theme }) => ({
-    backgroundImage: 'linear-gradient(90deg, var(--color-primary), var(--color-secondary))',
-    color: 'white',
-    padding: '10px 26px',
-    fontSize: '1rem',
-    fontWeight: 500,
-    borderRadius: '50px',
-    transition: 'var(--transition-smooth)',
-    '&:hover': {
-        boxShadow: '0 8px 20px rgba(118, 75, 162, 0.3)',
-        transform: 'translateY(-3px)',
-    }
-}));
+export function PrimaryButton({ children, ...props }) {
+    return (
+        <Button
+            {...props}
+            sx={{
+                background: 'linear-gradient(90deg, #f97316, #ea580c)',
+                color: 'white',
+                fontWeight: 600,
+                textTransform: 'none',
+                padding: '12px 32px',
+                borderRadius: '50px',
+                fontSize: '1rem',
+                boxShadow: '0 4px 15px rgba(249, 115, 22, 0.3)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                    background: 'linear-gradient(90deg, #ea580c, #f97316)',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 6px 20px rgba(249, 115, 22, 0.4)',
+                },
+                ...props.sx
+            }}
+        >
+            {children}
+        </Button>
+    );
+}
 
 /**
- * Special Project Button - Distinct style for main CTAs
+ * SecondaryButton - Outlined button with white border
  */
-export const ProjectButton = styled(Button)(({ theme }) => ({
-    background: 'linear-gradient(90deg, #FF6B00, #CF7A09)',
-    color: 'white',
-    padding: '12px 32px',
-    fontSize: '1.1rem',
-    fontWeight: 600,
-    borderRadius: '50px',
-    textTransform: 'none',
-    boxShadow: '0 4px 15px rgba(255, 107, 0, 0.3)',
-    transition: 'all 0.3s ease',
-    '&:hover': {
-        background: 'linear-gradient(90deg, #CF7A09, #FF6B00)',
-        transform: 'translateY(-3px)',
-        boxShadow: '0 6px 20px rgba(255, 107, 0, 0.4)',
-    }
-}));
-
-/**
- * Outline/Glass button for secondary actions (Code, GitHub, etc.)
- */
-export const SecondaryButton = styled(Button)(({ theme }) => ({
-    color: 'var(--color-text)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid var(--glass-border)',
-    padding: '10px 26px',
-    fontSize: '1rem',
-    fontWeight: 500,
-    borderRadius: '50px',
-    transition: 'var(--transition-smooth)',
-    '&:hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        border: '1px solid var(--color-secondary)',
-        transform: 'translateY(-3px)',
-    }
-}));
-
-/**
- * Navigation button with underline effect
- */
-export const NavigationButton = styled(Button)(({ theme }) => ({
-    color: 'var(--color-text)',
-    fontWeight: 500,
-    marginLeft: '10px',
-    marginRight: '10px',
-    position: 'relative',
-    '&::after': {
-        content: '""',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        width: '0%',
-        height: '2px',
-        backgroundColor: 'var(--color-secondary)',
-        transition: 'var(--transition-smooth)',
-    },
-    '&:hover': {
-        backgroundColor: 'transparent',
-        '&::after': {
-            width: '100%',
-        }
-    }
-}));
+export function SecondaryButton({ children, ...props }) {
+    return (
+        <Button
+            {...props}
+            sx={{
+                background: 'transparent',
+                color: 'white',
+                fontWeight: 500,
+                textTransform: 'none',
+                padding: '10px 24px',
+                borderRadius: '50px',
+                fontSize: '0.95rem',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                },
+                ...props.sx
+            }}
+        >
+            {children}
+        </Button>
+    );
+}

@@ -109,23 +109,21 @@ export default function TechGrid({ page }) {
                 overflow: 'hidden', // Hide overflow for marquees
             }}
         >
-            <Fade in={show} timeout={800}>
-                <Box sx={{ width: '100%' }}>
-                    {/* Section Title */}
-                    <SectionHeader
-                        title="Technologies & Tools"
-                        subtitle="The arsenal I use to build ideas."
-                        mb={8}
-                    />
+            <Box sx={{ width: '100%' }}>
+                {/* Section Title */}
+                <SectionHeader
+                    title="Technologies & Tools"
+                    subtitle="The arsenal I use to build ideas."
+                    mb={8}
+                />
 
-                    {/* Marquee Rows */}
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <MarqueeRow items={ROW_1} direction="normal" speed="35s" />
-                        <MarqueeRow items={ROW_2} direction="reverse" speed="30s" />
-                        <MarqueeRow items={ROW_3} direction="normal" speed="38s" />
-                    </Box>
+                {/* Marquee Rows */}
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <MarqueeRow items={ROW_1} direction="normal" speed="35s" />
+                    <MarqueeRow items={ROW_2} direction="reverse" speed="30s" />
+                    <MarqueeRow items={ROW_3} direction="normal" speed="38s" />
                 </Box>
-            </Fade>
+            </Box>
         </Container>
     );
 }

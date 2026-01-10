@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { ProjectButton } from '../ui/Buttons';
+import { PrimaryButton } from '../ui/Buttons';
 
 /**
  * Hero section component - Landing page first view
@@ -23,12 +23,14 @@ export default function Hero({ isMobile, onContactClick, onScrollDown }) {
                         creative solutions that matter.
                     </p>
                     <div className="hero-buttons">
-                        <ProjectButton onClick={onContactClick}>
+                        <PrimaryButton onClick={onContactClick}>
                             Contact Me
-                        </ProjectButton>
+                        </PrimaryButton>
                     </div>
                 </div>
-                <div className="arrow bounce">
+
+                {/* Arrow positioned below content with spacing */}
+                <div className="arrow bounce" style={{ marginTop: '3rem' }}>
                     <IconButton
                         className="scroll-button"
                         aria-label="Scroll down"

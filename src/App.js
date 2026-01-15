@@ -84,6 +84,7 @@ function GlobalNotification({ open, onClose, success, message }) {
 function HomePage({ projects }) {
     const [page, setPage] = useState(0);
     const fpApiRef = React.useRef(null);
+    const hasRebuiltRef = React.useRef(false);
     // Only show dialog if user hasn't seen it before
     const [openDialog, setOpenDialog] = useState(() => {
         const hasSeenDialog = localStorage.getItem('hasSeenUpdateDialog');
@@ -99,6 +100,18 @@ function HomePage({ projects }) {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+    // Rebuild fullpage.js after projects load to recalculate section heights
+    // This fixes mobile truncation issue where fp-overflow height is calculated before content loads
+    useEffect(() => {
+        if (projects.length > 0 && fpApiRef.current && !hasRebuiltRef.current) {
+            hasRebuiltRef.current = true;
+            // Small delay to let React render the projects first
+            setTimeout(() => {
+                fpApiRef.current.reBuild();
+            }, 150);
+        }
+    }, [projects]);
 
     // Handle fullpage section changes
     const handleAfterLoad = (origin, destination) => {
@@ -155,8 +168,7 @@ function HomePage({ projects }) {
                     responsiveWidth={0}
                     slidesNavPosition='bottom'
                     scrollOverflow={true}
-                    scrollOverflowReset={true}
-                    normalScrollElementTouchThreshold={5}
+                    scrollOverflowMacStyle={true}
                     keyboardScrolling={true}
                     animateAnchor={true}
                     recordHistory={true}

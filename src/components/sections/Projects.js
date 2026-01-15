@@ -65,27 +65,24 @@ function ProjectCard({ project, index, isVisible }) {
                 transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'opacity 0.5s ease, transform 0.5s ease',
                 transitionDelay: `${index * 100}ms`,
-                height: '100%',
             }}
         >
             <TiltCard
                 onClick={handleClick}
                 sx={{
                     width: '100%',
-                    height: '100%',
-                    minHeight: '220px',
+                    minHeight: { xs: '160px', sm: '200px', md: '220px' },
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
                     p: 0,
-                    // NO overrides - inherits TiltCard defaults
                 }}
             >
-                {/* Image Area - 50% height */}
+                {/* Image Area */}
                 <Box
                     sx={{
-                        height: '50%',
-                        minHeight: '100px',
+                        height: { xs: '80px', sm: '100px', md: '50%' },
+                        minHeight: { xs: '80px', sm: '100px', md: '100px' },
                         position: 'relative',
                         borderRadius: '16px 16px 0 0',
                         overflow: 'hidden',
@@ -241,10 +238,10 @@ export default function Projects({ isMobile, projects, page }) {
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 pt: sectionSpacing.pt,
-                pb: sectionSpacing.py,
+                pb: { xs: 12, sm: 8, md: sectionSpacing.py.md },
                 px: sectionSpacing.px,
-                height: '100%',
-                position: 'relative', // Context for debug absolute
+                minHeight: { xs: 'auto', md: '100%' },
+                position: 'relative',
             }}
         >
             {/* DEBUG OVERLAY - TEMPORARY */}
@@ -277,17 +274,16 @@ export default function Projects({ isMobile, projects, page }) {
                 mb={6}
             />
 
-            {/* 2x2 Grid - All projects visible */}
+            {/* Grid - 1 column mobile, 4 columns desktop */}
             <Box
                 sx={{
                     display: 'grid',
                     gridTemplateColumns: {
-                        xs: 'repeat(2, 1fr)',
+                        xs: '1fr',
+                        sm: 'repeat(2, 1fr)',
                         md: 'repeat(4, 1fr)',
                     },
-                    gap: { xs: 1.5, md: 2 },
-                    flex: 1,
-                    maxHeight: { xs: 'auto', md: '400px' },
+                    gap: { xs: 2, sm: 1.5, md: 2 },
                 }}
             >
                 {projects.slice(0, 4).map((project, index) => (

@@ -103,11 +103,11 @@ export default function TechGrid({ page }) {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
-                height: '100%', // Full height to center content
+                minHeight: { xs: 'auto', md: '100%' },
                 pt: sectionSpacing.pt,
-                pb: sectionSpacing.py,
+                pb: { xs: 8, sm: 6, md: sectionSpacing.py.md },
                 px: sectionSpacing.px,
-                overflow: 'hidden', // Hide overflow for marquees
+                overflow: 'hidden',
             }}
         >
             <Box sx={{ width: '100%' }}>

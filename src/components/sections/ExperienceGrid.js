@@ -27,14 +27,14 @@ export default function ExperienceGrid() {
             maxWidth="xl"
             sx={{
                 width: '100%',
-                height: '100%',
+                minHeight: { xs: 'auto', md: '100%' },
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'flex-start', // Top aligned for consistent header position
+                justifyContent: 'flex-start',
                 px: sectionSpacing.px,
-                pt: sectionSpacing.pt, // Use standardized top padding
-                pb: sectionSpacing.py,
+                pt: sectionSpacing.pt,
+                pb: { xs: 8, sm: 6, md: sectionSpacing.py.md },
             }}
         >
             {/* Header - Using SectionHeader component */}

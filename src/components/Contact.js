@@ -63,10 +63,10 @@ export default function Contact({ page, onShowNotification }) {
     <Container maxWidth="sm" sx={{
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
+      minHeight: { xs: 'auto', md: '100%' },
       px: sectionSpacing.px,
       pt: sectionSpacing.pt,
-      pb: sectionSpacing.py,
+      pb: { xs: 8, sm: 6, md: sectionSpacing.py.md },
       justifyContent: 'flex-start',
     }}>
       <SectionHeader

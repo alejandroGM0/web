@@ -9,8 +9,6 @@ html, body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Prevent iOS bounce/overscroll */
-  overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
 }
 

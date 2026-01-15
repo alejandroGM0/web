@@ -69,12 +69,12 @@ export default function About(props) {
             maxWidth="lg"
             sx={{
                 pt: sectionSpacing.pt,
-                pb: sectionSpacing.py,
+                pb: { xs: 8, sm: 6, md: sectionSpacing.py.md },
                 px: sectionSpacing.px,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
-                height: '100%',
+                minHeight: { xs: 'auto', md: '100%' },
             }}
         >
 

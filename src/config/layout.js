@@ -1,19 +1,19 @@
 // Layout spacing tokens to keep sections consistent across components
 export const sectionSpacing = {
-    px: { xs: 2.5, sm: 3.5, md: 6 },
-    py: { xs: 3, sm: 4, md: 5 },
-    // Padding top accounting for navbar height - use this for consistent top margin
-    pt: { xs: 12, sm: 13, md: 15 }, // Increased for more top margin
+    px: { xs: 2, sm: 3, md: 5 },
+    py: { xs: 4, sm: 5, md: 5 },
+    // Padding top accounting for navbar height
+    pt: { xs: 10, sm: 11, md: 12 }, // Reduced margins
 };
 
 export const cardPadding = {
-    xs: 2.5,
-    sm: 3.5,
-    md: 5.5,
+    xs: 2,
+    sm: 3,
+    md: 4.5,
 };
 
 export const contentGap = {
-    xs: 3,
-    sm: 4,
-    md: 8,
+    xs: 2,
+    sm: 3,
+    md: 6,
 };

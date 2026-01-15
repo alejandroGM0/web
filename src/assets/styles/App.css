@@ -288,7 +288,7 @@
 /* Atmospheric background glow removed */
 
 .hero-name {
-    font-size: clamp(8rem, 20vw, 14rem);
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
     line-height: 1.05;
     margin: 0 0 1rem 0;
@@ -665,6 +665,31 @@
    MOBILE RESPONSIVE OVERRIDES
    ========================================== */
 
+/* Tablet screens (769px - 900px) */
+@media (min-width: 769px) and (max-width: 900px) {
+    .hero-name {
+        font-size: 5rem !important;
+    }
+
+    .section {
+        height: 100vh;
+        min-height: 100vh;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .section .fp-overflow {
+        height: 100% !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .hero-content,
+    .hero-content-mobile {
+        padding: 60px 24px 40px 24px;
+    }
+}
+
 @media (max-width: 768px) {
 
     /* Keep fullpage sections at 100vh - required for scrollOverflow to work */
@@ -711,15 +736,19 @@
     /* Make arrow stay at bottom without causing overflow */
     .hero-content .arrow,
     .hero-content-mobile .arrow {
-        margin-top: auto !important;
-        padding-bottom: 1rem;
+        position: absolute !important;
+        bottom: 2rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        right: auto !important;
+        width: auto !important;
     }
 
     .hero-name {
-        font-size: 6rem !important;
+        font-size: 4.2rem !important;
         margin-bottom: 0.75rem;
         margin-top: 0;
-        line-height: 1.05;
+        line-height: 1.1;
     }
 
     .mono-subtitle {
@@ -742,29 +771,6 @@
 
     .hero-buttons button {
         width: 100%;
-    }
-
-    /* Arrow scroll indicator - centered on mobile */
-    .arrow {
-        position: absolute !important;
-        bottom: 20px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        transform: none !important;
-    }
-
-    .hero-content .arrow,
-    .hero-content-mobile .arrow {
-        position: absolute !important;
-        bottom: 20px !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        transform: none !important;
     }
 
     /* Glass cards on mobile */
@@ -813,7 +819,7 @@
 @media (max-width: 600px) {
     .hero-name {
         font-size: 3.5rem !important;
-        line-height: 1.05;
+        line-height: 1.1;
     }
 
     .mono-subtitle {
@@ -828,6 +834,22 @@
     #fp-nav ul li a span {
         width: 6px !important;
         height: 6px !important;
+    }
+}
+
+/* Very small phones (480px and below) */
+@media (max-width: 480px) {
+    .hero-name {
+        font-size: 2.8rem !important;
+        line-height: 1.1;
+    }
+
+    .mono-subtitle {
+        font-size: 0.75rem !important;
+    }
+
+    .hero-description {
+        font-size: 0.9rem !important;
     }
 }
 
@@ -858,7 +880,7 @@
     overflow: hidden !important;
 }
 
-.section > .fp-overflow {
+.section>.fp-overflow {
     height: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -894,9 +916,9 @@
         -webkit-overflow-scrolling: touch !important;
         touch-action: pan-y !important;
     }
-    
+
     /* Ensure inner content is scrollable */
-    .fp-overflow > * {
+    .fp-overflow>* {
         touch-action: pan-y;
     }
 }

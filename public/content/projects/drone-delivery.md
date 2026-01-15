@@ -1,40 +1,45 @@
 ---
 title: "Drone Delivery Network"
-description: "Autonomous fleet management system for last-mile logistics. Currently building the hardware prototype."
+description: "Experimental autonomous logistics platform. Currently in early prototyping phase (Pre-Alpha)."
 technologies: ["C++", "Python", "ROS 2", "OpenCV", "Raspberry Pi"]
 githubUrl: "#"
 liveUrl: ""
 coverImage: "/images/drone-delivery.png"
 featured: true
-challenge: "Designing a robust flight controller capable of handling variable payloads and wind conditions on custom hardware."
-solution: "Implementing a custom PID controller on a Raspberry Pi with ROS 2 for high-level mission planning and computer vision for obstacle avoidance."
-devTime: "In Development"
+challenge: "Building a complex autonomous system from scratch, balancing hardware constraints with ambitious software goals in a custom-built frame."
+solution: "Iterative development approach focusing on core flight stability before layering complex autonomy. Currently validating basic hardware-software integration."
+devTime: "Early Stage"
 role: "Systems Engineer"
-battery: "Testing Phase"
-keyLearning: "Deep diving into real-time operating systems (RTOS) and sensor fusion algorithms for stable flight."
+battery: "N/A"
+keyLearning: "Managing the complexities of hardware integration and real-time control loops in a physical system."
 heroImage: "/images/drone-delivery.png"
-badgeType: "Hardware"
-status: "In Development"
+badgeType: "Prototype"
+status: "Pre-Alpha"
 ---
 
-## Project Status: In Construction 🚧
+## Project Status: Very Early Stage (Green) 🌱
 
-This project is currently in the heavy R&D phase. I am building the physical drone platform from scratch, focusing on the avionics and control systems.
+**Current Status**: This project is currently in a very early, experimental stage ("very green"). The hardware platform is assembled but the software stack is still being defined and basic flight characteristics are being tuned. This is not yet a production-ready system.
 
-## Hardware Specs
+**Target**: The goal is to have a fully functional, autonomous flight prototype ready by **June 2026**.
+
+## Detailed Overview
+
+The Drone Delivery Network is an ambitious initiative to build a fully autonomous last-mile delivery vehicle from first principles. Unlike off-the-shelf commercial drones, this platform uses a custom component selection designed for modularity and research flexibility.
+
+We are currently navigating the initial hurdles of "bringing the bird to life" — ensuring the flight controller interacts correctly with the custom power distribution board and that the companion computer (Raspberry Pi) can reliably send offboard setpoints without latency spikes.
+
+## Hardware Specs (Subject to Change)
 
 - **Frame**: Custom carbon fiber quadcopter frame (300mm wheelbase)
 - **Flight Controller**: Pixhawk 6C (running PX4)
 - **Companion Computer**: Raspberry Pi 4 (8GB) running ROS 2 Humble
 - **Propulsion**: T-Motor F40 Pro III 2400KV motors, 35A BLHeli_32 ESCs
-- **Vision**: Intel RealSense D435i for VIO (Visual Inertial Odometry)
+- **Vision**: Intel RealSense D435i (Integration pending stable flight)
 
-## Current Progress
+## Roadmap to June
 
-I am currently tuning the PIDs for the stabilization mode. The basics of the ROS 2 node graph are established, with successful communication between the flight controller and the companion computer via MAVLink.
-
-### Next Steps
-
-- [ ] Optimize VIO for GPS-denied navigation
-- [ ] Implement precision landing using ArUco markers
-- [ ] Stress test battery life with dummy payloads
+- **Phase 1 (Now)**: PID Tuning and basic manual flight.
+- **Phase 2 (April)**: Stable Position Hold using Optical Flow.
+- **Phase 3 (May)**: Autonomous waypoint navigation.
+- **Phase 4 (June)**: Full delivery mission simulation (Takeoff -> Navigate -> Drop -> Land).

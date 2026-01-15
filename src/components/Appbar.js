@@ -76,11 +76,11 @@ export default function Appbar(props) {
             sx={{
                 position: 'fixed',
                 top: '20px',
-                left: 0,
-                right: 0,
-                margin: '0 auto',
-                width: { xs: '90%', sm: '95%' },
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 'calc(100% - 32px)',
                 maxWidth: '1200px',
+                boxSizing: 'border-box',
                 zIndex: 1100,
                 display: 'flex',
                 alignItems: 'center',
@@ -180,7 +180,10 @@ export default function Appbar(props) {
                                     backdropFilter: 'blur(10px)',
                                     borderRadius: '12px',
                                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                                    mt: 1.5
+                                    mt: 1.5,
+                                    minWidth: '180px',
+                                    py: 1,
+                                    px: 0.5
                                 }
                             }}
                         >
@@ -189,14 +192,29 @@ export default function Appbar(props) {
                                     key={index}
                                     onClick={() => handleMenuItemClick(item.section)}
                                     selected={props.activeSection === item.section}
-                                    sx={{ color: '#fff', fontSize: '0.9rem' }}
+                                    sx={{
+                                        color: '#fff',
+                                        fontSize: '0.95rem',
+                                        py: 1.5,
+                                        px: 3,
+                                        borderRadius: '8px',
+                                        mx: 0.5
+                                    }}
                                 >
                                     {item.label}
                                 </MenuItem>
                             ))}
                             <MenuItem
                                 onClick={() => handleMenuItemClick(5)}
-                                sx={{ color: '#FF6B00', fontWeight: 600, fontSize: '0.9rem' }}
+                                sx={{
+                                    color: '#FF6B00',
+                                    fontWeight: 600,
+                                    fontSize: '0.95rem',
+                                    py: 1.5,
+                                    px: 3,
+                                    borderRadius: '8px',
+                                    mx: 0.5
+                                }}
                             >
                                 Let's Talk
                             </MenuItem>

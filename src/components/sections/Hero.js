@@ -13,9 +13,15 @@ export default function Hero({ isMobile, onContactClick, onScrollDown }) {
             <div className={isMobile ? "hero-content-mobile" : "hero-content"}>
                 <div className="hero-text">
                     <h1 className="hero-name">
-                        Alejandro
-                        <br />
-                        <span className="text-highlight">Gasca</span>
+                        {isMobile ? (
+                            <>
+                                Alejandro
+                                <br />
+                                <span className="text-highlight">Gasca</span>
+                            </>
+                        ) : (
+                            <>Alejandro <span className="text-highlight">Gasca</span></>
+                        )}
                     </h1>
                     <div className="mono-subtitle">
                         {isMobile ? (

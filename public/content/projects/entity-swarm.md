@@ -1,8 +1,8 @@
 ---
 title: "Videogame"
-description: "High-intensity isometric roguelite inspired by Vampire Survivors. Manage a squad of distinct units and survive endless hordes."
+description: "High-intensity isometric roguelite built on a custom engine. Inspired by Vampire Survivors, manage a squad of distinct units and survive endless hordes."
 technologies: ["Java", "Custom Engine", "OpenGL", "Gradle"]
-githubUrl: "#"
+githubUrl: ""
 liveUrl: ""
 coverImage: "/images/entity-swarm.png"
 images: [
@@ -22,6 +22,7 @@ solution: "I developed a pure ECS (Entity Component System) architecture from sc
 devTime: "In Development"
 role: "Lead Developer"
 battery: "∞"
+keyLearning: "Building an engine from scratch is the ultimate test of optimization skills. Managing memory layouts and draw calls manually taught me more about low-level performance than any framework could."
 solutionFeatures: [
   { icon: "Memory", title: "Data-Oriented", description: "Contiguous memory layout for cache efficiency", color: "blue" },
   { icon: "GridView", title: "Spatial Hashing", description: "O(1) lookup for collision detection", color: "purple" },
@@ -51,7 +52,7 @@ releaseDate: "2026"
 announcementDate: ""
 ---
 
-**This project** is a high-performance implementation of the "bullet heaven" genre, blending the addictive power curve of *Vampire Survivors* with the squad management tactical depth of *Yet Another Zombie Survivors*.
+**This project** is a videogame where I am building a **custom engine** from scratch. It blends the addictive power curve of *Vampire Survivors* with the squad management tactical depth of *Yet Another Zombie Survivors*.
 
 Instead of controlling a single hero, you command a **tactical squad**. You don't just upgrade a weapon; you draft new specialized units—Snipers, Medics, Shieldbearers, and Mages—each with their own behavior trees and upgrade paths.
 

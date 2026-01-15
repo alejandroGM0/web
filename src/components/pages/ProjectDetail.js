@@ -442,6 +442,12 @@ export default function ProjectDetail({ projects = [] }) {
                                             <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem' }}>Timeline</Typography>
                                             <Typography sx={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.875rem' }}>{project.devTime || 'N/A'}</Typography>
                                         </Box>
+                                        {project.releaseDate && (
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', pb: 1.5 }}>
+                                                <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem' }}>Completion Date</Typography>
+                                                <Typography sx={{ color: '#fbbf24', fontWeight: 600, fontSize: '0.875rem' }}>{project.releaseDate}</Typography>
+                                            </Box>
+                                        )}
 
                                         {/* Tech Stack */}
                                         <Box sx={{ pt: 1 }}>
@@ -455,9 +461,28 @@ export default function ProjectDetail({ projects = [] }) {
 
                                         {/* Actions */}
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, pt: 2 }}>
-                                            {(project.demoUrl || project.liveUrl) && (
-                                                <PrimaryButton startIcon={<RocketLaunchIcon />} href={project.demoUrl || project.liveUrl} target="_blank" fullWidth sx={{ py: 1.5 }}>Play Demo</PrimaryButton>
-                                            )}
+                                            <PrimaryButton
+                                                startIcon={project.demoDisabled ? <RocketLaunchIcon sx={{ opacity: 0.5 }} /> : <RocketLaunchIcon />}
+                                                href={project.demoDisabled ? undefined : (project.demoUrl || project.liveUrl)}
+                                                target={project.demoDisabled ? undefined : "_blank"}
+                                                disabled={!!project.demoDisabled}
+                                                fullWidth
+                                                sx={{
+                                                    py: 1.5,
+                                                    ...(project.demoDisabled && {
+                                                        background: 'rgba(255, 255, 255, 0.05) !important',
+                                                        color: 'rgba(255, 255, 255, 0.3) !important',
+                                                        boxShadow: 'none !important',
+                                                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                        pointerEvents: 'none',
+                                                        '& .MuiSvgIcon-root': {
+                                                            opacity: 0.3
+                                                        }
+                                                    })
+                                                }}
+                                            >
+                                                {project.demoDisabled ? "Demo Currently Offline" : "Play Demo"}
+                                            </PrimaryButton>
                                             {project.githubUrl && (
                                                 <SecondaryButton startIcon={<CodeIcon />} href={project.githubUrl} target="_blank" fullWidth sx={{ py: 1.5 }}>Source Code</SecondaryButton>
                                             )}
@@ -480,12 +505,7 @@ export default function ProjectDetail({ projects = [] }) {
                 </Container>
             </Box>
 
-            {/* FOOTER */}
-            <Box component="footer" sx={{ borderTop: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'var(--color-background)', py: 4, mt: 'auto' }}>
-                <Container maxWidth="lg">
-                    <Typography sx={{ textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontSize: '0.875rem' }}>© 2026 Portfolio</Typography>
-                </Container>
-            </Box>
+
         </Box>
     );
 }

@@ -1,57 +1,53 @@
 ---
-title: "Drone Delivery Network"
-description: "Experimental autonomous logistics platform. Currently in early prototyping phase (Pre-Alpha)."
-technologies: ["C++", "Python", "ROS 2", "OpenCV", "Raspberry Pi"]
-githubUrl: "#"
+title: "Autonomous Delivery Drone"
+description: "Development of an autonomous aerial vehicle for last-mile delivery. Focusing on robust path planning and stable flight control."
+technologies: ["C++", "Python", "ROS 2", "OpenCV", "Embedded Systems"]
+githubUrl: ""
 liveUrl: ""
 coverImage: "/images/drone-delivery.png?v=2"
 images: ["/images/drone-graph.png"]
 featured: true
 features: [
-  { icon: "GridView", title: "ROS 2 Architecture", description: "Decentralized node graph for robustness", color: "blue" },
-  { icon: "Layers", title: "Sensor Fusion", description: "Combining VIO, IMU, and GPS data", color: "purple" },
-  { icon: "AccountTree", title: "Offboard Control", description: "MAVLink bridge to Pixhawk flight controller", color: "emerald" },
-  { icon: "Map", title: "Path Planning", description: "3D obstacle avoidance using OctoMap", color: "amber" }
+  { icon: "GridView", title: "Modular Architecture", description: "ROS 2 node graph", color: "blue" },
+  { icon: "Layers", title: "Sensor Fusion", description: "VIO and IMU state estimation", color: "purple" },
+  { icon: "AccountTree", title: "Intelligent Control", description: "Precise offboard trajectory tracking", color: "emerald" },
+  { icon: "Map", title: "3D Perception", description: "Real-time environment mapping", color: "amber" }
 ]
-challenge: "Building a complex autonomous system from scratch, balancing hardware constraints with ambitious software goals in a custom-built frame."
-solution: "Iterative development approach focusing on core flight stability before layering complex autonomy. Currently validating basic hardware-software integration."
-devTime: "Early Stage"
-role: "Systems Engineer"
+challenge: "Designing a robust autonomous system capable of navigating complex environments while maintaining strict safety standards and operational efficiency."
+solution: "We are developing a tiered control architecture. A high-level mission computer handles path planning and obstacle avoidance using ROS 2, while a dedicated real-time flight controller manages flight dynamics and stability. This separation of concerns ensures system reliability."
+devTime: "R&D Phase"
+role: "Systems Architect"
 battery: "N/A"
 solutionFeatures: [
-  { icon: "Memory", title: "Hardware Select", description: "Calculating thrust-to-weight ratios", color: "blue" },
-  { icon: "RocketLaunch", title: "Flight Control", description: "Pixhawk tuning for custom frame", color: "purple" },
-  { icon: "Code", title: "ROS 2 Bridge", description: "High-bandwidth MAVLink communication", color: "emerald" },
-  { icon: "Map", title: "Auto Navigation", description: "SLAM with depth camera input", color: "amber" }
+  { icon: "Memory", title: "System Integration", description: "Hardware-Software co-design", color: "blue" },
+  { icon: "RocketLaunch", title: "Dynamics Modeling", description: "Precise PID tuning & simulation", color: "purple" },
+  { icon: "Code", title: "Protocol Design", description: "Efficient MAVLink bridging", color: "emerald" },
+  { icon: "Map", title: "SLAM Research", description: "Visual localization integration", color: "amber" }
 ]
 heroImage: "/images/drone-delivery.png?v=2"
-badgeType: "Prototype"
 status: "Pre-Alpha"
+releaseDate: "June 2026"
+announcementDate: ""
+badgeType: "Prototype"
 ---
 
-## Project Status: Very Early Stage (Green) 🌱
+## Project Status: Active Prototyping 🟢
 
-**Current Status**: This project is currently in a very early, experimental stage ("very green"). The hardware platform is assembled but the software stack is still being defined and basic flight characteristics are being tuned. This is not yet a production-ready system.
+This project focuses on the engineering challenges of **autonomous aerial logistics**. The goal is to build a robust flying vehicle capable of performing delivery missions with minimal human intervention.
 
-**Target**: The goal is to have a fully functional, autonomous flight prototype ready by **June 2026**.
+We are currently in the **Prototyping Phase**, validating core architectural decisions and conducting hardware-in-the-loop (HITL) testing to ensure system integrity.
 
-## Detailed Overview
+### Strategic Roadmap (2026)
 
-The Drone Delivery Network is an ambitious initiative to build a fully autonomous last-mile delivery vehicle from first principles. Unlike off-the-shelf commercial drones, this platform uses a custom component selection designed for modularity and research flexibility.
+*   **Q1 - Core Stability**: Validating flight dynamics and low-level control loops on custom hardware.
+*   **Q2 - Perception Layer**: Integrating onboard vision systems for optical flow and visual odometry.
+*   **Q3 - Autonomy**: Implementing waypoint navigation and local obstacle avoidance algorithms.
+*   **Q4 - Mission Simulation**: Full end-to-end delivery simulation in controlled environments.
 
-We are currently navigating the initial hurdles of "bringing the bird to life" — ensuring the flight controller interacts correctly with the custom power distribution board and that the companion computer (Raspberry Pi) can reliably send offboard setpoints without latency spikes.
+### System Architecture
 
-## Hardware Specs (Subject to Change)
+The platform exploits a distributed computing model. High-level autonomy (SLAM, Path Planning) runs on a powerful companion computer, sending high-frequency control setpoints to a distinct flight controller. This ensures that computationally expensive AI tasks never compromise the real-time safety guarantees of the flight stabilization loop.
 
-- **Frame**: Custom carbon fiber quadcopter frame (300mm wheelbase)
-- **Flight Controller**: Pixhawk 6C (running PX4)
-- **Companion Computer**: Raspberry Pi 4 (8GB) running ROS 2 Humble
-- **Propulsion**: T-Motor F40 Pro III 2400KV motors, 35A BLHeli_32 ESCs
-- **Vision**: Intel RealSense D435i (Integration pending stable flight)
-
-## Roadmap to June
-
-- **Phase 1 (Now)**: PID Tuning and basic manual flight.
-- **Phase 2 (April)**: Stable Position Hold using Optical Flow.
-- **Phase 3 (May)**: Autonomous waypoint navigation.
-- **Phase 4 (June)**: Full delivery mission simulation (Takeoff -> Navigate -> Drop -> Land).
+*   **Compute**: Distributed processing (Edge AI + Real-time Core)
+*   **Communications**: High-bandwidth inter-process communication via ROS 2
+*   **Safety**: Failsafe-first design philosophy with redundant state estimation

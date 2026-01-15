@@ -1,6 +1,6 @@
 // Project loader using fetch to load markdown from public folder
 
-const PROJECT_SLUGS = ['entity-swarm', 'drone-delivery', 'blablacar-clone', 'spartbot'];
+const PROJECT_SLUGS = ['entity-swarm', 'drone-delivery', 'blablacar-clone', 'musicsync'];
 
 /**
  * Load all projects asynchronously from public folder
@@ -142,6 +142,7 @@ function parseFrontmatter(markdown) {
         images: frontmatter.images || [],
         badgeType: frontmatter.badgeType || '',
         status: frontmatter.status || '',
+        demoDisabled: frontmatter.demoDisabled || false,
         releaseDate: frontmatter.releaseDate || '',
         announcementDate: frontmatter.announcementDate || '',
         // NEW FIELDS
@@ -177,10 +178,10 @@ function getDefaultProjects() {
             features: []
         },
         {
-            slug: 'spartbot',
-            title: 'SpartBot',
-            shortDescription: 'Discord bot for server management with moderation tools and custom commands.',
-            technologies: ['Python', 'Discord.py', 'MongoDB'],
+            slug: 'musicsync',
+            title: 'MusicSync',
+            shortDescription: 'Real-time social listening platform with precise audio synchronization.',
+            technologies: ['React', 'Node.js', 'Socket.io', 'External Music API'],
             githubUrl: 'https://github.com/alejandroGM0',
             liveUrl: '',
             features: []

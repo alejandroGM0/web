@@ -60,7 +60,7 @@ export default function Contact({ page, onShowNotification }) {
   };
 
   return (
-    <Container maxWidth="sm" sx={{
+    <Container maxWidth="lg" sx={{
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -68,12 +68,14 @@ export default function Contact({ page, onShowNotification }) {
       pt: sectionSpacing.pt,
       pb: sectionSpacing.py,
       justifyContent: 'center',
+      alignItems: 'center',
     }}>
-      <SectionHeader
-        title="Let's Connect"
-        subtitle="Have a project in mind? I'd love to hear about it."
-        mb={3}
-      />
+      <Box sx={{ width: '100%', maxWidth: '500px' }}>
+        <SectionHeader
+          title="Let's Connect"
+          subtitle="Have a project in mind? I'd love to hear about it."
+          mb={3}
+        />
 
       <TiltCard sx={{ p: { xs: 2, md: 2.5 } }}>
         {/* Contact Form - FormSubmit */}
@@ -132,10 +134,11 @@ export default function Contact({ page, onShowNotification }) {
         </Box>
 
         {/* Social Links */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 3, pt: 2, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 2, pt: 1.5, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
           <IconButton
             href="https://github.com/alejandroGM0"
             target="_blank"
+            size="small"
             sx={{
               background: 'rgba(255,255,255,0.05)',
               border: '1px solid rgba(255,255,255,0.1)',
@@ -145,11 +148,12 @@ export default function Contact({ page, onShowNotification }) {
               }
             }}
           >
-            <GitHubIcon sx={{ color: 'white' }} />
+            <GitHubIcon sx={{ color: 'white', fontSize: 20 }} />
           </IconButton>
           <IconButton
             href="https://www.linkedin.com/in/alejandro-gasca-72608136b/"
             target="_blank"
+            size="small"
             sx={{
               background: 'rgba(255,255,255,0.05)',
               border: '1px solid rgba(255,255,255,0.1)',
@@ -159,17 +163,18 @@ export default function Contact({ page, onShowNotification }) {
               }
             }}
           >
-            <LinkedInIcon sx={{ color: 'white' }} />
+            <LinkedInIcon sx={{ color: 'white', fontSize: 20 }} />
           </IconButton>
         </Box>
 
         {/* Footer */}
-        <Box sx={{ mt: 2, textAlign: 'center' }}>
+        <Box sx={{ mt: 1.5, textAlign: 'center' }}>
           <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }}>
             © {new Date().getFullYear()} Alejandro Gasca. All rights reserved.
           </Typography>
         </Box>
       </TiltCard>
+      </Box>
     </Container>
 
   );

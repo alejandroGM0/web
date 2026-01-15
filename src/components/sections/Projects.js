@@ -71,7 +71,7 @@ function ProjectCard({ project, index, isVisible }) {
                 onClick={handleClick}
                 sx={{
                     width: '100%',
-                    minHeight: { xs: '160px', sm: '200px', md: '220px' },
+                    minHeight: { xs: '200px', sm: '280px', md: '400px' },
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
@@ -81,7 +81,7 @@ function ProjectCard({ project, index, isVisible }) {
                 {/* Image Area */}
                 <Box
                     sx={{
-                        height: { xs: '160px', sm: '180px', md: '200px' },
+                        height: { xs: '120px', sm: '170px', md: '280px' },
                         position: 'relative',
                         borderRadius: '16px 16px 0 0',
                         overflow: 'hidden',
@@ -216,7 +216,6 @@ function ProjectCard({ project, index, isVisible }) {
  * Projects Section - 2x2 Grid Layout (All projects visible)
  */
 export default function Projects({ isMobile, projects, page }) {
-    const isDebug = false;
     const [isVisible, setIsVisible] = useState(false);
     const hasAnimatedRef = React.useRef(false);
 
@@ -231,7 +230,7 @@ export default function Projects({ isMobile, projects, page }) {
 
     return (
         <Container
-            maxWidth="xl"
+            maxWidth="lg"
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -240,33 +239,8 @@ export default function Projects({ isMobile, projects, page }) {
                 pb: { xs: 12, sm: 8, md: sectionSpacing.py.md },
                 px: sectionSpacing.px,
                 minHeight: { xs: 'auto', md: '100%' },
-                position: 'relative',
             }}
         >
-            {/* DEBUG OVERLAY - TEMPORARY */}
-            {isDebug && (
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        zIndex: 9999,
-                        background: 'rgba(255, 0, 0, 0.8)',
-                        color: 'white',
-                        p: 1,
-                        fontSize: '12px',
-                        pointerEvents: 'none',
-                        maxWidth: '300px',
-                    }}
-                >
-                    <Typography variant="caption" sx={{ display: 'block', fontWeight: 'bold' }}>
-                        DEBUG INFO:
-                    </Typography>
-                    <div>Projects loaded: {projects.length}</div>
-                    <div>List: {projects.map(p => p.title).join(', ')}</div>
-                </Box>
-            )}
-
             <SectionHeader
                 title="Featured Projects"
                 subtitle="High-performance applications built with modern technologies."

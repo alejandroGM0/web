@@ -287,10 +287,32 @@ export default function ProjectDetail({ projects = [] }) {
                                     <GridViewIcon sx={{ color: 'var(--color-primary)' }} /> Key Features
                                 </Typography>
                                 <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
-                                    <FeatureCard icon={<GridViewIcon />} title="Custom Architecture" description={`Built with ${project.technologies?.[0] || 'modern tech'}`} color="blue" />
-                                    <FeatureCard icon={<LayersIcon />} title="Optimized Performance" description="High-performance implementation" color="purple" />
-                                    <FeatureCard icon={<AccountTreeIcon />} title="Scalable Design" description="Built for growth and maintainability" color="emerald" />
-                                    <FeatureCard icon={<MapIcon />} title="Modern Patterns" description="Following best practices" color="amber" />
+                                    {project.features ? (
+                                        project.features.map((feature, index) => {
+                                            const Icons = {
+                                                GridView: <GridViewIcon />,
+                                                Layers: <LayersIcon />,
+                                                AccountTree: <AccountTreeIcon />,
+                                                Map: <MapIcon />
+                                            };
+                                            return (
+                                                <FeatureCard
+                                                    key={index}
+                                                    icon={Icons[feature.icon] || <GridViewIcon />}
+                                                    title={feature.title}
+                                                    description={feature.description}
+                                                    color={feature.color}
+                                                />
+                                            );
+                                        })
+                                    ) : (
+                                        <>
+                                            <FeatureCard icon={<GridViewIcon />} title="Custom Architecture" description={`Built with ${project.technologies?.[0] || 'modern tech'}`} color="blue" />
+                                            <FeatureCard icon={<LayersIcon />} title="Optimized Performance" description="High-performance implementation" color="purple" />
+                                            <FeatureCard icon={<AccountTreeIcon />} title="Scalable Design" description="Built for growth and maintainability" color="emerald" />
+                                            <FeatureCard icon={<MapIcon />} title="Modern Patterns" description="Following best practices" color="amber" />
+                                        </>
+                                    )}
                                 </Box>
                             </TiltCard>
 

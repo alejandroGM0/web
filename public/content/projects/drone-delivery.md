@@ -6,6 +6,12 @@ githubUrl: "#"
 liveUrl: ""
 coverImage: "/images/drone-delivery.png?v=2"
 featured: true
+features: [
+  { icon: "GridView", title: "ROS 2 Architecture", description: "Decentralized node graph for robustness", color: "blue" },
+  { icon: "Layers", title: "Sensor Fusion", description: "Combining VIO, IMU, and GPS data", color: "purple" },
+  { icon: "AccountTree", title: "Offboard Control", description: "MAVLink bridge to Pixhawk flight controller", color: "emerald" },
+  { icon: "Map", title: "Path Planning", description: "3D obstacle avoidance using OctoMap", color: "amber" }
+]
 challenge: "Building a complex autonomous system from scratch, balancing hardware constraints with ambitious software goals in a custom-built frame."
 solution: "Iterative development approach focusing on core flight stability before layering complex autonomy. Currently validating basic hardware-software integration."
 devTime: "Early Stage"

@@ -6,6 +6,12 @@ githubUrl: "https://github.com/alejandroGM0"
 liveUrl: ""
 coverImage: "/images/spartbot.png"
 featured: true
+features: [
+  { icon: "GridView", title: "Async Architecture", description: "Non-blocking event loop for high concurrency", color: "blue" },
+  { icon: "Layers", title: "Music Streaming", description: "High-quality audio pipeline with FFmpeg", color: "purple" },
+  { icon: "AccountTree", title: "Moderation Suite", description: "Auto-mod rules and audit logging", color: "emerald" },
+  { icon: "Map", title: "Leveling System", description: "MongoDB-backed XP and reputation tracking", color: "amber" }
+]
 challenge: "Building a scalable bot architecture that can handle multiple Discord servers simultaneously while maintaining low latency responses and persistent data storage."
 solution: "Used async/await patterns extensively with Discord.py, implemented MongoDB for persistent storage, and containerized the bot with Docker for easy deployment and scaling."
 devTime: "2 months"

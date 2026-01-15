@@ -144,23 +144,13 @@ export default function About(props) {
                             <Grid container spacing={{ xs: 1.5, md: 2 }}>
                                 {skills.map((skill, index) => (
                                     <Grid item xs={6} key={index}>
-                                        <Box
+                                        <TiltCard
                                             sx={{
-                                                background: 'rgba(255, 255, 255, 0.03)',
-                                                backdropFilter: 'blur(10px)',
-                                                border: '1px solid rgba(255, 255, 255, 0.08)',
-                                                borderRadius: '16px',
+                                                // Only layout - NO background/border overrides
                                                 p: { xs: 2.25, md: 3 },
                                                 textAlign: 'center',
-                                                transition: 'all 0.3s ease',
                                                 // Staggered layout: odd items (index 1, 3) pushed down
                                                 mt: index % 2 === 1 ? { xs: 2, md: 2 } : 0,
-                                                '&:hover': {
-                                                    background: 'rgba(255, 255, 255, 0.05)',
-                                                    transform: 'translateY(-4px)',
-                                                    borderColor: 'rgba(249, 115, 22, 0.5)',
-                                                    boxShadow: '0 8px 32px -1px rgba(249, 115, 22, 0.15)',
-                                                }
                                             }}
                                         >
                                             <Box sx={{ color: skill.color, mb: 1.5 }}>
@@ -178,7 +168,7 @@ export default function About(props) {
                                             >
                                                 {skill.subtitle}
                                             </Typography>
-                                        </Box>
+                                        </TiltCard>
                                     </Grid>
                                 ))}
                             </Grid>

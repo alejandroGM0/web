@@ -22,6 +22,7 @@ import ExperienceGrid from './components/sections/ExperienceGrid';
 import Projects from './components/sections/Projects';
 import Contact from './components/Contact';
 import ProjectDetail from './components/pages/ProjectDetail';
+import PageTransition from './components/ui/PageTransition';
 
 // Styles
 import './assets/styles/App.css';
@@ -30,7 +31,7 @@ import './assets/styles/App.css';
 import loadProjectsAsync from './utils/projectLoader';
 
 // Fullpage configuration
-const FULLPAGE_CREDITS = { enabled: true, label: '', position: 'right' };
+const FULLPAGE_CREDITS = { enabled: false };
 const SECTION_ANCHORS = ['Home', 'About', 'Tech', 'Experience', 'Projects', 'Contact'];
 
 /**
@@ -82,7 +83,7 @@ function GlobalNotification({ open, onClose, success, message }) {
  */
 function HomePage({ projects }) {
     const [page, setPage] = useState(0);
-    const [fpApi, setFpApi] = useState(null);
+    const fpApiRef = React.useRef(null);
     // Only show dialog if user hasn't seen it before
     const [openDialog, setOpenDialog] = useState(() => {
         const hasSeenDialog = localStorage.getItem('hasSeenUpdateDialog');
@@ -108,8 +109,8 @@ function HomePage({ projects }) {
 
     // Navigate to section by index
     const handleMenuClick = (sectionIndex) => {
-        if (fpApi && SECTION_ANCHORS[sectionIndex]) {
-            fpApi.moveTo(SECTION_ANCHORS[sectionIndex]);
+        if (fpApiRef.current && SECTION_ANCHORS[sectionIndex]) {
+            fpApiRef.current.moveTo(SECTION_ANCHORS[sectionIndex]);
         }
     };
 
@@ -143,7 +144,7 @@ function HomePage({ projects }) {
                 <ReactFullpage
                     afterLoad={handleAfterLoad}
                     navigation={true}
-                    licenseKey={"YOUR_LICENSE_KEY"}
+                    licenseKey={''}
                     credits={FULLPAGE_CREDITS}
                     slidesNavigation={false}
                     css3={true}
@@ -163,10 +164,8 @@ function HomePage({ projects }) {
                     autoScrolling={true}
                     anchors={SECTION_ANCHORS}
                     render={({ fullpageApi }) => {
-                        // Store API ref without triggering re-render
-                        if (fullpageApi && !fpApi) {
-                            setFpApi(fullpageApi);
-                        }
+                        // Store API ref (no re-render)
+                        fpApiRef.current = fullpageApi;
 
                         return (
                             <ReactFullpage.Wrapper>
@@ -222,22 +221,27 @@ function HomePage({ projects }) {
 
 export default function App() {
     // Load projects from markdown files asynchronously
+    // Use ref to track if already loaded to prevent duplicate fetches
     const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const loadedRef = React.useRef(false);
 
     useEffect(() => {
+        if (loadedRef.current) return;
+        loadedRef.current = true;
+
         loadProjectsAsync().then((loadedProjects) => {
             setProjects(loadedProjects);
-            setLoading(false);
         });
     }, []);
 
     return (
         <BrowserRouter basename="/codertysmi.github.io">
-            <Routes>
-                <Route path="/" element={<HomePage projects={projects} loading={loading} />} />
-                <Route path="/project/:slug" element={<ProjectDetail />} />
-            </Routes>
+            <PageTransition>
+                <Routes>
+                    <Route path="/" element={<HomePage projects={projects} />} />
+                    <Route path="/project/:slug" element={<ProjectDetail projects={projects} />} />
+                </Routes>
+            </PageTransition>
         </BrowserRouter>
     );
 }

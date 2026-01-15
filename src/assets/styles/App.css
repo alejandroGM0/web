@@ -756,3 +756,66 @@
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* Hide fullPage.js watermark */
+.fp-watermark {
+    display: none !important;
+}
+
+/* ==========================================
+   PROJECT DETAIL PAGE - Fix double scrollbar
+   These rules activate IMMEDIATELY when body
+   has data-page="project-detail" attribute
+   ========================================== */
+body[data-page="project-detail"],
+html:has(body[data-page="project-detail"]) {
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+}
+
+body[data-page="project-detail"] #fp-nav,
+body[data-page="project-detail"] .fp-slidesNav,
+body[data-page="project-detail"] .fp-controlArrow {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+body[data-page="project-detail"] .fp-overflow,
+body[data-page="project-detail"] .fp-scroller,
+body[data-page="project-detail"] .fp-section,
+body[data-page="project-detail"] .fp-tableCell {
+    overflow: visible !important;
+    height: auto !important;
+}
+
+/* Custom scrollbar for project detail pages - Glassmorphism */
+body[data-page="project-detail"]::-webkit-scrollbar,
+html:has(body[data-page="project-detail"])::-webkit-scrollbar {
+    width: 10px;
+}
+
+body[data-page="project-detail"]::-webkit-scrollbar-track,
+html:has(body[data-page="project-detail"])::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body[data-page="project-detail"]::-webkit-scrollbar-thumb,
+html:has(body[data-page="project-detail"])::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+}
+
+body[data-page="project-detail"]::-webkit-scrollbar-thumb:hover,
+html:has(body[data-page="project-detail"])::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body[data-page="project-detail"] {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.08) rgba(255, 255, 255, 0.02);
+}

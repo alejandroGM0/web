@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -48,7 +48,7 @@ const getBadgeStyle = (type) => {
 /**
  * Compact Project Card for 2x2 Grid
  */
-function ProjectCard({ project }) {
+function ProjectCard({ project, index, isVisible }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -59,155 +59,160 @@ function ProjectCard({ project }) {
     const badgeStyle = getBadgeStyle(badgeType);
 
     return (
-        <TiltCard
-            onClick={handleClick}
+        <Box
             sx={{
-                width: '100%',
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+                transition: 'opacity 0.5s ease, transform 0.5s ease',
+                transitionDelay: `${index * 100}ms`,
                 height: '100%',
-                minHeight: '220px',
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                p: 0,
-                background: 'rgba(20, 20, 25, 0.6)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                transition: 'border-color 0.3s ease, transform 0.3s ease',
-                '&:hover': {
-                    borderColor: 'rgba(255, 255, 255, 0.2)',
-                },
             }}
         >
-            {/* Image Area - 50% height */}
-            <Box
+            <TiltCard
+                onClick={handleClick}
                 sx={{
-                    height: '50%',
-                    minHeight: '100px',
-                    position: 'relative',
-                    borderRadius: '16px 16px 0 0',
-                    overflow: 'hidden',
-                    background: '#0d0d0d',
-                }}
-            >
-                {project.heroImage ? (
-                    <img
-                        src={project.heroImage}
-                        alt={project.title}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                        }}
-                    />
-                ) : (
-                    <Box sx={{
-                        p: 1.5,
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        background: 'linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%)',
-                    }}>
-                        <Box sx={{
-                            fontFamily: '"JetBrains Mono", monospace',
-                            fontSize: '0.6rem',
-                            color: 'rgba(255,255,255,0.4)',
-                            lineHeight: 1.6,
-                        }}>
-                            <div style={{ color: '#6b7280' }}>{'// ' + project.title}</div>
-                            <div><span style={{ color: '#c084fc' }}>import</span> {'{'}App{'}'} <span style={{ color: '#c084fc' }}>from</span> <span style={{ color: '#86efac' }}>'./app'</span></div>
-                            <div><span style={{ color: '#60a5fa' }}>render</span>({'<'}<span style={{ color: '#fbbf24' }}>App</span> {'/>'})</div>
-                        </Box>
-                    </Box>
-                )}
-
-                {/* Badge */}
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 8,
-                        right: 8,
-                        backgroundColor: badgeStyle.bg,
-                        color: badgeStyle.color,
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        fontSize: '0.6rem',
-                        fontWeight: 700,
-                        border: `1px solid ${badgeStyle.border}`,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.3px',
-                    }}
-                >
-                    {badgeType}
-                </Box>
-            </Box>
-
-            {/* Content Area - 50% height */}
-            <Box
-                sx={{
-                    flex: 1,
-                    p: 1.5,
+                    width: '100%',
+                    height: '100%',
+                    minHeight: '220px',
+                    cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between',
+                    p: 0,
+                    // NO overrides - inherits TiltCard defaults
                 }}
             >
-                <Box>
-                    <Typography
-                        variant="subtitle1"
+                {/* Image Area - 50% height */}
+                <Box
+                    sx={{
+                        height: '50%',
+                        minHeight: '100px',
+                        position: 'relative',
+                        borderRadius: '16px 16px 0 0',
+                        overflow: 'hidden',
+                        background: '#0d0d0d',
+                    }}
+                >
+                    {project.heroImage ? (
+                        <img
+                            src={`${process.env.PUBLIC_URL}${project.heroImage}`}
+                            alt={project.title}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                            }}
+                        />
+                    ) : (
+                        <Box sx={{
+                            p: 1.5,
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            background: 'linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 100%)',
+                        }}>
+                            <Box sx={{
+                                fontFamily: '"JetBrains Mono", monospace',
+                                fontSize: '0.6rem',
+                                color: 'rgba(255,255,255,0.4)',
+                                lineHeight: 1.6,
+                            }}>
+                                <div style={{ color: '#6b7280' }}>{'// ' + project.title}</div>
+                                <div><span style={{ color: '#c084fc' }}>import</span> {'{'}App{'}'} <span style={{ color: '#c084fc' }}>from</span> <span style={{ color: '#86efac' }}>'./app'</span></div>
+                                <div><span style={{ color: '#60a5fa' }}>render</span>({'<'}<span style={{ color: '#fbbf24' }}>App</span> {'/>'})</div>
+                            </Box>
+                        </Box>
+                    )}
+
+                    {/* Badge */}
+                    <Box
                         sx={{
-                            color: 'white',
+                            position: 'absolute',
+                            top: 8,
+                            right: 8,
+                            backgroundColor: badgeStyle.bg,
+                            color: badgeStyle.color,
+                            padding: '3px 8px',
+                            borderRadius: '4px',
+                            fontSize: '0.6rem',
                             fontWeight: 700,
-                            mb: 0.5,
-                            fontSize: '0.95rem',
-                            lineHeight: 1.2,
+                            border: `1px solid ${badgeStyle.border}`,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.3px',
                         }}
                     >
-                        {project.title}
-                    </Typography>
-
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            color: 'rgba(255, 255, 255, 0.5)',
-                            fontSize: '0.75rem',
-                            lineHeight: 1.4,
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                        }}
-                    >
-                        {project.shortDescription}
-                    </Typography>
+                        {badgeType}
+                    </Box>
                 </Box>
 
-                {/* Tech Tags */}
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
-                    {project.technologies?.slice(0, 3).map((tech, i) => {
-                        const color = getTechColor(tech);
-                        return (
-                            <Chip
-                                key={i}
-                                label={tech}
-                                size="small"
-                                sx={{
-                                    backgroundColor: 'transparent',
-                                    color: color,
-                                    border: `1px solid ${color}`,
-                                    borderRadius: '4px',
-                                    fontSize: '0.6rem',
-                                    fontWeight: 500,
-                                    height: '20px',
-                                    '& .MuiChip-label': {
-                                        px: 1,
-                                    },
-                                }}
-                            />
-                        );
-                    })}
+                {/* Content Area - 50% height */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        p: 1.5,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Box>
+                        <Typography
+                            variant="subtitle1"
+                            sx={{
+                                color: 'white',
+                                fontWeight: 700,
+                                mb: 0.5,
+                                fontSize: '0.95rem',
+                                lineHeight: 1.2,
+                            }}
+                        >
+                            {project.title}
+                        </Typography>
+
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                fontSize: '0.75rem',
+                                lineHeight: 1.4,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            {project.shortDescription}
+                        </Typography>
+                    </Box>
+
+                    {/* Tech Tags */}
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
+                        {project.technologies?.slice(0, 3).map((tech, i) => {
+                            const color = getTechColor(tech);
+                            return (
+                                <Chip
+                                    key={i}
+                                    label={tech}
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: 'transparent',
+                                        color: color,
+                                        border: `1px solid ${color}`,
+                                        borderRadius: '4px',
+                                        fontSize: '0.6rem',
+                                        fontWeight: 500,
+                                        height: '20px',
+                                        '& .MuiChip-label': {
+                                            px: 1,
+                                        },
+                                    }}
+                                />
+                            );
+                        })}
+                    </Box>
                 </Box>
-            </Box>
-        </TiltCard>
+            </TiltCard>
+        </Box>
     );
 }
 
@@ -216,6 +221,17 @@ function ProjectCard({ project }) {
  */
 export default function Projects({ isMobile, projects, page }) {
     const isDebug = false;
+    const [isVisible, setIsVisible] = useState(false);
+    const hasAnimatedRef = React.useRef(false);
+
+    // Trigger animation only once when first entering Projects section
+    useEffect(() => {
+        if (page === 4 && !hasAnimatedRef.current) {
+            hasAnimatedRef.current = true;
+            const timer = setTimeout(() => setIsVisible(true), 100);
+            return () => clearTimeout(timer);
+        }
+    }, [page]);
 
     return (
         <Container
@@ -224,7 +240,7 @@ export default function Projects({ isMobile, projects, page }) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                py: { xs: 2, md: 3 },
+                py: sectionSpacing.py,
                 px: sectionSpacing.px,
                 height: '100%',
                 position: 'relative', // Context for debug absolute
@@ -274,7 +290,7 @@ export default function Projects({ isMobile, projects, page }) {
                 }}
             >
                 {projects.slice(0, 4).map((project, index) => (
-                    <ProjectCard key={index} project={project} />
+                    <ProjectCard key={index} project={project} index={index} isVisible={isVisible} />
                 ))}
             </Box>
         </Container>

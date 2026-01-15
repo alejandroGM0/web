@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Container, Typography, Grid } from '@mui/material';
-import Fade from '@mui/material/Fade';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TiltCard from '../ui/TiltCard';
 import SectionHeader from '../ui/SectionHeader';
-import { sectionSpacing, cardPadding } from '../../config/layout';
+import { sectionSpacing, cardPadding, contentGap } from '../../config/layout';
 
 // Import your original logos
 import gtLogo from '../../images/gt_logo2.png';
@@ -27,19 +26,14 @@ const EXPERIENCES = [
 ];
 
 /**
- * ExperienceGrid component - Compact card layout for experiences
+ * ExperienceGrid component - Individual TiltCards matching About/Contact style
+ * Uses TiltCard defaults without overriding base styles
  */
 export default function ExperienceGrid({ page }) {
-    const isActive = page === 3;
-
     return (
         <Container
             maxWidth="lg"
             sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
                 py: sectionSpacing.py,
                 px: sectionSpacing.px,
             }}
@@ -56,64 +50,69 @@ export default function ExperienceGrid({ page }) {
                     mb={4}
                 />
 
-                {/* Experience Cards - 6 in a row on desktop */}
-                <Grid container spacing={{ xs: 2, sm: 3, md: 5 }} rowGap={{ xs: 3, md: 5 }} justifyContent="center">
+                {/* Individual TiltCards - Grid spacing handles external margins */}
+                <Grid container spacing={{ xs: 3, md: 4 }} justifyContent="center">
                     {EXPERIENCES.map((exp, index) => (
-                        <Grid item xs={6} sm={4} md={4} key={index}>
+                        <Grid item xs={6} sm={4} key={index}>
                             <TiltCard
                                 sx={{
-                                    p: { xs: 2, md: 3 },
+                                    p: { xs: 3, md: 4 },
                                     height: '100%',
-                                    minHeight: { xs: '130px', md: '140px' },
+                                    minHeight: { xs: 180, md: 200 },
                                     display: 'flex',
-                                    flexDirection: 'column', // Always vertical
+                                    flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    gap: 0, // Remove gap, use explicit margins
                                     textAlign: 'center',
-                                    gap: 2,
-                                    '&:hover': {
-                                        borderColor: 'rgba(249, 115, 22, 0.4)',
-                                    }
                                 }}
                             >
+                                {/* Logo - with bottom margin */}
                                 <Box
                                     sx={{
-                                        width: { xs: 55, sm: 65, md: 70 },
-                                        height: { xs: 55, sm: 65, md: 70 },
-                                        borderRadius: '16px',
-                                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                                        width: { xs: 80, md: 100 },
+                                        height: { xs: 80, md: 100 },
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        flexShrink: 0,
                                         p: 2,
-                                        mb: 1, // Margin bottom to push text down
+                                        mb: 2.5,
+                                        borderRadius: '16px',
+                                        background: 'rgba(255,255,255,0.05)',
+                                        border: '1px solid rgba(255,255,255,0.08)',
                                     }}
                                 >
                                     <img
                                         src={exp.logo}
                                         alt={exp.company}
                                         style={{
-                                            maxWidth: '100%',
-                                            maxHeight: '100%',
+                                            width: '100%',
+                                            height: '100%',
                                             objectFit: 'contain',
                                             filter: 'brightness(0) invert(1)',
+                                            opacity: 0.95,
                                         }}
                                     />
                                 </Box>
 
-                                {/* Content Wrapper */}
+                                {/* Text Content */}
                                 <Box>
                                     <Typography
-                                        variant="caption"
+                                        variant="h6"
                                         sx={{
-                                            color: '#f97316', // Orange highlight
                                             fontWeight: 700,
-                                            fontSize: { xs: '1rem', md: '1.2rem' },
-                                            lineHeight: 1.2,
-                                            display: 'block',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.5px'
+                                            color: 'white',
+                                            fontSize: { xs: '0.95rem', md: '1.1rem' },
+                                            mb: 0.5,
+                                        }}
+                                    >
+                                        {exp.company}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: 'rgba(255,255,255,0.5)',
+                                            fontSize: { xs: '0.8rem', md: '0.9rem' },
                                         }}
                                     >
                                         {exp.role}

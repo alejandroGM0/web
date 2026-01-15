@@ -4,7 +4,7 @@ description: "Full-stack carpooling platform with real-time ride matching and bo
 technologies: ["Django", "React", "PostgreSQL", "Docker", "Redis"]
 githubUrl: "https://github.com/alejandroGM0"
 liveUrl: ""
-coverImage: "/images/groomusic.png"
+coverImage: "/images/blablacar.png"
 featured: true
 challenge: "Creating a scalable ride-matching algorithm that considers multiple factors like route overlap, time windows, and user preferences while maintaining sub-second response times."
 solution: "Implemented a geospatial indexing system with PostGIS for efficient route matching, combined with Redis caching for frequently accessed routes and real-time availability updates."
@@ -12,7 +12,7 @@ devTime: "4 months"
 role: "Full Stack Developer"
 battery: "3 Hours"
 keyLearning: "Deep understanding of geospatial queries and the importance of proper database indexing for location-based services."
-heroImage: "/images/groomusic.png"
+heroImage: "/images/blablacar.png"
 ---
 
 ## Overview

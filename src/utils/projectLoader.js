@@ -1,6 +1,6 @@
 // Project loader using fetch to load markdown from public folder
 
-const PROJECT_SLUGS = ['taskflow-pro', 'code-arena', 'blablacar-clone', 'spartbot'];
+const PROJECT_SLUGS = ['entity-swarm', 'code-arena', 'blablacar-clone', 'spartbot'];
 
 /**
  * Load all projects asynchronously from public folder
@@ -104,12 +104,18 @@ function parseFrontmatter(markdown) {
         heroImage: frontmatter.heroImage || '',
         images: frontmatter.images || [],
         badgeType: frontmatter.badgeType || '',
+        // New fields for in-development projects
+        status: frontmatter.status || '',
+        releaseDate: frontmatter.releaseDate || '',
+        announcementDate: frontmatter.announcementDate || '',
     };
 }
 
 function getContent(markdown) {
     if (typeof markdown !== 'string') return '';
-    return markdown.replace(/^---\n[\s\S]*?\n---\n*/, '');
+    // Normalize line endings (handle both \r\n and \n)
+    const normalized = markdown.replace(/\r\n/g, '\n');
+    return normalized.replace(/^---\n[\s\S]*?\n---\n*/, '');
 }
 
 function getDefaultProjects() {

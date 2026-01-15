@@ -63,13 +63,17 @@ export default function Contact({ page, onShowNotification }) {
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
-      minHeight: '100%',
-      py: sectionSpacing.py,
-      px: sectionSpacing.px
+      minHeight: '100vh',
+      px: sectionSpacing.px,
+      py: sectionSpacing.py
     }}>
       {/* Main Content */}
-      <Container maxWidth="sm" sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <Container maxWidth="sm" sx={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}>
         <SectionHeader
           title="Let's Connect"
           subtitle="Have a project in mind? I'd love to hear about it."
@@ -163,24 +167,6 @@ export default function Contact({ page, onShowNotification }) {
           </Box>
         </TiltCard>
       </Container>
-
-      {/* Footer */}
-      <Box
-        component="footer"
-        sx={{
-          textAlign: 'center',
-          py: 3,
-          borderTop: '1px solid rgba(255,255,255,0.05)',
-          mt: 4
-        }}
-      >
-        <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem' }}>
-          © {new Date().getFullYear()} Alejandro Gasca. All rights reserved.
-        </Typography>
-        <Typography sx={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.75rem', mt: 0.5 }}>
-          Built with React & ❤️
-        </Typography>
-      </Box>
     </Box>
   );
 }

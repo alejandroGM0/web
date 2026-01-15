@@ -1,11 +1,14 @@
 ---
-title: "Untitled Game Project"
-description: "High-intensity isometric roguelite inspired by Vampire Survivors and Yet Another Zombie Survivors. Manage a squad of distinct units and survive endless hordes."
+title: "Videogame"
+description: "High-intensity isometric roguelite inspired by Vampire Survivors. Manage a squad of distinct units and survive endless hordes."
 technologies: ["Java", "Custom Engine", "OpenGL", "Gradle"]
-githubUrl: ""
+githubUrl: "#"
 liveUrl: ""
 coverImage: "/images/entity-swarm.png"
-images: ["/images/entity-swarm-gameplay.png", "/images/entity-swarm-ecs.png", "/images/entity-swarm-menu.png"]
+images: [
+  { url: "/images/entity-swarm-lighting.png", caption: "Gameplay" },
+  { url: "/images/entity-swarm-debug.png", caption: "Debug View | No Lighting/Post-processing | Min Graphics" }
+]
 featured: true
 badgeType: "Game Dev"
 features: [
@@ -27,14 +30,19 @@ solutionFeatures: [
 ]
 codeSnippets: [
   {
-    label: "Spatial Query",
-    description: "Efficient O(1) broad-phase collision detection using a spatial hash grid.",
-    code: "public List<Entity> query(AABB area) {\n    int startX = (int)(area.minX / cellSize);\n    int endX = (int)(area.maxX / cellSize);\n    List<Entity> result = new ArrayList<>();\n    \n    for (int x = startX; x <= endX; x++) {\n        // ... iterate relevant buckets ...\n        result.addAll(buckets[x][y]);\n    }\n    return result;\n}"
+    label: "Entity Factory",
+    description: "Component composition for creating game entities.",
+    code: "public int createZombie(float x, float y) {\n    int entity = registry.createEntity();\n    \n    registry.addComponent(entity, new TransformComponent(x, y));\n    registry.addComponent(entity, new SpriteComponent(Textures.ZOMBIE));\n    registry.addComponent(entity, new HealthComponent(100));\n    registry.addComponent(entity, new AIComponent(AI_TYPE.AGGRESSIVE));\n    registry.addComponent(entity, new ColliderComponent(16f, 16f));\n    \n    return entity;\n}"
   },
   {
-    label: "Behavior Tree",
-    description: "Modular AI decision making for units.",
-    code: "public NodeStatus tick(float dt) {\n    if (target == null || target.isDead()) {\n        target = findNearestEnemy();\n        return NodeStatus.RUNNING;\n    }\n    if (isInRange(target)) {\n        attack(target);\n        return NodeStatus.SUCCESS;\n    }\n    moveTo(target);\n    return NodeStatus.RUNNING;\n}"
+    label: "Sparse Set Registry",
+    description: "High-performance component storage using Sparse Sets for O(1) access.",
+    code: "public class SparseSet<T> {\n    private int[] sparse = new int[MAX_ENTITIES];\n    private int[] dense = new int[MAX_ENTITIES];\n    private T[] data = (T[]) new Object[MAX_ENTITIES];\n    private int size = 0;\n\n    public void add(int entity, T component) {\n        sparse[entity] = size;\n        dense[size] = entity;\n        data[size] = component;\n        size++;\n    }\n}"
+  },
+  {
+    label: "System Manager",
+    description: "Iterating component arrays for maximum cache locality.",
+    code: "public void update(float dt) {\n    int[] entities = getEntities(TransformComponent.class, VelocityComponent.class);\n    \n    for (int e : entities) {\n        TransformComponent t = transforms[e];\n        VelocityComponent v = velocities[e];\n        \n        t.x += v.dx * dt;\n        t.y += v.dy * dt;\n        \n        // Contiguous memory access ensures performance\n    }\n}"
   }
 ]
 heroImage: "/images/entity-swarm.png"
@@ -43,9 +51,7 @@ releaseDate: "2026"
 announcementDate: ""
 ---
 
-## Overview
-
-**Entity Swarm** (working title) is a high-performance implementation of the "bullet heaven" genre, blending the addictive power curve of *Vampire Survivors* with the squad management tactical depth of *Yet Another Zombie Survivors*.
+**This project** is a high-performance implementation of the "bullet heaven" genre, blending the addictive power curve of *Vampire Survivors* with the squad management tactical depth of *Yet Another Zombie Survivors*.
 
 Instead of controlling a single hero, you command a **tactical squad**. You don't just upgrade a weapon; you draft new specialized units—Snipers, Medics, Shieldbearers, and Mages—each with their own behavior trees and upgrade paths.
 

@@ -49,46 +49,83 @@ export async function loadProjectsAsync() {
 function parseFrontmatter(markdown) {
     if (typeof markdown !== 'string') return {};
 
-    // Normalize line endings (handle both \r\n and \n)
+    // Normalize line endings
     const normalizedMarkdown = markdown.replace(/\r\n/g, '\n');
-
     const match = normalizedMarkdown.match(/^---\n([\s\S]*?)\n---/);
     if (!match) return {};
 
     const frontmatter = {};
     const lines = match[1].split('\n');
 
-    lines.forEach(line => {
+    let currentKey = null;
+    let buffer = '';
+    let inArray = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Handle Multi-line Array accumulation
+        if (inArray) {
+            buffer += ' ' + line.trim();
+            // Check for end of array (naive: ends with bracket)
+            if (line.trim().endsWith(']')) {
+                try {
+                    // Use Function to parse JS-like object syntax (e.g. { icon: '...' })
+                    // This handles unquoted keys which JSON.parse rejects
+                    const parsed = new Function('return ' + buffer)();
+                    frontmatter[currentKey] = parsed;
+                } catch (e) {
+                    console.warn('Error parsing frontmatter array:', buffer, e);
+                    frontmatter[currentKey] = [];
+                }
+                inArray = false;
+                buffer = '';
+            }
+            continue;
+        }
+
         const colonIndex = line.indexOf(':');
-        if (colonIndex === -1) return;
+        if (colonIndex === -1) continue;
 
         const key = line.slice(0, colonIndex).trim();
         let value = line.slice(colonIndex + 1).trim();
 
-        // Handle arrays
-        if (value.startsWith('[') && value.endsWith(']')) {
-            try {
-                value = JSON.parse(value.replace(/'/g, '"'));
-            } catch {
-                value = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''));
+        // Start of Array detection
+        if (value.startsWith('[')) {
+            if (value.endsWith(']')) {
+                // Single line array
+                try {
+                    frontmatter[key] = new Function('return ' + value)();
+                } catch (e) {
+                    // Fallback for simple string lists
+                    frontmatter[key] = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''));
+                }
+            } else {
+                // Multi-line array start
+                inArray = true;
+                currentKey = key;
+                buffer = value;
             }
         }
-        // Handle quoted strings
+        // Quoted strings
         else if ((value.startsWith('"') && value.endsWith('"')) ||
             (value.startsWith("'") && value.endsWith("'"))) {
-            value = value.slice(1, -1);
+            frontmatter[key] = value.slice(1, -1);
         }
-        // Handle booleans
-        else if (value === 'true') value = true;
-        else if (value === 'false') value = false;
+        // Booleans
+        else if (value === 'true') frontmatter[key] = true;
+        else if (value === 'false') frontmatter[key] = false;
+        // Numbers
+        else if (!isNaN(value) && value !== '') frontmatter[key] = Number(value);
+        // Simple string
+        else frontmatter[key] = value;
+    }
 
-        frontmatter[key] = value;
-    });
-
-    // Map common fields
+    // Map common fields and INCLUDE NEW ONES
     return {
         title: frontmatter.title || '',
-        shortDescription: frontmatter.description || '',
+        description: frontmatter.description || '', // Original description
+        shortDescription: frontmatter.description || '', // Mapped for compatibility
         technologies: frontmatter.technologies || [],
         githubUrl: frontmatter.githubUrl || '',
         liveUrl: frontmatter.liveUrl || '',
@@ -104,16 +141,18 @@ function parseFrontmatter(markdown) {
         heroImage: frontmatter.heroImage || '',
         images: frontmatter.images || [],
         badgeType: frontmatter.badgeType || '',
-        // New fields for in-development projects
         status: frontmatter.status || '',
         releaseDate: frontmatter.releaseDate || '',
         announcementDate: frontmatter.announcementDate || '',
+        // NEW FIELDS
+        features: frontmatter.features || [],
+        solutionFeatures: frontmatter.solutionFeatures || [],
+        codeSnippets: frontmatter.codeSnippets || []
     };
 }
 
 function getContent(markdown) {
     if (typeof markdown !== 'string') return '';
-    // Normalize line endings (handle both \r\n and \n)
     const normalized = markdown.replace(/\r\n/g, '\n');
     return normalized.replace(/^---\n[\s\S]*?\n---\n*/, '');
 }
@@ -135,6 +174,7 @@ function getDefaultProjects() {
             technologies: ['Django', 'React', 'PostgreSQL', 'Docker'],
             githubUrl: 'https://github.com/alejandroGM0',
             liveUrl: '',
+            features: []
         },
         {
             slug: 'spartbot',
@@ -143,11 +183,12 @@ function getDefaultProjects() {
             technologies: ['Python', 'Discord.py', 'MongoDB'],
             githubUrl: 'https://github.com/alejandroGM0',
             liveUrl: '',
+            features: []
         },
     ];
 }
 
-// Synchronous export for backwards compatibility (returns default projects)
+// Synchronous export for backwards compatibility
 export function loadProjects() {
     return getDefaultProjects();
 }

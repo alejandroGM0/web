@@ -67,7 +67,7 @@ export default function ProjectDetail({ projects = [] }) {
     const { slug } = useParams();
     const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [activeCodeTab, setActiveCodeTab] = useState('architecture');
+    const [activeCodeTab, setActiveCodeTab] = useState(0);
 
     const project = projects.find(p => p.slug === slug);
     const currentIndex = useMemo(() => projects.findIndex(p => p.slug === slug), [projects, slug]);
@@ -85,8 +85,11 @@ export default function ProjectDetail({ projects = [] }) {
         }
         if (project.images?.length > 0) {
             project.images.forEach((img, i) => {
-                const url = img.startsWith('http') ? img : `${prefix}${img}`;
-                arr.push({ url, caption: `Screenshot ${i + 1}` });
+                const isObj = typeof img === 'object';
+                const rawUrl = isObj ? img.url : img;
+                const caption = isObj ? img.caption : `Screenshot ${i + 1}`;
+                const url = rawUrl.startsWith('http') ? rawUrl : `${prefix}${rawUrl}`;
+                arr.push({ url, caption });
             });
         }
         return arr;
@@ -373,7 +376,7 @@ export default function ProjectDetail({ projects = [] }) {
                                     )}
 
                                     {/* Dynamic Code Block with Tabs */}
-                                    {project.codeSnippets && (
+                                    {project.codeSnippets && project.codeSnippets.length > 0 && (
                                         <TiltCard sx={{ overflow: 'hidden', mt: 4 }}>
                                             <Box sx={{ backgroundColor: 'rgba(0,0,0,0.3)', px: 2, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <Typography sx={{ color: '#34d399', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>

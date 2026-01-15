@@ -81,8 +81,7 @@ function ProjectCard({ project, index, isVisible }) {
                 {/* Image Area */}
                 <Box
                     sx={{
-                        height: { xs: '80px', sm: '100px', md: '50%' },
-                        minHeight: { xs: '80px', sm: '100px', md: '100px' },
+                        height: { xs: '160px', sm: '180px', md: '200px' },
                         position: 'relative',
                         borderRadius: '16px 16px 0 0',
                         overflow: 'hidden',

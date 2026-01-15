@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -262,6 +263,22 @@ export default function ProjectDetail({ projects = [] }) {
                                 <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, fontSize: '1rem' }}>
                                     {project.shortDescription}
                                 </Typography>
+
+                                {/* MARKDOWN CONTENT */}
+                                {project.content && (
+                                    <Box sx={{
+                                        mt: 4,
+                                        '& p': { lineHeight: 1.8, color: 'rgba(255,255,255,0.7)', mb: 2 },
+                                        '& h1, & h2': { color: 'white', fontWeight: 700, mt: 4, mb: 2, fontSize: '1.25rem' },
+                                        '& h3': { color: 'var(--color-primary)', fontWeight: 600, mt: 3, mb: 1.5, fontSize: '1.1rem' },
+                                        '& ul, & ol': { color: 'rgba(255,255,255,0.7)', pl: 3, mb: 2 },
+                                        '& li': { mb: 0.5 },
+                                        '& strong': { color: 'white', fontWeight: 600 },
+                                        '& blockquote': { borderLeft: '4px solid var(--color-primary)', pl: 2, fontStyle: 'italic', my: 2 }
+                                    }}>
+                                        <ReactMarkdown>{project.content}</ReactMarkdown>
+                                    </Box>
+                                )}
                             </Box>
 
                             {/* KEY FEATURES - TiltCard Style */}

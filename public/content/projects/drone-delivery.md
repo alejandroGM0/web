@@ -4,7 +4,7 @@ description: "Experimental autonomous logistics platform. Currently in early pro
 technologies: ["C++", "Python", "ROS 2", "OpenCV", "Raspberry Pi"]
 githubUrl: "#"
 liveUrl: ""
-coverImage: "/images/drone-delivery.png"
+coverImage: "/images/drone-delivery.png?v=2"
 featured: true
 challenge: "Building a complex autonomous system from scratch, balancing hardware constraints with ambitious software goals in a custom-built frame."
 solution: "Iterative development approach focusing on core flight stability before layering complex autonomy. Currently validating basic hardware-software integration."
@@ -12,7 +12,7 @@ devTime: "Early Stage"
 role: "Systems Engineer"
 battery: "N/A"
 keyLearning: "Managing the complexities of hardware integration and real-time control loops in a physical system."
-heroImage: "/images/drone-delivery.png"
+heroImage: "/images/drone-delivery.png?v=2"
 badgeType: "Prototype"
 status: "Pre-Alpha"
 ---

@@ -56,7 +56,7 @@ export default function Tech({ page }) {
                                 alignItems: 'center',
                                 gap: 1.5,
                                 padding: '12px 24px',
-                                borderRadius: '50px',
+                                borderRadius: '12px',
                                 background: 'rgba(255, 255, 255, 0.03)',
                                 border: '1px solid rgba(255, 255, 255, 0.08)',
                                 whiteSpace: 'nowrap',

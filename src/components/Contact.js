@@ -63,19 +63,19 @@ export default function Contact({ page, onShowNotification }) {
     <Container maxWidth="sm" sx={{
       display: 'flex',
       flexDirection: 'column',
-      minHeight: { xs: 'auto', md: '100%' },
+      height: '100%',
       px: sectionSpacing.px,
       pt: sectionSpacing.pt,
-      pb: { xs: 8, sm: 6, md: sectionSpacing.py.md },
-      justifyContent: 'flex-start',
+      pb: sectionSpacing.py,
+      justifyContent: 'center',
     }}>
       <SectionHeader
         title="Let's Connect"
         subtitle="Have a project in mind? I'd love to hear about it."
-        mb={6}
+        mb={3}
       />
 
-      <TiltCard sx={{ p: { xs: 2.5, md: 3 } }}>
+      <TiltCard sx={{ p: { xs: 2, md: 2.5 } }}>
         {/* Contact Form - FormSubmit */}
         <Box
           component="form"
@@ -91,6 +91,7 @@ export default function Contact({ page, onShowNotification }) {
             variant="outlined"
             fullWidth
             required
+            size="small"
             sx={textFieldSx}
           />
           <TextField
@@ -100,6 +101,7 @@ export default function Contact({ page, onShowNotification }) {
             fullWidth
             type="email"
             required
+            size="small"
             sx={textFieldSx}
           />
           <TextField
@@ -108,7 +110,7 @@ export default function Contact({ page, onShowNotification }) {
             variant="outlined"
             fullWidth
             multiline
-            rows={4}
+            rows={3}
             required
             sx={textFieldSx}
           />

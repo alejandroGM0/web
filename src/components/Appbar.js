@@ -125,8 +125,7 @@ export default function Appbar(props) {
                         alignItems: 'center'
                     }}
                 >
-                    <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>Alejandro</Box>
-                    <Box component="span" sx={{ display: { xs: 'inline', sm: 'none' } }}>AG</Box>
+                    <Box component="span">Alejandro</Box>
                     <Box component="span" sx={{ color: '#FF6B00', ml: 0.5 }}>Gasca</Box>
                 </Typography>
             </Box>

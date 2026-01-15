@@ -13,10 +13,20 @@ export default function Hero({ isMobile, onContactClick, onScrollDown }) {
             <div className={isMobile ? "hero-content-mobile" : "hero-content"}>
                 <div className="hero-text">
                     <h1 className="hero-name">
-                        Alejandro <span className="text-highlight">Gasca</span>
+                        Alejandro
+                        <br />
+                        <span className="text-highlight">Gasca</span>
                     </h1>
                     <div className="mono-subtitle">
-                        Computer Engineer • Full Stack • Embedded Systems
+                        {isMobile ? (
+                            <>
+                                Computer Engineer • Full Stack
+                                <br />
+                                Embedded Systems
+                            </>
+                        ) : (
+                            <>Computer Engineer • Full Stack • Embedded Systems</>
+                        )}
                     </div>
                     <p className="hero-description">
                         I bridge the gap between hardware and software. specializing in building
@@ -29,8 +39,8 @@ export default function Hero({ isMobile, onContactClick, onScrollDown }) {
                     </div>
                 </div>
 
-                {/* Arrow positioned below content with spacing */}
-                <div className="arrow bounce" style={{ marginTop: '3rem' }}>
+                {/* Arrow positioned at bottom */}
+                <div className="arrow bounce">
                     <IconButton
                         className="scroll-button"
                         aria-label="Scroll down"

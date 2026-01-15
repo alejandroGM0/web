@@ -17,9 +17,10 @@ export default function NeuralCanvas() {
         let animationId;
         const particles = [];
 
-        const particleCount = 60;
-        const connectionDistance = 180;
-        const mouseDistance = 150;
+        const isMobile = window.innerWidth <= 900;
+        const particleCount = isMobile ? 32 : 60;
+        const connectionDistance = isMobile ? 120 : 180;
+        const mouseDistance = isMobile ? 110 : 150;
 
         let mouse = { x: null, y: null };
 
@@ -34,7 +35,7 @@ export default function NeuralCanvas() {
                 this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * 0.1; // Slower (was 0.2)
                 this.vy = (Math.random() - 0.5) * 0.1;
-                this.size = Math.random() * 1 + 0.5;
+                this.size = Math.random() * (isMobile ? 0.8 : 1) + (isMobile ? 0.3 : 0.5);
                 // Mix of orange and white particles
                 this.color = Math.random() > 0.8
                     ? 'rgba(249, 115, 22, ' // Orange (20%)
@@ -67,7 +68,7 @@ export default function NeuralCanvas() {
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color + '0.5)';
+                ctx.fillStyle = this.color + (isMobile ? '0.28)' : '0.5)');
                 ctx.fill();
             }
         }
@@ -86,9 +87,9 @@ export default function NeuralCanvas() {
 
         // Soft ambient light glows positioned around the canvas
         const ambientGlows = [
-            { x: 0.15, y: 0.2, radius: 400, color: 'rgba(249, 115, 22, 0.03)' },
-            { x: 0.85, y: 0.7, radius: 500, color: 'rgba(249, 115, 22, 0.025)' },
-            { x: 0.5, y: 0.9, radius: 350, color: 'rgba(251, 146, 60, 0.02)' },
+            { x: 0.15, y: 0.2, radius: isMobile ? 280 : 400, color: 'rgba(249, 115, 22, 0.02)' },
+            { x: 0.85, y: 0.7, radius: isMobile ? 320 : 500, color: 'rgba(249, 115, 22, 0.018)' },
+            { x: 0.5, y: 0.9, radius: isMobile ? 240 : 350, color: 'rgba(251, 146, 60, 0.015)' },
         ];
 
         function drawAmbientGlows() {
@@ -123,7 +124,7 @@ export default function NeuralCanvas() {
                     if (distance < connectionDistance) {
                         ctx.beginPath();
                         const opacity = 1 - (distance / connectionDistance);
-                        ctx.strokeStyle = 'rgba(255, 255, 255, ' + (opacity * 0.15) + ')';
+                        ctx.strokeStyle = 'rgba(255, 255, 255, ' + (opacity * (isMobile ? 0.06 : 0.15)) + ')';
                         ctx.lineWidth = 1;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);

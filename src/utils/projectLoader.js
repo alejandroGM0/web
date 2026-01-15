@@ -1,6 +1,6 @@
 // Project loader using fetch to load markdown from public folder
 
-const PROJECT_SLUGS = ['entity-swarm', 'code-arena', 'blablacar-clone', 'spartbot'];
+const PROJECT_SLUGS = ['entity-swarm', 'drone-delivery', 'blablacar-clone', 'spartbot'];
 
 /**
  * Load all projects asynchronously from public folder
@@ -121,11 +121,11 @@ function getContent(markdown) {
 function getDefaultProjects() {
     return [
         {
-            slug: 'code-arena',
-            title: 'Code Arena',
-            shortDescription: 'A real-time competitive programming platform with WebSocket-based live coding battles.',
-            technologies: ['React', 'Node.js', 'WebSocket', 'PostgreSQL'],
-            githubUrl: 'https://github.com/alejandroGM0/code-arena',
+            slug: 'drone-delivery',
+            title: 'Drone Delivery Network',
+            shortDescription: 'Autonomous fleet management system for last-mile logistics with real-time 3D visualization.',
+            technologies: ['React', 'Node.js', 'Three.js', 'WebSockets'],
+            githubUrl: '#',
             liveUrl: '',
         },
         {

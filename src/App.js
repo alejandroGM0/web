@@ -151,17 +151,20 @@ function HomePage({ projects }) {
                     verticalCentered={false}
                     controlArrows={true}
                     fitToSection={true}
-                    responsiveHeight={600}
-                    responsiveWidth={768}
+                    responsiveHeight={0}
+                    responsiveWidth={0}
                     slidesNavPosition='bottom'
-                    scrollOverflow={false}
+                    scrollOverflow={true}
+                    scrollOverflowReset={true}
                     normalScrollElementTouchThreshold={5}
                     keyboardScrolling={true}
                     animateAnchor={true}
                     recordHistory={true}
-                    scrollingSpeed={800}
-                    fitToSectionDelay={2000}
+                    scrollingSpeed={700}
+                    fitToSectionDelay={800}
                     autoScrolling={true}
+                    touchSensitivity={15}
+                    bigSectionsDestination={'top'}
                     anchors={SECTION_ANCHORS}
                     render={({ fullpageApi }) => {
                         // Store API ref (no re-render)

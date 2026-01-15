@@ -80,12 +80,11 @@ export default function Appbar(props) {
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: {
-                    xs: `calc(100% - ${sectionSpacing.px.xs * 16}px)`,
-                    sm: `calc(100% - ${sectionSpacing.px.sm * 16}px)`,
-                    md: `calc(100% - ${sectionSpacing.px.md * 16}px)`,
-                    lg: `calc(100% - ${sectionSpacing.px.md * 16}px)`,
+                    xs: `calc(100% - 32px)`,  // 16px cada lado
+                    sm: `calc(100% - 48px)`,  // 24px cada lado
+                    md: `calc(100% - 80px)`,  // 40px cada lado
                 },
-                maxWidth: '1200px',
+                maxWidth: '1120px',
                 boxSizing: 'border-box',
                 zIndex: 1100,
                 display: 'flex',

@@ -102,9 +102,10 @@ export default function TechGrid({ page }) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 height: '100%', // Full height to center content
-                py: sectionSpacing.py,
+                pt: sectionSpacing.pt,
+                pb: sectionSpacing.py,
                 px: sectionSpacing.px,
                 overflow: 'hidden', // Hide overflow for marquees
             }}
@@ -114,7 +115,7 @@ export default function TechGrid({ page }) {
                 <SectionHeader
                     title="Technologies & Tools"
                     subtitle="The arsenal I use to build ideas."
-                    mb={8}
+                    mb={6}
                 />
 
                 {/* Marquee Rows */}

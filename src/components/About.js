@@ -68,10 +68,17 @@ export default function About(props) {
         <Container
             maxWidth="lg"
             sx={{
-                py: sectionSpacing.py,
+                pt: sectionSpacing.pt,
+                pb: sectionSpacing.py,
                 px: sectionSpacing.px,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                height: '100%',
             }}
         >
+
+
             <Box>
                 <TiltCard
                     sx={{

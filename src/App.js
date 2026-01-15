@@ -179,27 +179,27 @@ function HomePage({ projects }) {
                                 </div>
 
                                 {/* About Section */}
-                                <div className="section section-bg-dark">
+                                <div className="section section-bg-dark section-no-padding">
                                     <About page={page} isMobile={isMobile} />
                                 </div>
 
                                 {/* Tech Section */}
-                                <div className="section section-bg-dark">
+                                <div className="section section-bg-dark section-no-padding">
                                     <TechGrid page={page} />
                                 </div>
 
                                 {/* Experience Section */}
-                                <div className="section section-bg-dark">
+                                <div className="section section-bg-dark section-no-padding">
                                     <ExperienceGrid page={page} />
                                 </div>
 
                                 {/* Projects Section */}
-                                <div className="section section-bg-dark">
+                                <div className="section section-bg-dark section-no-padding">
                                     <Projects isMobile={isMobile} projects={projects} page={page} />
                                 </div>
 
                                 {/* Contact Section */}
-                                <div className="section section-bg-dark">
+                                <div className="section section-bg-dark section-no-padding">
                                     <Contact page={page} onShowNotification={showNotification} />
                                 </div>
                             </ReactFullpage.Wrapper>

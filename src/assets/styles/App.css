@@ -41,6 +41,11 @@
     color: var(--color-text);
 }
 
+/* Utility to remove padding when handling it internally in components */
+.section.section-no-padding {
+    padding: 0 !important;
+}
+
 .section {
     height: 100vh;
     min-height: 100vh;
@@ -275,8 +280,7 @@
     color: #fff;
     letter-spacing: -0.02em;
     text-shadow:
-        0 0 30px rgba(255, 255, 255, 0.08),
-        0 0 60px rgba(255, 255, 255, 0.04);
+        0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 
@@ -290,7 +294,7 @@
     background-clip: text;
     display: inline-block;
     margin-left: 0.5rem;
-    filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.25));
+    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.15));
 }
 
 .mono-subtitle {
@@ -790,32 +794,29 @@ body[data-page="project-detail"] .fp-tableCell {
     height: auto !important;
 }
 
-/* Custom scrollbar for project detail pages - Glassmorphism */
+/* Custom scrollbar for project detail pages */
 body[data-page="project-detail"]::-webkit-scrollbar,
 html:has(body[data-page="project-detail"])::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 body[data-page="project-detail"]::-webkit-scrollbar-track,
 html:has(body[data-page="project-detail"])::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    background: #0a0f1c;
 }
 
 body[data-page="project-detail"]::-webkit-scrollbar-thumb,
 html:has(body[data-page="project-detail"])::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
 }
 
 body[data-page="project-detail"]::-webkit-scrollbar-thumb:hover,
 html:has(body[data-page="project-detail"])::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 body[data-page="project-detail"] {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.08) rgba(255, 255, 255, 0.02);
+    scrollbar-color: rgba(255, 255, 255, 0.12) #0a0f1c;
 }

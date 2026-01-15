@@ -239,8 +239,9 @@ export default function Projects({ isMobile, projects, page }) {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
-                py: sectionSpacing.py,
+                justifyContent: 'flex-start',
+                pt: sectionSpacing.pt,
+                pb: sectionSpacing.py,
                 px: sectionSpacing.px,
                 height: '100%',
                 position: 'relative', // Context for debug absolute
@@ -273,7 +274,7 @@ export default function Projects({ isMobile, projects, page }) {
             <SectionHeader
                 title="Featured Projects"
                 subtitle="High-performance applications built with modern technologies."
-                mb={{ xs: 2, md: 3 }}
+                mb={6}
             />
 
             {/* 2x2 Grid - All projects visible */}

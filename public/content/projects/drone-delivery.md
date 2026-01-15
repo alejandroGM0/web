@@ -29,6 +29,7 @@ status: "Pre-Alpha"
 releaseDate: "June 2026"
 announcementDate: ""
 badgeType: "Prototype"
+keyLearning: "Balancing real-time constraints of embedded flight controllers with high-level path planning algorithms."
 ---
 
 ## Project Status: Active Prototyping 🟢

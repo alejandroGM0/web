@@ -50,14 +50,22 @@ function FeatureCard({ icon, title, description, color }) {
     const c = colors[color] || colors.amber;
 
     return (
-        <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', gap: { xs: 1.5, md: 2 }, alignItems: 'flex-start' }}>
             <Box sx={{
-                p: 1, borderRadius: '8px', backgroundColor: c.bg, color: c.text,
-                border: `1px solid ${c.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                p: { xs: 0.75, md: 1 }, 
+                borderRadius: '8px', 
+                backgroundColor: c.bg, 
+                color: c.text,
+                border: `1px solid ${c.border}`, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                flexShrink: 0,
+                '& .MuiSvgIcon-root': { fontSize: { xs: 18, md: 24 } }
             }}>{icon}</Box>
-            <Box>
-                <Typography sx={{ color: 'white', fontWeight: 700, fontSize: '0.875rem', mb: 0.5 }}>{title}</Typography>
-                <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', lineHeight: 1.6 }}>{description}</Typography>
+            <Box sx={{ minWidth: 0 }}>
+                <Typography sx={{ color: 'white', fontWeight: 700, fontSize: { xs: '0.8rem', md: '0.875rem' }, mb: 0.5 }}>{title}</Typography>
+                <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: { xs: '0.7rem', md: '0.75rem' }, lineHeight: 1.6 }}>{description}</Typography>
             </Box>
         </Box>
     );
@@ -226,7 +234,7 @@ export default function ProjectDetail({ projects = [] }) {
                     </Box>
 
                     {/* GRID - Slider aligned with Sidebar */}
-                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '8fr 4fr' }, gap: 6 }}>
+                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '7fr 3fr' }, gap: 4 }}>
 
                         {/* LEFT COLUMN */}
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -234,22 +242,55 @@ export default function ProjectDetail({ projects = [] }) {
                             {/* IMAGE GALLERY - TiltCard Style */}
                             {slides.length > 0 && (
                                 <TiltCard sx={{ overflow: 'hidden', position: 'relative', '&:hover .gallery-nav': { opacity: 1 } }}>
-                                    <Box sx={{ position: 'relative', paddingTop: '56.25%', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+                                    {/* Main Image Display */}
+                                    <Box sx={{ position: 'relative', paddingTop: '56.25%', backgroundColor: '#050505', overflow: 'hidden' }}>
+                                        {/* Main Image */}
                                         <Box component="img" src={slides[currentSlide]?.url} alt={slides[currentSlide]?.caption}
                                             sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s' }} />
+                                        
+                                        {/* Navigation Arrows */}
                                         {slides.length > 1 && (<>
-                                            <IconButton className="gallery-nav" onClick={() => changeSlide(-1)} sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronLeftIcon /></IconButton>
-                                            <IconButton className="gallery-nav" onClick={() => changeSlide(1)} sx={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronRightIcon /></IconButton>
+                                            <IconButton className="gallery-nav" onClick={() => changeSlide(-1)} sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronLeftIcon /></IconButton>
+                                            <IconButton className="gallery-nav" onClick={() => changeSlide(1)} sx={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronRightIcon /></IconButton>
                                         </>)}
-                                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', p: 3, pt: 6 }}>
+                                        
+                                        {/* Caption */}
+                                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', p: 3, pt: 6, zIndex: 5 }}>
                                             <Typography sx={{ color: 'white', fontWeight: 500, fontSize: '1rem' }}>{slides[currentSlide]?.caption}</Typography>
                                         </Box>
                                     </Box>
+                                    
+                                    {/* Thumbnail Strip - Bottom Preview */}
                                     {slides.length > 1 && (
-                                        <Box sx={{ display: 'flex', gap: 1, p: 1.5, backgroundColor: 'rgba(0,0,0,0.3)', borderTop: '1px solid rgba(255,255,255,0.05)', overflowX: 'auto', '&::-webkit-scrollbar': { display: 'none' } }}>
+                                        <Box sx={{ 
+                                            display: 'flex',
+                                            gap: 0.5,
+                                            p: 1.5,
+                                            backgroundColor: 'rgba(0,0,0,0.5)',
+                                            borderTop: '1px solid rgba(255,255,255,0.08)',
+                                            overflowX: 'auto',
+                                            '&::-webkit-scrollbar': { display: 'none' },
+                                        }}>
                                             {slides.map((slide, i) => (
-                                                <Box key={i} onClick={() => setCurrentSlide(i)} sx={{ flexShrink: 0, width: 80, height: 50, borderRadius: '8px', overflow: 'hidden', border: i === currentSlide ? '2px solid var(--color-primary)' : '2px solid transparent', opacity: i === currentSlide ? 1 : 0.5, cursor: 'pointer', transition: 'all 0.2s', '&:hover': { opacity: 1 } }}>
-                                                    <Box component="img" src={slide.url} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                <Box 
+                                                    key={i} 
+                                                    onClick={() => setCurrentSlide(i)} 
+                                                    sx={{ 
+                                                        flexShrink: 0, 
+                                                        width: 56, 
+                                                        height: 36, 
+                                                        borderRadius: '6px', 
+                                                        overflow: 'hidden', 
+                                                        border: i === currentSlide 
+                                                            ? '2px solid var(--color-primary)' 
+                                                            : '2px solid transparent', 
+                                                        opacity: i === currentSlide ? 1 : 0.5, 
+                                                        cursor: 'pointer', 
+                                                        transition: 'all 0.2s ease',
+                                                        '&:hover': { opacity: 1 } 
+                                                    }}
+                                                >
+                                                    <Box component="img" src={slide.url} alt="" sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 </Box>
                                             ))}
                                         </Box>
@@ -285,11 +326,11 @@ export default function ProjectDetail({ projects = [] }) {
                             </Box>
 
                             {/* KEY FEATURES - TiltCard Style */}
-                            <TiltCard sx={{ p: { xs: 3, md: 4 } }}>
-                                <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '1rem', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <GridViewIcon sx={{ color: 'var(--color-primary)' }} /> Key Features
+                            <TiltCard sx={{ p: { xs: 2, md: 4 } }}>
+                                <Typography sx={{ color: 'white', fontWeight: 600, fontSize: { xs: '0.875rem', md: '1rem' }, mb: { xs: 2, md: 3 }, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <GridViewIcon sx={{ color: 'var(--color-primary)', fontSize: { xs: 18, md: 24 } }} /> Key Features
                                 </Typography>
-                                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
+                                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: { xs: 2, md: 3 } }}>
                                     {project.features ? (
                                         project.features.map((feature, index) => {
                                             const Icons = {
@@ -322,15 +363,15 @@ export default function ProjectDetail({ projects = [] }) {
                             {/* SECTION 2: CHALLENGE */}
                             {project.challenge && (
                                 <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
                                         <SectionNumber number="2" variant="danger" />
-                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700 }}>Technical Difficulties</Typography>
+                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontSize: { xs: '1.1rem', md: '1.5rem' } }}>Technical Difficulties</Typography>
                                     </Box>
-                                    <TiltCard sx={{ p: { xs: 3, md: 4 }, borderLeft: '4px solid #ef4444' }}>
-                                        <Typography sx={{ color: '#f87171', fontWeight: 600, fontSize: '1rem', mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                                            <MemoryIcon /> The Challenge
+                                    <TiltCard sx={{ p: { xs: 2, md: 4 }, borderLeft: '4px solid #ef4444' }}>
+                                        <Typography sx={{ color: '#f87171', fontWeight: 600, fontSize: { xs: '0.875rem', md: '1rem' }, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            <MemoryIcon sx={{ fontSize: { xs: 18, md: 24 } }} /> The Challenge
                                         </Typography>
-                                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8 }}>{project.challenge}</Typography>
+                                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, fontSize: { xs: '0.875rem', md: '1rem' } }}>{project.challenge}</Typography>
                                     </TiltCard>
                                 </Box>
                             )}
@@ -338,59 +379,48 @@ export default function ProjectDetail({ projects = [] }) {
                             {/* SECTION 3: SOLUTION */}
                             {project.solution && (
                                 <Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
                                         <SectionNumber number="3" variant="success" />
-                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700 }}>The Solution</Typography>
+                                        <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontSize: { xs: '1.1rem', md: '1.5rem' } }}>The Solution</Typography>
                                     </Box>
-                                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, mb: 4 }}>{project.solution}</Typography>
-
-                                    {/* Solution Features Grid */}
-                                    {project.solutionFeatures && (
-                                        <TiltCard sx={{ p: { xs: 3, md: 4 }, mt: 4 }}>
-                                            <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '1rem', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                <RocketLaunchIcon sx={{ color: '#10b981' }} /> Implementation Details
-                                            </Typography>
-                                            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
-                                                {project.solutionFeatures.map((feature, index) => {
-                                                    const Icons = {
-                                                        GridView: <GridViewIcon />,
-                                                        Layers: <LayersIcon />,
-                                                        AccountTree: <AccountTreeIcon />,
-                                                        Map: <MapIcon />,
-                                                        Memory: <MemoryIcon />,
-                                                        RocketLaunch: <RocketLaunchIcon />,
-                                                        Code: <CodeIcon />
-                                                    };
-                                                    return (
-                                                        <FeatureCard
-                                                            key={index}
-                                                            icon={Icons[feature.icon] || <GridViewIcon />}
-                                                            title={feature.title}
-                                                            description={feature.description}
-                                                            color={feature.color}
-                                                        />
-                                                    );
-                                                })}
-                                            </Box>
-                                        </TiltCard>
-                                    )}
+                                    <TiltCard sx={{ p: { xs: 2, md: 4 }, borderLeft: '4px solid #10b981' }}>
+                                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, fontSize: { xs: '0.875rem', md: '1rem' } }}>{project.solution}</Typography>
+                                    </TiltCard>
 
                                     {/* Dynamic Code Block with Tabs */}
                                     {project.codeSnippets && project.codeSnippets.length > 0 && (
                                         <TiltCard sx={{ overflow: 'hidden', mt: 4 }}>
-                                            <Box sx={{ backgroundColor: 'rgba(0,0,0,0.3)', px: 2, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Box sx={{ 
+                                                backgroundColor: 'rgba(0,0,0,0.3)', 
+                                                px: { xs: 1.5, md: 2 }, 
+                                                py: 1.5, 
+                                                borderBottom: '1px solid rgba(255,255,255,0.05)', 
+                                                display: 'flex', 
+                                                flexDirection: { xs: 'column', sm: 'row' },
+                                                gap: { xs: 1, sm: 0 },
+                                                justifyContent: 'space-between', 
+                                                alignItems: { xs: 'flex-start', sm: 'center' }
+                                            }}>
                                                 <Typography sx={{ color: '#34d399', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
                                                     <CodeIcon sx={{ fontSize: 14 }} /> Key Algorithms
                                                 </Typography>
-                                                <Box sx={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '8px', p: 0.5, border: '1px solid rgba(255,255,255,0.1)' }}>
+                                                <Box sx={{ 
+                                                    display: 'flex', 
+                                                    flexWrap: 'wrap',
+                                                    backgroundColor: 'rgba(0,0,0,0.3)', 
+                                                    borderRadius: '8px', 
+                                                    p: 0.5, 
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    gap: 0.5
+                                                }}>
                                                     {project.codeSnippets.map((snippet, idx) => (
                                                         <Button
                                                             key={idx}
                                                             onClick={() => setActiveCodeTab(idx)}
                                                             sx={{
-                                                                px: 1.5,
+                                                                px: { xs: 1, md: 1.5 },
                                                                 py: 0.5,
-                                                                fontSize: '0.75rem',
+                                                                fontSize: { xs: '0.65rem', md: '0.75rem' },
                                                                 fontWeight: 500,
                                                                 borderRadius: '6px',
                                                                 minWidth: 'auto',
@@ -404,13 +434,13 @@ export default function ProjectDetail({ projects = [] }) {
                                                     ))}
                                                 </Box>
                                             </Box>
-                                            <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
+                                            <Box sx={{ p: { xs: 2, md: 3 }, backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.875rem' } }}>
                                                     {project.codeSnippets[activeCodeTab || 0].description}
                                                 </Typography>
                                             </Box>
-                                            <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.4)', fontFamily: 'monospace', fontSize: '0.8rem', color: '#60a5fa', overflowX: 'auto' }}>
-                                                <pre style={{ margin: 0 }}>
+                                            <Box sx={{ p: { xs: 2, md: 3 }, backgroundColor: 'rgba(0,0,0,0.4)', fontFamily: 'monospace', fontSize: { xs: '0.7rem', md: '0.8rem' }, color: '#60a5fa', overflowX: 'auto' }}>
+                                                <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                                                     {project.codeSnippets[activeCodeTab || 0].code}
                                                 </pre>
                                             </Box>
@@ -454,35 +484,37 @@ export default function ProjectDetail({ projects = [] }) {
                                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.625rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', mb: 1.5 }}>Tech Stack</Typography>
                                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                                                 {project.technologies?.map((tech, i) => (
-                                                    <Chip key={i} label={tech} size="small" sx={{ backgroundColor: 'rgba(249, 115, 22, 0.1)', color: 'var(--color-primary)', fontSize: '0.75rem', border: '1px solid rgba(249, 115, 22, 0.25)', height: 28 }} />
+                                                    <Chip key={i} label={tech} size="small" sx={{ backgroundColor: 'transparent', color: '#94a3b8', fontSize: '0.75rem', border: '1px solid rgba(148, 163, 184, 0.3)', height: 28 }} />
                                                 ))}
                                             </Box>
                                         </Box>
 
                                         {/* Actions */}
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, pt: 2 }}>
-                                            <PrimaryButton
-                                                startIcon={project.demoDisabled ? <RocketLaunchIcon sx={{ opacity: 0.5 }} /> : <RocketLaunchIcon />}
-                                                href={project.demoDisabled ? undefined : (project.demoUrl || project.liveUrl)}
-                                                target={project.demoDisabled ? undefined : "_blank"}
-                                                disabled={!!project.demoDisabled}
-                                                fullWidth
-                                                sx={{
-                                                    py: 1.5,
-                                                    ...(project.demoDisabled && {
-                                                        background: 'rgba(255, 255, 255, 0.05) !important',
-                                                        color: 'rgba(255, 255, 255, 0.3) !important',
-                                                        boxShadow: 'none !important',
-                                                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                                                        pointerEvents: 'none',
-                                                        '& .MuiSvgIcon-root': {
-                                                            opacity: 0.3
-                                                        }
-                                                    })
-                                                }}
-                                            >
-                                                {project.demoDisabled ? "Demo Currently Offline" : "Play Demo"}
-                                            </PrimaryButton>
+                                            {project.slug === 'musicsync' && (
+                                                <PrimaryButton
+                                                    startIcon={project.demoDisabled ? <RocketLaunchIcon sx={{ opacity: 0.5 }} /> : <RocketLaunchIcon />}
+                                                    href={project.demoDisabled ? undefined : (project.demoUrl || project.liveUrl)}
+                                                    target={project.demoDisabled ? undefined : "_blank"}
+                                                    disabled={!!project.demoDisabled}
+                                                    fullWidth
+                                                    sx={{
+                                                        py: 1.5,
+                                                        ...(project.demoDisabled && {
+                                                            background: 'rgba(255, 255, 255, 0.05) !important',
+                                                            color: 'rgba(255, 255, 255, 0.3) !important',
+                                                            boxShadow: 'none !important',
+                                                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                            pointerEvents: 'none',
+                                                            '& .MuiSvgIcon-root': {
+                                                                opacity: 0.3
+                                                            }
+                                                        })
+                                                    }}
+                                                >
+                                                    {project.demoDisabled ? "Demo Currently Offline" : "Play Demo"}
+                                                </PrimaryButton>
+                                            )}
                                             {project.githubUrl && (
                                                 <SecondaryButton startIcon={<CodeIcon />} href={project.githubUrl} target="_blank" fullWidth sx={{ py: 1.5 }}>Source Code</SecondaryButton>
                                             )}

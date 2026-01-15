@@ -17,7 +17,7 @@ challenge: "Achieving perfect synchronization between clients with varying netwo
 solution: "Implemented a custom WebSocket protocol for clock correction and an adaptive buffering system to handle jitter."
 images: ["/images/musicsync-lobby.png", "/images/musicsync-room.png", "/images/musicsync-search.png", "/images/musicsync-settings.png"]
 demoUrl: "https://vibespace-demo.com"
-devTime: "3 months"
+devTime: "2 weeks"
 role: "Full Stack Developer"
 battery: "High Performance"
 solutionFeatures: [
@@ -27,15 +27,15 @@ solutionFeatures: [
   { icon: "Devices", title: "Responsive", description: "Mobile-first design", color: "amber" }
 ]
 heroImage: "/images/musicsync.png"
+badgeType: "Real Time"
+keyLearning: "Solving distributed clock synchronization to achieve sub-10ms audio latency across diverse network conditions."
 ---
 
 ## Overview
 
-MusicSync is a web application that enables users to listen to music together in real-time, regardless of their location. It solves the problem of "counting down to press play" by handling synchronization automatically.
+MusicSync is a complete remodeling of a project I originally created years ago ([Groomusic](https://github.com/alejandroGM0/groomusic)). I rebuilt it from scratch to apply modern standards and improved architecture. It enables users to listen to music together in real-time.
 
-## Key Features
+> [!NOTE]
+> This project was developed for **educational purposes only**. It is not commercially viable due to music royalty costs and API restrictions.
 
-- ** synchronized Playback**: Uses NTP-like time synchronization to ensure all clients play audio at the exact same millisecond.
-- **Collaborative Queues**: Users can vote on songs, add tracks to the queue, and reorder the playlist.
-- **Real-time Chat**: Integrated chat for social interaction while listening.
-- **Provider Integration**: Seamless search and playback using third-party APIs.
+

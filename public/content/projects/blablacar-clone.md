@@ -1,39 +1,42 @@
 ---
-title: "BlablaCar Clone"
-description: "Full-stack carpooling platform with real-time ride matching and booking system"
-technologies: ["Django", "React", "PostgreSQL", "Docker", "Redis"]
-githubUrl: "https://github.com/alejandroGM0"
+title: "CharlaCar"
+description: "A fully functional carpooling platform that connects drivers and passengers for cost-effective travel."
+technologies: ["Python", "Django", "MySQL", "Daphne (ASGI)", "Stripe", "JavaScript"]
+githubUrl: "https://github.com/alejandroGM0/proyecto_software"
 liveUrl: ""
-coverImage: "/images/blablacar.png"
+coverImage: "https://i.imgur.com/LUBsUjP.jpeg"
 featured: true
 features: [
-  { icon: "GridView", title: "Geospatial Indexing", description: "PostGIS optimization for ride matching", color: "blue" },
-  { icon: "Layers", title: "Real-time Updates", description: "WebSocket notifications for bookings", color: "purple" },
-  { icon: "AccountTree", title: "Smart Caching", description: "Redis strategy for high-traffic routes", color: "emerald" },
-  { icon: "Map", title: "Secure Payments", description: "Stripe integration for automated payouts", color: "amber" }
+  { icon: "DirectionsCar", title: "Ride Sharing", description: "Publish and search for rides easily", color: "blue" },
+  { icon: "Chat", title: "Real-time Chat", description: "Instant messaging between users", color: "purple" },
+  { icon: "Payment", title: "Secure Payments", description: "Integrated Stripe payment system", color: "emerald" },
+  { icon: "Star", title: "Reputation System", description: "User reviews and ratings", color: "amber" }
 ]
-challenge: "Creating a scalable ride-matching algorithm that considers multiple factors like route overlap, time windows, and user preferences while maintaining sub-second response times."
-solution: "Implemented a geospatial indexing system with PostGIS for efficient route matching, combined with Redis caching for frequently accessed routes and real-time availability updates."
-devTime: "4 months"
+challenge: "Building a complete, production-ready platform with real-time capabilities and secure financial transactions within a tight one-month deadline."
+solution: "Leveraged Django for rapid backend development, integrated Stripe for robust payments, and used Daphne/WebSockets for real-time features like chat and notifications."
+images: ["https://i.imgur.com/uca2vNm.png", "https://i.imgur.com/1nl31mv.png", "https://i.imgur.com/YdjaO1v.png", "https://i.imgur.com/Yd2w7lx.png", "https://i.imgur.com/ie29tuL.png", "https://i.imgur.com/87AwTNE.png", "https://i.imgur.com/6nsC3g7.png", "https://i.imgur.com/OJdeQfR.png"]
+devTime: "1 month"
 role: "Full Stack Developer"
-battery: "3 Hours"
+battery: "Fully Functional"
 solutionFeatures: [
-  { icon: "Map", title: "Route Indexing", description: "PostGIS geography types for paths", color: "blue" },
-  { icon: "Layers", title: "Query Opt", description: "Spatial overlap search within radius", color: "purple" },
-  { icon: "Memory", title: "Redis Caching", description: "Sorted sets for leaderboard/feeds", color: "emerald" },
-  { icon: "RocketLaunch", title: "Event Loop", description: "Non-blocking notifications", color: "amber" }
+  { icon: "Security", title: "Auth System", description: "Complete user profiles & verification", color: "blue" },
+  { icon: "Notifications", title: "Live Updates", description: "Real-time booking status alerts", color: "purple" },
+  { icon: "CreditCard", title: "Stripe", description: "Automated payouts and refunds", color: "emerald" },
+  { icon: "Storage", title: "MySQL", description: "Robust relational data structure", color: "amber" }
 ]
-heroImage: "/images/blablacar.png"
+heroImage: "https://i.imgur.com/LUBsUjP.jpeg"
+badgeType: "Full Stack"
+keyLearning: "Mastering complex many-to-many relationships and real-time state management in a high-concurrency environment."
 ---
 
 ## Overview
 
-A feature-complete carpooling platform inspired by BlablaCar, allowing users to share rides, reduce costs, and travel sustainably.
+CharlaCar is a **completely functional** carpooling platform designed to make travel affordable and accessible. It connects drivers looking to offset travel costs with passengers seeking comfortable and economical rides.
 
 ## Key Features
 
-- **Smart Route Matching**: Geospatial algorithm finds optimal ride matches
-- **Real-time Booking**: Instant seat reservation with availability updates
-- **User Verification**: Multi-step verification for driver safety
-- **Payment Integration**: Secure in-app payments with Stripe
-- **Rating System**: Trust-based community reviews
+- **Ride Management**: Drivers can publish routes, and passengers can search/book seats.
+- **Secure Payments**: Fully integrated **Stripe** payment system for secure transactions between users.
+- **Real-time Communication**: Built-in chat system allowing instant negotiation and coordination.
+- **Trust & Safety**: Comprehensive user profiles and a community-driven rating/review system.
+- **Responsive Design**: optimized for use on both desktop and mobile devices.

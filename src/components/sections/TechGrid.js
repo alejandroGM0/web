@@ -83,6 +83,7 @@ const ROW_3 = [
     { title: "Git", iconName: "git", color: "#F05032" },
     { title: "MongoDB", iconName: "mongodb", color: "#47A248" },
     { title: "PostgreSQL", iconName: "postgresql", color: "#4169E1" },
+    { title: "Cassandra", iconName: "cassandra", color: "#1287B1" },
 ];
 
 export default function TechGrid({ page }) {

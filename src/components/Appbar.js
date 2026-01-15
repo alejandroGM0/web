@@ -10,6 +10,7 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import '../assets/styles/App.css';
+import { sectionSpacing } from '../config/layout';
 
 // Navigation Link Style
 const NavButton = styled(Button)(({ theme }) => ({
@@ -79,12 +80,12 @@ export default function Appbar(props) {
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: {
-                    xs: 'calc(100% - 32px)',
-                    sm: 'calc(100% - 48px)',
-                    md: 'calc(100% - 80px)',
-                    lg: 'calc(100% - 80px)',
+                    xs: `calc(100% - ${sectionSpacing.px.xs * 16}px)`,
+                    sm: `calc(100% - ${sectionSpacing.px.sm * 16}px)`,
+                    md: `calc(100% - ${sectionSpacing.px.md * 16}px)`,
+                    lg: `calc(100% - ${sectionSpacing.px.md * 16}px)`,
                 },
-                maxWidth: '1120px',
+                maxWidth: '1200px',
                 boxSizing: 'border-box',
                 zIndex: 1100,
                 display: 'flex',

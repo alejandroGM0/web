@@ -782,6 +782,7 @@
 
     /* Fullpage navigation dots - smaller and to the side */
     #fp-nav {
+        display: none !important;
         right: 8px !important;
     }
 

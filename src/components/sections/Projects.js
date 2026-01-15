@@ -10,27 +10,7 @@ import { sectionSpacing } from '../../config/layout';
 
 // Tech badge colors based on technology name
 const getTechColor = (tech) => {
-    const colors = {
-        'React': '#61dafb',
-        'Node.js': '#68a063',
-        'Socket.io': '#010101',
-        'Python': '#3776ab',
-        'Django': '#092e20',
-        'React Native': '#61dafb',
-        'PostGIS': '#336791',
-        'Discord.py': '#5865f2',
-        'MongoDB': '#47a248',
-        'JavaScript': '#f7df1e',
-        'TypeScript': '#3178c6',
-        'Next.js': '#000000',
-        'PostgreSQL': '#336791',
-        'Redis': '#dc382d',
-        'Docker': '#2496ed',
-        'AWS': '#ff9900',
-        'Firebase': '#ffca28',
-        'GraphQL': '#e535ab',
-    };
-    return colors[tech] || '#f97316';
+    return '#94a3b8'; // Slate 400
 };
 
 // Badge type colors
@@ -90,7 +70,7 @@ function ProjectCard({ project, index, isVisible }) {
                 >
                     {project.heroImage ? (
                         <img
-                            src={`${process.env.PUBLIC_URL}${project.heroImage}`}
+                            src={project.heroImage?.startsWith('http') ? project.heroImage : `${process.env.PUBLIC_URL}${project.heroImage}`}
                             alt={project.title}
                             style={{
                                 width: '100%',

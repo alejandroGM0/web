@@ -44,8 +44,8 @@ const skills = [
 
 // Stats section
 const stats = [
-    { value: '5+', label: 'Years Experience' },
-    { value: '40+', label: 'Projects Completed' }
+    { value: '3+', label: 'Years Experience' },
+    { value: '12+', label: 'Projects Completed' }
 ];
 
 
@@ -93,16 +93,20 @@ export default function About(props) {
                     <Grid container spacing={contentGap} alignItems="center" sx={{ position: 'relative', zIndex: 1 }}>
                         {/* Left column - Text content */}
                         <Grid item xs={12} md={6}>
-                            <SectionHeader title="About Me" align="left" mb={3} />
+                            <SectionHeader
+                                title="About Me"
+                                align="left"
+                                mb={3}
+                            />
                             <Typography
                                 component="div"
                                 sx={{ '& p': { mb: 2, lineHeight: 1.7, color: 'rgba(255,255,255,0.75)', fontSize: '1rem' } }}
                             >
                                 <Typography component="p">
-                                    Hello, my name is <Box component="span" sx={{ color: '#fb923c', fontWeight: 600 }}>Alejandro</Box>. Currently, I am a Computer Engineering student at the University of Zaragoza (Unizar), continuously expanding my knowledge through hands-on experience.
+                                    I'm a Computer Engineering student at the University of Zaragoza (Unizar) with a passion for bridging the gap between hardware and software. My expertise spans from <Box component="span" sx={{ color: '#fb923c', fontWeight: 600 }}>embedded systems</Box> and robotics to scalable <Box component="span" sx={{ color: '#fb923c', fontWeight: 600 }}>full-stack architectures</Box>.
                                 </Typography>
                                 <Typography component="p">
-                                    I am passionate about web development, back-end architecture, and machine learning algorithms. I enjoy the creative process of coding and delivering optimal solutions. My skill set includes Python, JavaScript, HTML, CSS, and I ensure all my websites are SEO-friendly and optimized for performance.
+                                    I don't just write code; I build systems. Whether it's designing autonomous drone flight controllers, optimizing real-time algorithms, or crafting immersive web experiences, I focus on performance, reliability, and solving complex engineering challenges.
                                 </Typography>
                             </Typography>
 

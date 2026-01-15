@@ -341,43 +341,78 @@ export default function ProjectDetail({ projects = [] }) {
                                     </Box>
                                     <Typography sx={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, mb: 4 }}>{project.solution}</Typography>
 
-                                    {/* Code Block with Tabs - TiltCard Style */}
-                                    <TiltCard sx={{ overflow: 'hidden' }}>
-                                        <Box sx={{ backgroundColor: 'rgba(0,0,0,0.3)', px: 2, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Typography sx={{ color: '#34d399', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10b981' }} /> Solution Applied
+                                    {/* Solution Features Grid */}
+                                    {project.solutionFeatures && (
+                                        <TiltCard sx={{ p: { xs: 3, md: 4 }, mt: 4 }}>
+                                            <Typography sx={{ color: 'white', fontWeight: 600, fontSize: '1rem', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <RocketLaunchIcon sx={{ color: '#10b981' }} /> Implementation Details
                                             </Typography>
-                                            <Box sx={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '8px', p: 0.5, border: '1px solid rgba(255,255,255,0.1)' }}>
-                                                <Button onClick={() => setActiveCodeTab('architecture')} sx={{ px: 1.5, py: 0.5, fontSize: '0.75rem', fontWeight: 500, borderRadius: '6px', minWidth: 'auto', backgroundColor: activeCodeTab === 'architecture' ? 'rgba(255,255,255,0.1)' : 'transparent', color: activeCodeTab === 'architecture' ? 'white' : 'rgba(255,255,255,0.5)', '&:hover': { color: 'white' } }}>Architecture</Button>
-                                                <Button onClick={() => setActiveCodeTab('implementation')} sx={{ px: 1.5, py: 0.5, fontSize: '0.75rem', fontWeight: 500, borderRadius: '6px', minWidth: 'auto', backgroundColor: activeCodeTab === 'implementation' ? 'rgba(255,255,255,0.1)' : 'transparent', color: activeCodeTab === 'implementation' ? 'white' : 'rgba(255,255,255,0.5)', '&:hover': { color: 'white' } }}>Implementation</Button>
+                                            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
+                                                {project.solutionFeatures.map((feature, index) => {
+                                                    const Icons = {
+                                                        GridView: <GridViewIcon />,
+                                                        Layers: <LayersIcon />,
+                                                        AccountTree: <AccountTreeIcon />,
+                                                        Map: <MapIcon />,
+                                                        Memory: <MemoryIcon />,
+                                                        RocketLaunch: <RocketLaunchIcon />,
+                                                        Code: <CodeIcon />
+                                                    };
+                                                    return (
+                                                        <FeatureCard
+                                                            key={index}
+                                                            icon={Icons[feature.icon] || <GridViewIcon />}
+                                                            title={feature.title}
+                                                            description={feature.description}
+                                                            color={feature.color}
+                                                        />
+                                                    );
+                                                })}
                                             </Box>
-                                        </Box>
-                                        <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
-                                                {activeCodeTab === 'architecture' ? 'Optimized data structures and efficient memory access patterns.' : 'Modern patterns for maximum performance and maintainability.'}
-                                            </Typography>
-                                        </Box>
-                                        <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.4)', fontFamily: 'monospace', fontSize: '0.8rem', color: activeCodeTab === 'architecture' ? '#34d399' : 'var(--color-primary)', overflowX: 'auto' }}>
-                                            <pre style={{ margin: 0 }}>
-                                                {activeCodeTab === 'architecture' ? `// Optimized Architecture
-public class SystemManager {
-    private float[] positionsX;
-    private float[] positionsY;
-    
-    public void update(float dt) {
-        for(int i = 0; i < count; i++) {
-            positionsX[i] += velocitiesX[i] * dt;
-        }
-    }
-}` : `// Implementation Pattern
-public void render() {
-    glBindBuffer(GL_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ARRAY_BUFFER, data, GL_DYNAMIC_DRAW);
-    glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, 0);
-}`}
-                                            </pre>
-                                        </Box>
-                                    </TiltCard>
+                                        </TiltCard>
+                                    )}
+
+                                    {/* Dynamic Code Block with Tabs */}
+                                    {project.codeSnippets && (
+                                        <TiltCard sx={{ overflow: 'hidden', mt: 4 }}>
+                                            <Box sx={{ backgroundColor: 'rgba(0,0,0,0.3)', px: 2, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Typography sx={{ color: '#34d399', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <CodeIcon sx={{ fontSize: 14 }} /> Key Algorithms
+                                                </Typography>
+                                                <Box sx={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: '8px', p: 0.5, border: '1px solid rgba(255,255,255,0.1)' }}>
+                                                    {project.codeSnippets.map((snippet, idx) => (
+                                                        <Button
+                                                            key={idx}
+                                                            onClick={() => setActiveCodeTab(idx)}
+                                                            sx={{
+                                                                px: 1.5,
+                                                                py: 0.5,
+                                                                fontSize: '0.75rem',
+                                                                fontWeight: 500,
+                                                                borderRadius: '6px',
+                                                                minWidth: 'auto',
+                                                                backgroundColor: activeCodeTab === idx ? 'rgba(255,255,255,0.1)' : 'transparent',
+                                                                color: activeCodeTab === idx ? 'white' : 'rgba(255,255,255,0.5)',
+                                                                '&:hover': { color: 'white' }
+                                                            }}
+                                                        >
+                                                            {snippet.label}
+                                                        </Button>
+                                                    ))}
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                                <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
+                                                    {project.codeSnippets[activeCodeTab || 0].description}
+                                                </Typography>
+                                            </Box>
+                                            <Box sx={{ p: 3, backgroundColor: 'rgba(0,0,0,0.4)', fontFamily: 'monospace', fontSize: '0.8rem', color: '#60a5fa', overflowX: 'auto' }}>
+                                                <pre style={{ margin: 0 }}>
+                                                    {project.codeSnippets[activeCodeTab || 0].code}
+                                                </pre>
+                                            </Box>
+                                        </TiltCard>
+                                    )}
                                 </Box>
                             )}
                         </Box>

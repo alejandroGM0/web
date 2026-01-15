@@ -45,7 +45,7 @@ export default function ExperienceGrid() {
                         <Box
                             component="span"
                             sx={{
-                                background: 'linear-gradient(to right, #45A29E, #66FCF1)',
+                                background: 'linear-gradient(to right, #f97316, #fb923c)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                             }}

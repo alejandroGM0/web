@@ -5,6 +5,7 @@ technologies: ["C++", "Python", "ROS 2", "OpenCV", "Raspberry Pi"]
 githubUrl: "#"
 liveUrl: ""
 coverImage: "/images/drone-delivery.png?v=2"
+images: ["/images/drone-graph.png"]
 featured: true
 features: [
   { icon: "GridView", title: "ROS 2 Architecture", description: "Decentralized node graph for robustness", color: "blue" },
@@ -17,7 +18,12 @@ solution: "Iterative development approach focusing on core flight stability befo
 devTime: "Early Stage"
 role: "Systems Engineer"
 battery: "N/A"
-keyLearning: "Managing the complexities of hardware integration and real-time control loops in a physical system."
+solutionFeatures: [
+  { icon: "Memory", title: "Hardware Select", description: "Calculating thrust-to-weight ratios", color: "blue" },
+  { icon: "RocketLaunch", title: "Flight Control", description: "Pixhawk tuning for custom frame", color: "purple" },
+  { icon: "Code", title: "ROS 2 Bridge", description: "High-bandwidth MAVLink communication", color: "emerald" },
+  { icon: "Map", title: "Auto Navigation", description: "SLAM with depth camera input", color: "amber" }
+]
 heroImage: "/images/drone-delivery.png?v=2"
 badgeType: "Prototype"
 status: "Pre-Alpha"

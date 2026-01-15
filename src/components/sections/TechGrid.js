@@ -64,14 +64,13 @@ const MarqueeRow = ({ items, direction = 'normal', speed = '40s' }) => {
 const ROW_1 = [
     { title: "Python", iconName: "python", color: "#3776AB" },
     { title: "C++", iconName: "cplusplus", color: "#00599C" },
+    { title: "C", iconName: "c", color: "#A8B9CC" },
+    { title: "Java", iconName: "java", color: "#007396" },
     { title: "JavaScript", iconName: "javascript", color: "#F7DF1E" },
-    { title: "TypeScript", iconName: "typescript", color: "#3178C6" },
-    { title: "Lua", iconName: "lua", color: "#2C2D72" },
 ];
 
 const ROW_2 = [
     { title: "React", iconName: "react", color: "#61DAFB" },
-    { title: "Node.js", iconName: "nodejs", color: "#339933" },
     { title: "Django", iconName: "django", color: "#092E20" },
     { title: "Flask", iconName: "flask", color: "#ffffff" },
     { title: "HTML5", iconName: "html5", color: "#E34F26" },
@@ -84,7 +83,6 @@ const ROW_3 = [
     { title: "Git", iconName: "git", color: "#F05032" },
     { title: "MongoDB", iconName: "mongodb", color: "#47A248" },
     { title: "PostgreSQL", iconName: "postgresql", color: "#4169E1" },
-    { title: "Arduino", iconName: "arduino", color: "#00979D" },
 ];
 
 export default function TechGrid({ page }) {

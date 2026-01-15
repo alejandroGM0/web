@@ -63,117 +63,127 @@ export default function Contact({ page, onShowNotification }) {
     <Container maxWidth="lg" sx={{
       display: 'flex',
       flexDirection: 'column',
-      height: '100%',
+      minHeight: { xs: 'auto', md: '100%' },
       px: sectionSpacing.px,
       pt: sectionSpacing.pt,
       pb: sectionSpacing.py,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
     }}>
-      <Box sx={{ width: '100%', maxWidth: '500px' }}>
+      <Box sx={{ width: '100%', maxWidth: '700px' }}>
         <SectionHeader
-          title="Let's Connect"
-          subtitle="Have a project in mind? I'd love to hear about it."
+          title={
+            <>
+              Let's{' '}
+              <Box
+                component="span"
+                sx={{
+                  background: 'linear-gradient(to right, #f97316, #fb923c)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Connect
+              </Box>
+            </>
+          }
+          subtitle="Open to technical collaborations and engineering opportunities."
           mb={3}
         />
 
-      <TiltCard sx={{ p: { xs: 2, md: 2.5 } }}>
-        {/* Contact Form - FormSubmit */}
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}
-        >
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-
-          <TextField
-            name="name"
-            label="Name"
-            variant="outlined"
-            fullWidth
-            required
-            size="small"
-            sx={textFieldSx}
-          />
-          <TextField
-            name="email"
-            label="Email"
-            variant="outlined"
-            fullWidth
-            type="email"
-            required
-            size="small"
-            sx={textFieldSx}
-          />
-          <TextField
-            name="message"
-            label="Message"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={3}
-            required
-            sx={textFieldSx}
-          />
-          <PrimaryButton
-            type="submit"
-            disabled={isSubmitting}
-            sx={{
-              mt: 1,
-              py: 1.5,
-              display: 'flex',
-              gap: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+        <TiltCard sx={{ p: { xs: 2, md: 3.5 } }}>
+          {/* Contact Form - FormSubmit */}
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'}
-            <SendIcon sx={{ fontSize: 18 }} />
-          </PrimaryButton>
-        </Box>
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
 
-        {/* Social Links */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 2, pt: 1.5, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <IconButton
-            href="https://github.com/alejandroGM0"
-            target="_blank"
-            size="small"
-            sx={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              '&:hover': {
-                background: 'rgba(249, 115, 22, 0.1)',
-                borderColor: 'rgba(249, 115, 22, 0.3)'
-              }
-            }}
-          >
-            <GitHubIcon sx={{ color: 'white', fontSize: 20 }} />
-          </IconButton>
-          <IconButton
-            href="https://www.linkedin.com/in/alejandro-gasca-72608136b/"
-            target="_blank"
-            size="small"
-            sx={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              '&:hover': {
-                background: 'rgba(249, 115, 22, 0.1)',
-                borderColor: 'rgba(249, 115, 22, 0.3)'
-              }
-            }}
-          >
-            <LinkedInIcon sx={{ color: 'white', fontSize: 20 }} />
-          </IconButton>
-        </Box>
+            <TextField
+              name="name"
+              label="Name"
+              variant="outlined"
+              fullWidth
+              required
+              sx={textFieldSx}
+            />
+            <TextField
+              name="email"
+              label="Email"
+              variant="outlined"
+              fullWidth
+              type="email"
+              required
+              sx={textFieldSx}
+            />
+            <TextField
+              name="message"
+              label="Message"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              required
+              sx={textFieldSx}
+            />
+            <PrimaryButton
+              type="submit"
+              disabled={isSubmitting}
+              sx={{
+                mt: 1,
+                py: 1.5,
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+              <SendIcon sx={{ fontSize: 18 }} />
+            </PrimaryButton>
+          </Box>
 
-        {/* Footer */}
-        <Box sx={{ mt: 1.5, textAlign: 'center' }}>
-          <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }}>
-            © {new Date().getFullYear()} Alejandro Gasca. All rights reserved.
-          </Typography>
-        </Box>
-      </TiltCard>
+          {/* Social Links */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mt: 3, pt: 2, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <IconButton
+              href="https://github.com/alejandroGM0"
+              target="_blank"
+              sx={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                '&:hover': {
+                  background: 'rgba(249, 115, 22, 0.1)',
+                  borderColor: 'rgba(249, 115, 22, 0.3)'
+                }
+              }}
+            >
+              <GitHubIcon sx={{ color: 'white' }} />
+            </IconButton>
+            <IconButton
+              href="https://www.linkedin.com/in/alejandro-gasca-72608136b/"
+              target="_blank"
+              sx={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                '&:hover': {
+                  background: 'rgba(249, 115, 22, 0.1)',
+                  borderColor: 'rgba(249, 115, 22, 0.3)'
+                }
+              }}
+            >
+              <LinkedInIcon sx={{ color: 'white' }} />
+            </IconButton>
+          </Box>
+
+          {/* Footer */}
+          <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }}>
+              © {new Date().getFullYear()} Alejandro Gasca. All rights reserved.
+            </Typography>
+          </Box>
+        </TiltCard>
       </Box>
     </Container>
 

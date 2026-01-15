@@ -17,7 +17,12 @@ solution: "Used async/await patterns extensively with Discord.py, implemented Mo
 devTime: "2 months"
 role: "Solo Developer"
 battery: "1.5 Hours"
-keyLearning: "Mastered asynchronous programming patterns in Python and learned the importance of rate limiting in API-heavy applications."
+solutionFeatures: [
+  { icon: "Code", title: "Async Core", description: "Python asyncio for concurrency", color: "blue" },
+  { icon: "Layers", title: "MongoDB Store", description: "Flexible schema for user data", color: "purple" },
+  { icon: "RocketLaunch", title: "Audio Pipe", description: "FFmpeg transcoding for streaming", color: "emerald" },
+  { icon: "GridView", title: "Dockerized", description: "Containerized for easy deploy", color: "amber" }
+]
 heroImage: "/images/spartbot.png"
 ---
 

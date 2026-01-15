@@ -17,7 +17,12 @@ solution: "Implemented a geospatial indexing system with PostGIS for efficient r
 devTime: "4 months"
 role: "Full Stack Developer"
 battery: "3 Hours"
-keyLearning: "Deep understanding of geospatial queries and the importance of proper database indexing for location-based services."
+solutionFeatures: [
+  { icon: "Map", title: "Route Indexing", description: "PostGIS geography types for paths", color: "blue" },
+  { icon: "Layers", title: "Query Opt", description: "Spatial overlap search within radius", color: "purple" },
+  { icon: "Memory", title: "Redis Caching", description: "Sorted sets for leaderboard/feeds", color: "emerald" },
+  { icon: "RocketLaunch", title: "Event Loop", description: "Non-blocking notifications", color: "amber" }
+]
 heroImage: "/images/blablacar.png"
 ---
 

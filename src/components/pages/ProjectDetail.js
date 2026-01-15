@@ -52,13 +52,13 @@ function FeatureCard({ icon, title, description, color }) {
     return (
         <Box sx={{ display: 'flex', gap: { xs: 1.5, md: 2 }, alignItems: 'flex-start' }}>
             <Box sx={{
-                p: { xs: 0.75, md: 1 }, 
-                borderRadius: '8px', 
-                backgroundColor: c.bg, 
+                p: { xs: 0.75, md: 1 },
+                borderRadius: '8px',
+                backgroundColor: c.bg,
                 color: c.text,
-                border: `1px solid ${c.border}`, 
-                display: 'flex', 
-                alignItems: 'center', 
+                border: `1px solid ${c.border}`,
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
                 '& .MuiSvgIcon-root': { fontSize: { xs: 18, md: 24 } }
@@ -220,24 +220,24 @@ export default function ProjectDetail({ projects = [] }) {
 
             {/* MAIN */}
             <Box component="main" sx={{ flexGrow: 1, pt: '112px', pb: 10 }}>
-                <Container maxWidth="lg">
+                <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 3 } }}>
                     {/* HEADER - Full Width */}
-                    <Box sx={{ mb: 6 }}>
+                    <Box sx={{ mb: { xs: 4, md: 6 } }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
                             {project.badgeType && (
                                 <Chip label={project.badgeType} size="small" sx={{ backgroundColor: 'rgba(249, 115, 22, 0.15)', color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid rgba(249, 115, 22, 0.3)', height: 24 }} />
                             )}
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', fontFamily: 'monospace' }}>2026</Typography>
                         </Box>
-                        <Typography variant="h3" sx={{ color: 'white', fontWeight: 700, letterSpacing: '-0.02em', mb: 3, fontSize: { xs: '2rem', md: '2.75rem' } }}>{project.title}</Typography>
-                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '48rem' }}>{project.shortDescription}</Typography>
+                        <Typography variant="h3" sx={{ color: 'white', fontWeight: 700, letterSpacing: '-0.02em', mb: 2, fontSize: { xs: '1.5rem', sm: '2rem', md: '2.75rem' } }}>{project.title}</Typography>
+                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: { xs: '0.95rem', md: '1.15rem' }, lineHeight: 1.6, maxWidth: '48rem' }}>{project.shortDescription}</Typography>
                     </Box>
 
                     {/* GRID - Slider aligned with Sidebar */}
-                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '7fr 3fr' }, gap: 4 }}>
+                    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '7fr 3fr' }, gap: { xs: 3, md: 4 } }}>
 
                         {/* LEFT COLUMN */}
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 4, md: 8 } }}>
 
                             {/* IMAGE GALLERY - TiltCard Style */}
                             {slides.length > 0 && (
@@ -247,47 +247,47 @@ export default function ProjectDetail({ projects = [] }) {
                                         {/* Main Image */}
                                         <Box component="img" src={slides[currentSlide]?.url} alt={slides[currentSlide]?.caption}
                                             sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s' }} />
-                                        
+
                                         {/* Navigation Arrows */}
                                         {slides.length > 1 && (<>
-                                            <IconButton className="gallery-nav" onClick={() => changeSlide(-1)} sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronLeftIcon /></IconButton>
-                                            <IconButton className="gallery-nav" onClick={() => changeSlide(1)} sx={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: 0, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' } }}><ChevronRightIcon /></IconButton>
+                                            <IconButton className="gallery-nav" onClick={() => changeSlide(-1)} sx={{ position: 'absolute', left: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: { xs: 0.7, md: 0 }, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' }, width: { xs: 32, md: 40 }, height: { xs: 32, md: 40 } }}><ChevronLeftIcon /></IconButton>
+                                            <IconButton className="gallery-nav" onClick={() => changeSlide(1)} sx={{ position: 'absolute', right: { xs: 8, md: 16 }, top: '50%', transform: 'translateY(-50%)', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', color: 'white', opacity: { xs: 0.7, md: 0 }, transition: 'all 0.2s', '&:hover': { backgroundColor: 'var(--color-primary)', color: 'white' }, width: { xs: 32, md: 40 }, height: { xs: 32, md: 40 } }}><ChevronRightIcon /></IconButton>
                                         </>)}
-                                        
+
                                         {/* Caption */}
-                                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', p: 3, pt: 6, zIndex: 5 }}>
-                                            <Typography sx={{ color: 'white', fontWeight: 500, fontSize: '1rem' }}>{slides[currentSlide]?.caption}</Typography>
+                                        <Box sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', p: { xs: 2, md: 3 }, pt: { xs: 4, md: 6 }, zIndex: 5 }}>
+                                            <Typography sx={{ color: 'white', fontWeight: 500, fontSize: { xs: '0.875rem', md: '1rem' } }}>{slides[currentSlide]?.caption}</Typography>
                                         </Box>
                                     </Box>
-                                    
+
                                     {/* Thumbnail Strip - Bottom Preview */}
                                     {slides.length > 1 && (
-                                        <Box sx={{ 
+                                        <Box sx={{
                                             display: 'flex',
                                             gap: 0.5,
-                                            p: 1.5,
+                                            p: { xs: 1, md: 1.5 },
                                             backgroundColor: 'rgba(0,0,0,0.5)',
                                             borderTop: '1px solid rgba(255,255,255,0.08)',
                                             overflowX: 'auto',
                                             '&::-webkit-scrollbar': { display: 'none' },
                                         }}>
                                             {slides.map((slide, i) => (
-                                                <Box 
-                                                    key={i} 
-                                                    onClick={() => setCurrentSlide(i)} 
-                                                    sx={{ 
-                                                        flexShrink: 0, 
-                                                        width: 56, 
-                                                        height: 36, 
-                                                        borderRadius: '6px', 
-                                                        overflow: 'hidden', 
-                                                        border: i === currentSlide 
-                                                            ? '2px solid var(--color-primary)' 
-                                                            : '2px solid transparent', 
-                                                        opacity: i === currentSlide ? 1 : 0.5, 
-                                                        cursor: 'pointer', 
+                                                <Box
+                                                    key={i}
+                                                    onClick={() => setCurrentSlide(i)}
+                                                    sx={{
+                                                        flexShrink: 0,
+                                                        width: { xs: 44, md: 56 },
+                                                        height: { xs: 28, md: 36 },
+                                                        borderRadius: '6px',
+                                                        overflow: 'hidden',
+                                                        border: i === currentSlide
+                                                            ? '2px solid var(--color-primary)'
+                                                            : '2px solid transparent',
+                                                        opacity: i === currentSlide ? 1 : 0.5,
+                                                        cursor: 'pointer',
                                                         transition: 'all 0.2s ease',
-                                                        '&:hover': { opacity: 1 } 
+                                                        '&:hover': { opacity: 1 }
                                                     }}
                                                 >
                                                     <Box component="img" src={slide.url} alt="" sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -330,7 +330,7 @@ export default function ProjectDetail({ projects = [] }) {
                                 <Typography sx={{ color: 'white', fontWeight: 600, fontSize: { xs: '0.875rem', md: '1rem' }, mb: { xs: 2, md: 3 }, display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <GridViewIcon sx={{ color: 'var(--color-primary)', fontSize: { xs: 18, md: 24 } }} /> Key Features
                                 </Typography>
-                                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: { xs: 2, md: 3 } }}>
+                                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: { xs: 2, md: 3 } }}>
                                     {project.features ? (
                                         project.features.map((feature, index) => {
                                             const Icons = {
@@ -390,26 +390,26 @@ export default function ProjectDetail({ projects = [] }) {
                                     {/* Dynamic Code Block with Tabs */}
                                     {project.codeSnippets && project.codeSnippets.length > 0 && (
                                         <TiltCard sx={{ overflow: 'hidden', mt: 4 }}>
-                                            <Box sx={{ 
-                                                backgroundColor: 'rgba(0,0,0,0.3)', 
-                                                px: { xs: 1.5, md: 2 }, 
-                                                py: 1.5, 
-                                                borderBottom: '1px solid rgba(255,255,255,0.05)', 
-                                                display: 'flex', 
+                                            <Box sx={{
+                                                backgroundColor: 'rgba(0,0,0,0.3)',
+                                                px: { xs: 1.5, md: 2 },
+                                                py: 1.5,
+                                                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                                                display: 'flex',
                                                 flexDirection: { xs: 'column', sm: 'row' },
                                                 gap: { xs: 1, sm: 0 },
-                                                justifyContent: 'space-between', 
+                                                justifyContent: 'space-between',
                                                 alignItems: { xs: 'flex-start', sm: 'center' }
                                             }}>
                                                 <Typography sx={{ color: '#34d399', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
                                                     <CodeIcon sx={{ fontSize: 14 }} /> Key Algorithms
                                                 </Typography>
-                                                <Box sx={{ 
-                                                    display: 'flex', 
+                                                <Box sx={{
+                                                    display: 'flex',
                                                     flexWrap: 'wrap',
-                                                    backgroundColor: 'rgba(0,0,0,0.3)', 
-                                                    borderRadius: '8px', 
-                                                    p: 0.5, 
+                                                    backgroundColor: 'rgba(0,0,0,0.3)',
+                                                    borderRadius: '8px',
+                                                    p: 0.5,
                                                     border: '1px solid rgba(255,255,255,0.1)',
                                                     gap: 0.5
                                                 }}>

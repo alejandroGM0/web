@@ -1,17 +1,29 @@
 ---
 title: "Autonomous Delivery Drone"
 description: "Development of an autonomous aerial vehicle for last-mile delivery. Focusing on robust path planning and stable flight control."
-technologies: ["C++", "Python", "ROS 2", "OpenCV", "Embedded Systems"]
+technologies: [
+  "C++",
+  "Python",
+  "ROS 2",
+  "OpenCV",
+  "Embedded Systems"
+]
 githubUrl: ""
 liveUrl: ""
-coverImage: "/images/drone-delivery.png?v=2"
-images: ["/images/drone-graph.png"]
+coverImage: "/images/drone-delivery.png"
+images: [
+  "/images/drone-graph.png"
+]
 featured: true
 features: [
-  { icon: "GridView", title: "Modular Architecture", description: "ROS 2 node graph", color: "blue" },
-  { icon: "Layers", title: "Sensor Fusion", description: "VIO and IMU state estimation", color: "purple" },
-  { icon: "AccountTree", title: "Intelligent Control", description: "Precise offboard trajectory tracking", color: "emerald" },
-  { icon: "Map", title: "3D Perception", description: "Real-time environment mapping", color: "amber" }
+  { icon: "GridView", title: "Modular Architecture", description: "ROS 2 node graph", color: "blue"
+  },
+  { icon: "Layers", title: "Sensor Fusion", description: "VIO and IMU state estimation", color: "purple"
+  },
+  { icon: "AccountTree", title: "Intelligent Control", description: "Precise offboard trajectory tracking", color: "emerald"
+  },
+  { icon: "Map", title: "3D Perception", description: "Real-time environment mapping", color: "amber"
+  }
 ]
 challenge: "Designing a robust autonomous system capable of navigating complex environments while maintaining strict safety standards and operational efficiency."
 solution: "We are developing a tiered control architecture. A high-level mission computer handles path planning and obstacle avoidance using ROS 2, while a dedicated real-time flight controller manages flight dynamics and stability. This separation of concerns ensures system reliability."
@@ -19,12 +31,16 @@ devTime: "R&D Phase"
 role: "Systems Architect"
 battery: "N/A"
 solutionFeatures: [
-  { icon: "Memory", title: "System Integration", description: "Hardware-Software co-design", color: "blue" },
-  { icon: "RocketLaunch", title: "Dynamics Modeling", description: "Precise PID tuning & simulation", color: "purple" },
-  { icon: "Code", title: "Protocol Design", description: "Efficient MAVLink bridging", color: "emerald" },
-  { icon: "Map", title: "SLAM Research", description: "Visual localization integration", color: "amber" }
+  { icon: "Memory", title: "System Integration", description: "Hardware-Software co-design", color: "blue"
+  },
+  { icon: "RocketLaunch", title: "Dynamics Modeling", description: "Precise PID tuning & simulation", color: "purple"
+  },
+  { icon: "Code", title: "Protocol Design", description: "Efficient MAVLink bridging", color: "emerald"
+  },
+  { icon: "Map", title: "SLAM Research", description: "Visual localization integration", color: "amber"
+  }
 ]
-heroImage: "/images/drone-delivery.png?v=2"
+heroImage: "/images/drone-delivery.png"
 status: "Pre-Alpha"
 releaseDate: "June 2026"
 announcementDate: ""

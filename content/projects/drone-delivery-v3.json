@@ -1,70 +1,82 @@
----
-title: "Autonomous Delivery Drone"
-description: "Development of an autonomous aerial vehicle for last-mile delivery. Focusing on robust path planning and stable flight control."
-technologies: [
-  "C++",
-  "Python",
-  "ROS 2",
-  "OpenCV",
-  "Embedded Systems"
-]
-githubUrl: ""
-liveUrl: ""
-coverImage: "/images/drone-delivery.png"
-images: [
-  "/images/drone-graph.png"
-]
-featured: true
-features: [
-  { icon: "GridView", title: "Modular Architecture", description: "ROS 2 node graph", color: "blue"
-  },
-  { icon: "Layers", title: "Sensor Fusion", description: "VIO and IMU state estimation", color: "purple"
-  },
-  { icon: "AccountTree", title: "Intelligent Control", description: "Precise offboard trajectory tracking", color: "emerald"
-  },
-  { icon: "Map", title: "3D Perception", description: "Real-time environment mapping", color: "amber"
-  }
-]
-challenge: "Designing a robust autonomous system capable of navigating complex environments while maintaining strict safety standards and operational efficiency."
-solution: "We are developing a tiered control architecture. A high-level mission computer handles path planning and obstacle avoidance using ROS 2, while a dedicated real-time flight controller manages flight dynamics and stability. This separation of concerns ensures system reliability."
-devTime: "R&D Phase"
-role: "Systems Architect"
-battery: "N/A"
-solutionFeatures: [
-  { icon: "Memory", title: "System Integration", description: "Hardware-Software co-design", color: "blue"
-  },
-  { icon: "RocketLaunch", title: "Dynamics Modeling", description: "Precise PID tuning & simulation", color: "purple"
-  },
-  { icon: "Code", title: "Protocol Design", description: "Efficient MAVLink bridging", color: "emerald"
-  },
-  { icon: "Map", title: "SLAM Research", description: "Visual localization integration", color: "amber"
-  }
-]
-heroImage: "/images/drone-delivery.png"
-status: "Pre-Alpha"
-releaseDate: "June 2026"
-announcementDate: ""
-badgeType: "Prototype"
-keyLearning: "Balancing real-time constraints of embedded flight controllers with high-level path planning algorithms."
----
-
-## Project Status: Active Prototyping 🟢
-
-This project focuses on the engineering challenges of **autonomous aerial logistics**. The goal is to build a robust flying vehicle capable of performing delivery missions with minimal human intervention.
-
-We are currently in the **Prototyping Phase**, validating core architectural decisions and conducting hardware-in-the-loop (HITL) testing to ensure system integrity.
-
-### Strategic Roadmap (2026)
-
-*   **Q1 - Core Stability**: Validating flight dynamics and low-level control loops on custom hardware.
-*   **Q2 - Perception Layer**: Integrating onboard vision systems for optical flow and visual odometry.
-*   **Q3 - Autonomy**: Implementing waypoint navigation and local obstacle avoidance algorithms.
-*   **Q4 - Mission Simulation**: Full end-to-end delivery simulation in controlled environments.
-
-### System Architecture
-
-The platform exploits a distributed computing model. High-level autonomy (SLAM, Path Planning) runs on a powerful companion computer, sending high-frequency control setpoints to a distinct flight controller. This ensures that computationally expensive AI tasks never compromise the real-time safety guarantees of the flight stabilization loop.
-
-*   **Compute**: Distributed processing (Edge AI + Real-time Core)
-*   **Communications**: High-bandwidth inter-process communication via ROS 2
-*   **Safety**: Failsafe-first design philosophy with redundant state estimation
+{
+  "title": "Autonomous Delivery Drone",
+  "description": "Development of an autonomous aerial vehicle for last-mile delivery. Focusing on robust path planning and stable flight control.",
+  "technologies": [
+    "C++",
+    "Python",
+    "ROS 2",
+    "OpenCV",
+    "Embedded Systems"
+  ],
+  "githubUrl": "",
+  "liveUrl": "",
+  "coverImage": "/images/drone-delivery.png",
+  "images": [
+    "/images/drone-graph.png"
+  ],
+  "featured": true,
+  "features": [
+    {
+      "icon": "GridView",
+      "title": "Modular Architecture",
+      "description": "ROS 2 node graph",
+      "color": "blue"
+    },
+    {
+      "icon": "Layers",
+      "title": "Sensor Fusion",
+      "description": "VIO and IMU state estimation",
+      "color": "purple"
+    },
+    {
+      "icon": "AccountTree",
+      "title": "Intelligent Control",
+      "description": "Precise offboard trajectory tracking",
+      "color": "emerald"
+    },
+    {
+      "icon": "Map",
+      "title": "3D Perception",
+      "description": "Real-time environment mapping",
+      "color": "amber"
+    }
+  ],
+  "challenge": "Designing a robust autonomous system capable of navigating complex environments while maintaining strict safety standards and operational efficiency.",
+  "solution": "We are developing a tiered control architecture. A high-level mission computer handles path planning and obstacle avoidance using ROS 2, while a dedicated real-time flight controller manages flight dynamics and stability. This separation of concerns ensures system reliability.",
+  "devTime": "R&D Phase",
+  "role": "Systems Architect",
+  "battery": "N/A",
+  "solutionFeatures": [
+    {
+      "icon": "Memory",
+      "title": "System Integration",
+      "description": "Hardware-Software co-design",
+      "color": "blue"
+    },
+    {
+      "icon": "RocketLaunch",
+      "title": "Dynamics Modeling",
+      "description": "Precise PID tuning & simulation",
+      "color": "purple"
+    },
+    {
+      "icon": "Code",
+      "title": "Protocol Design",
+      "description": "Efficient MAVLink bridging",
+      "color": "emerald"
+    },
+    {
+      "icon": "Map",
+      "title": "SLAM Research",
+      "description": "Visual localization integration",
+      "color": "amber"
+    }
+  ],
+  "heroImage": "/images/drone-delivery.png",
+  "status": "Pre-Alpha",
+  "releaseDate": "June 2026",
+  "announcementDate": "",
+  "badgeType": "Prototype",
+  "keyLearning": "Balancing real-time constraints of embedded flight controllers with high-level path planning algorithms.",
+  "content": "## Project Status: Active Prototyping 🟢\n\nThis project focuses on the engineering challenges of **autonomous aerial logistics**. The goal is to build a robust flying vehicle capable of performing delivery missions with minimal human intervention.\n\nWe are currently in the **Prototyping Phase**, validating core architectural decisions and conducting hardware-in-the-loop (HITL) testing to ensure system integrity.\n\n### Strategic Roadmap (2026)\n\n*   **Q1 - Core Stability**: Validating flight dynamics and low-level control loops on custom hardware.\n*   **Q2 - Perception Layer**: Integrating onboard vision systems for optical flow and visual odometry.\n*   **Q3 - Autonomy**: Implementing waypoint navigation and local obstacle avoidance algorithms.\n*   **Q4 - Mission Simulation**: Full end-to-end delivery simulation in controlled environments.\n\n### System Architecture\n\nThe platform exploits a distributed computing model. High-level autonomy (SLAM, Path Planning) runs on a powerful companion computer, sending high-frequency control setpoints to a distinct flight controller. This ensures that computationally expensive AI tasks never compromise the real-time safety guarantees of the flight stabilization loop.\n\n*   **Compute**: Distributed processing (Edge AI + Real-time Core)\n*   **Communications**: High-bandwidth inter-process communication via ROS 2\n*   **Safety**: Failsafe-first design philosophy with redundant state estimation"
+}

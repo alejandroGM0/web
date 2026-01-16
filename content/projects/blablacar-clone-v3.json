@@ -1,42 +1,87 @@
----
-title: "CharlaCar"
-description: "A fully functional carpooling platform that connects drivers and passengers for cost-effective travel."
-technologies: ["Python", "Django", "MySQL", "Daphne (ASGI)", "Stripe", "JavaScript"]
-githubUrl: "https://github.com/alejandroGM0/proyecto_software"
-liveUrl: ""
-coverImage: "https://i.imgur.com/LUBsUjP.jpeg"
-featured: true
-features: [
-  { icon: "DirectionsCar", title: "Ride Sharing", description: "Publish and search for rides easily", color: "blue" },
-  { icon: "Chat", title: "Real-time Chat", description: "Instant messaging between users", color: "purple" },
-  { icon: "Payment", title: "Secure Payments", description: "Integrated Stripe payment system", color: "emerald" },
-  { icon: "Star", title: "Reputation System", description: "User reviews and ratings", color: "amber" }
-]
-challenge: "Building a complete, production-ready platform with real-time capabilities and secure financial transactions within a tight one-month deadline."
-solution: "Leveraged Django for rapid backend development, integrated Stripe for robust payments, and used Daphne/WebSockets for real-time features like chat and notifications."
-images: ["https://i.imgur.com/uca2vNm.png", "https://i.imgur.com/1nl31mv.png", "https://i.imgur.com/YdjaO1v.png", "https://i.imgur.com/Yd2w7lx.png", "https://i.imgur.com/ie29tuL.png", "https://i.imgur.com/87AwTNE.png", "https://i.imgur.com/6nsC3g7.png", "https://i.imgur.com/OJdeQfR.png"]
-devTime: "1 month"
-role: "Full Stack Developer"
-battery: "Fully Functional"
-solutionFeatures: [
-  { icon: "Security", title: "Auth System", description: "Complete user profiles & verification", color: "blue" },
-  { icon: "Notifications", title: "Live Updates", description: "Real-time booking status alerts", color: "purple" },
-  { icon: "CreditCard", title: "Stripe", description: "Automated payouts and refunds", color: "emerald" },
-  { icon: "Storage", title: "MySQL", description: "Robust relational data structure", color: "amber" }
-]
-heroImage: "https://i.imgur.com/LUBsUjP.jpeg"
-badgeType: "Full Stack"
-keyLearning: "Mastering complex many-to-many relationships and real-time state management in a high-concurrency environment."
----
-
-## Overview
-
-CharlaCar is a **completely functional** carpooling platform designed to make travel affordable and accessible. It connects drivers looking to offset travel costs with passengers seeking comfortable and economical rides.
-
-## Key Features
-
-- **Ride Management**: Drivers can publish routes, and passengers can search/book seats.
-- **Secure Payments**: Fully integrated **Stripe** payment system for secure transactions between users.
-- **Real-time Communication**: Built-in chat system allowing instant negotiation and coordination.
-- **Trust & Safety**: Comprehensive user profiles and a community-driven rating/review system.
-- **Responsive Design**: optimized for use on both desktop and mobile devices.
+{
+  "title": "CharlaCar",
+  "description": "A fully functional carpooling platform that connects drivers and passengers for cost-effective travel.",
+  "technologies": [
+    "Python",
+    "Django",
+    "MySQL",
+    "Daphne (ASGI)",
+    "Stripe",
+    "JavaScript"
+  ],
+  "githubUrl": "https://github.com/alejandroGM0/proyecto_software",
+  "liveUrl": "",
+  "coverImage": "https://i.imgur.com/LUBsUjP.jpeg",
+  "featured": true,
+  "features": [
+    {
+      "icon": "DirectionsCar",
+      "title": "Ride Sharing",
+      "description": "Publish and search for rides easily",
+      "color": "blue"
+    },
+    {
+      "icon": "Chat",
+      "title": "Real-time Chat",
+      "description": "Instant messaging between users",
+      "color": "purple"
+    },
+    {
+      "icon": "Payment",
+      "title": "Secure Payments",
+      "description": "Integrated Stripe payment system",
+      "color": "emerald"
+    },
+    {
+      "icon": "Star",
+      "title": "Reputation System",
+      "description": "User reviews and ratings",
+      "color": "amber"
+    }
+  ],
+  "challenge": "Building a complete, production-ready platform with real-time capabilities and secure financial transactions within a tight one-month deadline.",
+  "solution": "Leveraged Django for rapid backend development, integrated Stripe for robust payments, and used Daphne/WebSockets for real-time features like chat and notifications.",
+  "images": [
+    "https://i.imgur.com/uca2vNm.png",
+    "https://i.imgur.com/1nl31mv.png",
+    "https://i.imgur.com/YdjaO1v.png",
+    "https://i.imgur.com/Yd2w7lx.png",
+    "https://i.imgur.com/ie29tuL.png",
+    "https://i.imgur.com/87AwTNE.png",
+    "https://i.imgur.com/6nsC3g7.png",
+    "https://i.imgur.com/OJdeQfR.png"
+  ],
+  "devTime": "1 month",
+  "role": "Full Stack Developer",
+  "battery": "Fully Functional",
+  "solutionFeatures": [
+    {
+      "icon": "Security",
+      "title": "Auth System",
+      "description": "Complete user profiles & verification",
+      "color": "blue"
+    },
+    {
+      "icon": "Notifications",
+      "title": "Live Updates",
+      "description": "Real-time booking status alerts",
+      "color": "purple"
+    },
+    {
+      "icon": "CreditCard",
+      "title": "Stripe",
+      "description": "Automated payouts and refunds",
+      "color": "emerald"
+    },
+    {
+      "icon": "Storage",
+      "title": "MySQL",
+      "description": "Robust relational data structure",
+      "color": "amber"
+    }
+  ],
+  "heroImage": "https://i.imgur.com/LUBsUjP.jpeg",
+  "badgeType": "Full Stack",
+  "keyLearning": "Mastering complex many-to-many relationships and real-time state management in a high-concurrency environment.",
+  "content": "## Overview\n\nCharlaCar is a **completely functional** carpooling platform designed to make travel affordable and accessible. It connects drivers looking to offset travel costs with passengers seeking comfortable and economical rides.\n\n## Key Features\n\n- **Ride Management**: Drivers can publish routes, and passengers can search/book seats.\n- **Secure Payments**: Fully integrated **Stripe** payment system for secure transactions between users.\n- **Real-time Communication**: Built-in chat system allowing instant negotiation and coordination.\n- **Trust & Safety**: Comprehensive user profiles and a community-driven rating/review system.\n- **Responsive Design**: optimized for use on both desktop and mobile devices."
+}

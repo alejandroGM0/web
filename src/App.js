@@ -12,7 +12,6 @@ import ErrorIcon from '@mui/icons-material/Error';
 // Core components
 import Appbar from './components/Appbar';
 import NeuralCanvas from './components/ui/NeuralCanvas';
-import UpdateDialog from './components/ui/UpdateDialog';
 
 // Section components
 import Hero from './components/sections/Hero';
@@ -85,12 +84,6 @@ function HomePage({ projects }) {
     const [page, setPage] = useState(0);
     const fpApiRef = React.useRef(null);
     const hasRebuiltRef = React.useRef(false);
-    // Only show dialog if user hasn't seen it before
-    const [openDialog, setOpenDialog] = useState(() => {
-        const hasSeenDialog = localStorage.getItem('hasSeenUpdateDialog');
-        return !hasSeenDialog;
-    });
-
     // Global notification state
     const [notification, setNotification] = useState({
         open: false,
@@ -100,6 +93,9 @@ function HomePage({ projects }) {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    
+    // Detect Firefox
+    const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
     // Rebuild fullpage.js after projects load to recalculate section heights
     // This fixes mobile truncation issue where fp-overflow height is calculated before content loads
@@ -120,17 +116,17 @@ function HomePage({ projects }) {
         }
     };
 
+    // Firefox fix: prevent scroll getting stuck
+    const handleOnLeave = (origin, destination, direction) => {
+        // Allow all navigation
+        return true;
+    };
+
     // Navigate to section by index
     const handleMenuClick = (sectionIndex) => {
         if (fpApiRef.current && SECTION_ANCHORS[sectionIndex]) {
             fpApiRef.current.moveTo(SECTION_ANCHORS[sectionIndex]);
         }
-    };
-
-    // Handle dialog close - save to localStorage
-    const handleCloseDialog = () => {
-        localStorage.setItem('hasSeenUpdateDialog', 'true');
-        setOpenDialog(false);
     };
 
     // Show notification - passed to Contact
@@ -145,8 +141,6 @@ function HomePage({ projects }) {
 
     return (
         <>
-            <UpdateDialog open={openDialog} onClose={handleCloseDialog} />
-
             {/* Neural Canvas background - fixed behind content */}
             <NeuralCanvas />
 
@@ -156,26 +150,29 @@ function HomePage({ projects }) {
 
                 <ReactFullpage
                     afterLoad={handleAfterLoad}
+                    onLeave={handleOnLeave}
                     navigation={true}
                     licenseKey={''}
                     credits={FULLPAGE_CREDITS}
                     slidesNavigation={false}
-                    css3={true}
+                    css3={!isFirefox}
                     verticalCentered={false}
                     controlArrows={true}
                     fitToSection={true}
                     responsiveHeight={0}
                     responsiveWidth={0}
                     slidesNavPosition='bottom'
-                    scrollOverflow={true}
-                    scrollOverflowMacStyle={true}
+                    scrollOverflow={isMobile}
+                    scrollOverflowReset={true}
+                    scrollBar={isFirefox}
+                    autoScrolling={!isFirefox}
                     keyboardScrolling={true}
                     animateAnchor={true}
                     recordHistory={true}
                     scrollingSpeed={700}
-                    fitToSectionDelay={800}
-                    autoScrolling={true}
-                    touchSensitivity={15}
+                    fitToSectionDelay={1000}
+                    touchSensitivity={5}
+                    normalScrollElementTouchThreshold={5}
                     bigSectionsDestination={'top'}
                     anchors={SECTION_ANCHORS}
                     render={({ fullpageApi }) => {
@@ -250,7 +247,7 @@ export default function App() {
     }, []);
 
     return (
-        <BrowserRouter basename="/codertysmi.github.io">
+        <BrowserRouter>
             <PageTransition>
                 <Routes>
                     <Route path="/" element={<HomePage projects={projects} />} />

@@ -76,156 +76,175 @@ export default function Appbar(props) {
         <Box
             sx={{
                 position: 'fixed',
-                top: '20px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: {
-                    xs: `calc(100% - 32px)`,  // 16px cada lado
-                    sm: `calc(100% - 48px)`,  // 24px cada lado
-                    md: `calc(100% - 80px)`,  // 40px cada lado
-                },
-                maxWidth: '1120px',
-                boxSizing: 'border-box',
+                // En móvil: pegado arriba, sin margen. En desktop: con margen
+                top: { xs: 0, md: '20px' },
+                left: 0,
+                right: 0,
+                width: '100%',
                 zIndex: 1100,
-                display: 'flex',
-                alignItems: 'center',
-                padding: { xs: '6px 12px', sm: '8px 24px' },
-                borderRadius: '16px',
-                backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+                pointerEvents: 'none',
             }}
         >
-            {/* Logo Area */}
             <Box
-                onClick={() => props.onMenuClick && props.onMenuClick(0)}
                 sx={{
+                    // En móvil: sin container, full width. En desktop: centrado con max-width
+                    maxWidth: { xs: '100%', md: 'lg' },
+                    mx: 'auto',
+                    px: { xs: 0, md: sectionSpacing.px.md },
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: 1.5,
-                    mr: { xs: 1, md: 4 },
-                    pl: { xs: 0, sm: 1 },
-                    cursor: 'pointer',
-                    transition: 'opacity 0.2s',
-                    '&:hover': { opacity: 0.8 }
-                }}>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: 'rgba(255, 107, 0, 0.1)',
-                    borderRadius: '8px',
-                    p: 0.5
-                }}>
-                    <TerminalIcon sx={{ color: '#FF6B00', fontSize: 24 }} />
-                </Box>
-                <Typography
-                    variant="h6"
+                }}
+            >
+                <Box
                     sx={{
-                        fontWeight: 700,
-                        fontSize: '1.1rem',
-                        color: '#fff',
+                        width: '100%',
+                        maxWidth: { xs: '100%', md: '1120px' },
+                        boxSizing: 'border-box',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        padding: { xs: '10px 16px', sm: '8px 24px' },
+                        // En móvil: sin border-radius, en desktop: con border-radius
+                        borderRadius: { xs: 0, md: '16px' },
+                        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                        backdropFilter: 'blur(12px)',
+                        // En móvil: solo borde inferior, en desktop: borde completo
+                        border: { xs: 'none', md: '1px solid rgba(255, 255, 255, 0.08)' },
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                        boxShadow: { xs: 'none', md: '0 4px 24px rgba(0, 0, 0, 0.15)' },
+                        pointerEvents: 'auto',
                     }}
                 >
-                    <Box component="span">Alejandro</Box>
-                    <Box component="span" sx={{ color: '#FF6B00', ml: 0.5 }}>Gasca</Box>
-                </Typography>
-            </Box>
-
-            {/* Desktop Navigation */}
-            {!isMobile && (
-                <Box sx={{ display: 'flex', gap: 1, mr: 4 }}>
-                    {navItems.map((item, index) => (
-                        <NavButton
-                            key={index}
-                            disableRipple
-                            onClick={() => props.onMenuClick && props.onMenuClick(item.section)}
+                    {/* Logo Area */}
+                    <Box
+                        onClick={() => props.onMenuClick && props.onMenuClick(0)}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1.5,
+                            mr: { xs: 1, md: 4 },
+                            pl: { xs: 0, sm: 1 },
+                            cursor: 'pointer',
+                            transition: 'opacity 0.2s',
+                            '&:hover': { opacity: 0.8 }
+                        }}>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(255, 107, 0, 0.1)',
+                            borderRadius: '8px',
+                            p: 0.5
+                        }}>
+                            <TerminalIcon sx={{ color: '#FF6B00', fontSize: 24 }} />
+                        </Box>
+                        <Typography
+                            variant="h6"
                             sx={{
-                                backgroundColor: props.activeSection === item.section ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                                color: props.activeSection === item.section ? '#fff' : 'var(--color-text)',
-                                '&:hover': {
-                                    backgroundColor: props.activeSection === item.section ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.08)',
-                                }
+                                fontWeight: 700,
+                                fontSize: '1.1rem',
+                                color: '#fff',
+                                display: 'flex',
+                                alignItems: 'center'
                             }}
                         >
-                            {item.label}
-                        </NavButton>
-                    ))}
-                </Box>
-            )}
+                            <Box component="span">Alejandro</Box>
+                            <Box component="span" sx={{ color: '#FF6B00', ml: 0.5 }}>Gasca</Box>
+                        </Typography>
+                    </Box>
 
-            {/* Actions Area */}
-            <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
-                {!isMobile && (
-                    <CTAButton onClick={() => props.onMenuClick && props.onMenuClick(5)}>
-                        Let's Talk
-                    </CTAButton>
-                )}
-
-                {/* Mobile Menu Toggle */}
-                {isMobile && (
-                    <>
-                        <IconButton
-                            size="medium"
-                            onClick={handleMenu}
-                            sx={{ color: '#fff' }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                            sx={{
-                                '& .MuiPaper-root': {
-                                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
-                                    backdropFilter: 'blur(10px)',
-                                    borderRadius: '12px',
-                                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                                    mt: 1.5,
-                                    minWidth: '180px',
-                                    py: 1,
-                                    px: 0.5
-                                }
-                            }}
-                        >
+                    {/* Desktop Navigation */}
+                    {!isMobile && (
+                        <Box sx={{ display: 'flex', gap: 1, mr: 4 }}>
                             {navItems.map((item, index) => (
-                                <MenuItem
+                                <NavButton
                                     key={index}
-                                    onClick={() => handleMenuItemClick(item.section)}
-                                    selected={props.activeSection === item.section}
+                                    disableRipple
+                                    onClick={() => props.onMenuClick && props.onMenuClick(item.section)}
                                     sx={{
-                                        color: '#fff',
-                                        fontSize: '0.95rem',
-                                        py: 1.5,
-                                        px: 3,
-                                        borderRadius: '8px',
-                                        mx: 0.5
+                                        backgroundColor: props.activeSection === item.section ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                                        color: props.activeSection === item.section ? '#fff' : 'var(--color-text)',
+                                        '&:hover': {
+                                            backgroundColor: props.activeSection === item.section ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.08)',
+                                        }
                                     }}
                                 >
                                     {item.label}
-                                </MenuItem>
+                                </NavButton>
                             ))}
-                            <MenuItem
-                                onClick={() => handleMenuItemClick(5)}
-                                sx={{
-                                    color: '#FF6B00',
-                                    fontWeight: 600,
-                                    fontSize: '0.95rem',
-                                    py: 1.5,
-                                    px: 3,
-                                    borderRadius: '8px',
-                                    mx: 0.5
-                                }}
-                            >
+                        </Box>
+                    )}
+
+                    {/* Actions Area */}
+                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        {!isMobile && (
+                            <CTAButton onClick={() => props.onMenuClick && props.onMenuClick(5)}>
                                 Let's Talk
-                            </MenuItem>
-                        </Menu>
-                    </>
-                )}
+                            </CTAButton>
+                        )}
+
+                        {/* Mobile Menu Toggle */}
+                        {isMobile && (
+                            <>
+                                <IconButton
+                                    size="medium"
+                                    onClick={handleMenu}
+                                    sx={{ color: '#fff' }}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                    sx={{
+                                        '& .MuiPaper-root': {
+                                            backgroundColor: 'rgba(30, 30, 30, 0.95)',
+                                            backdropFilter: 'blur(10px)',
+                                            borderRadius: '12px',
+                                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                                            mt: 1.5,
+                                            minWidth: '180px',
+                                            py: 1,
+                                            px: 0.5
+                                        }
+                                    }}
+                                >
+                                    {navItems.map((item, index) => (
+                                        <MenuItem
+                                            key={index}
+                                            onClick={() => handleMenuItemClick(item.section)}
+                                            selected={props.activeSection === item.section}
+                                            sx={{
+                                                color: '#fff',
+                                                fontSize: '0.95rem',
+                                                py: 1.5,
+                                                px: 3,
+                                                borderRadius: '8px',
+                                                mx: 0.5
+                                            }}
+                                        >
+                                            {item.label}
+                                        </MenuItem>
+                                    ))}
+                                    <MenuItem
+                                        onClick={() => handleMenuItemClick(5)}
+                                        sx={{
+                                            color: '#FF6B00',
+                                            fontWeight: 600,
+                                            fontSize: '0.95rem',
+                                            py: 1.5,
+                                            px: 3,
+                                            borderRadius: '8px',
+                                            mx: 0.5
+                                        }}
+                                    >
+                                        Let's Talk
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                        )}
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

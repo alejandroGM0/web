@@ -931,6 +931,40 @@
 }
 
 /* ==========================================
+   FIREFOX-SPECIFIC FIXES
+   Firefox has issues with fullpage.js scroll detection
+   ========================================== */
+
+/* Firefox scroll fix */
+@-moz-document url-prefix() {
+    .fp-overflow {
+        overflow: visible !important;
+    }
+    
+    .section {
+        overflow: visible !important;
+    }
+    
+    /* Ensure proper scroll behavior in Firefox */
+    html, body {
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Alternative Firefox detection */
+@supports (-moz-appearance: none) {
+    .fp-overflow {
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 100vh;
+    }
+    
+    .section .fp-overflow {
+        overflow: visible !important;
+    }
+}
+
+/* ==========================================
    PROJECT DETAIL PAGE - Fix double scrollbar
    These rules activate IMMEDIATELY when body
    has data-page="project-detail" attribute

@@ -16,7 +16,7 @@ const getTechColor = (tech) => {
 // Badge type colors
 const getBadgeStyle = (type) => {
     const styles = {
-        'Full Stack': { bg: 'rgba(74, 222, 128, 0.15)', color: '#4ade80', border: 'rgba(74, 222, 128, 0.3)' },
+        'Full Stack': { bg: 'rgba(249, 115, 22, 0.15)', color: '#f97316', border: 'rgba(249, 115, 22, 0.3)' },
         'Frontend': { bg: 'rgba(96, 165, 250, 0.15)', color: '#60a5fa', border: 'rgba(96, 165, 250, 0.3)' },
         'Backend': { bg: 'rgba(251, 146, 60, 0.15)', color: '#fb923c', border: 'rgba(251, 146, 60, 0.3)' },
         'Bot': { bg: 'rgba(167, 139, 250, 0.15)', color: '#a78bfa', border: 'rgba(167, 139, 250, 0.3)' },
@@ -100,6 +100,20 @@ function ProjectCard({ project, index, isVisible }) {
                         </Box>
                     )}
 
+                    {/* Gradient Overlay for Badge Visibility */}
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            height: '60px',
+                            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)',
+                            zIndex: 1,
+                            pointerEvents: 'none',
+                        }}
+                    />
+
                     {/* Badge */}
                     <Box
                         sx={{
@@ -115,6 +129,7 @@ function ProjectCard({ project, index, isVisible }) {
                             border: `1px solid ${badgeStyle.border}`,
                             textTransform: 'uppercase',
                             letterSpacing: '0.3px',
+                            zIndex: 2,
                         }}
                     >
                         {badgeType}

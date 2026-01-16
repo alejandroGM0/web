@@ -27,7 +27,7 @@ export default function ExperienceGrid() {
             maxWidth="xl"
             sx={{
                 width: '100%',
-                minHeight: { xs: 'auto', md: '100%' },
+                minHeight: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

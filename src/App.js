@@ -93,9 +93,6 @@ function HomePage({ projects }) {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    
-    // Detect Firefox
-    const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
     // Rebuild fullpage.js after projects load to recalculate section heights
     // This fixes mobile truncation issue where fp-overflow height is calculated before content loads
@@ -114,12 +111,6 @@ function HomePage({ projects }) {
         if (destination) {
             setPage(destination.index);
         }
-    };
-
-    // Firefox fix: prevent scroll getting stuck
-    const handleOnLeave = (origin, destination, direction) => {
-        // Allow all navigation
-        return true;
     };
 
     // Navigate to section by index
@@ -150,29 +141,27 @@ function HomePage({ projects }) {
 
                 <ReactFullpage
                     afterLoad={handleAfterLoad}
-                    onLeave={handleOnLeave}
                     navigation={true}
                     licenseKey={''}
                     credits={FULLPAGE_CREDITS}
                     slidesNavigation={false}
-                    css3={!isFirefox}
+                    css3={true}
                     verticalCentered={false}
                     controlArrows={true}
                     fitToSection={true}
                     responsiveHeight={0}
                     responsiveWidth={0}
                     slidesNavPosition='bottom'
-                    scrollOverflow={isMobile}
+                    scrollOverflow={true}
                     scrollOverflowReset={true}
-                    scrollBar={isFirefox}
-                    autoScrolling={!isFirefox}
+                    scrollBar={false}
+                    autoScrolling={true}
                     keyboardScrolling={true}
                     animateAnchor={true}
                     recordHistory={true}
                     scrollingSpeed={700}
                     fitToSectionDelay={1000}
-                    touchSensitivity={5}
-                    normalScrollElementTouchThreshold={5}
+                    touchSensitivity={15}
                     bigSectionsDestination={'top'}
                     anchors={SECTION_ANCHORS}
                     render={({ fullpageApi }) => {

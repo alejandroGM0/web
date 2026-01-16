@@ -12,7 +12,7 @@ export async function loadProjectsAsync() {
                 try {
                     // Use process.env.PUBLIC_URL for correct path in production
                     const basePath = process.env.PUBLIC_URL || '';
-                    const response = await fetch(`${basePath}/content/projects/${slug}.md`);
+                    const response = await fetch(`${basePath}/content/projects/${slug}.txt`);
 
                     if (!response.ok) {
                         console.warn(`Failed to load ${slug}: ${response.status}`);
@@ -22,7 +22,7 @@ export async function loadProjectsAsync() {
                     const markdown = await response.text();
                     const frontmatter = parseFrontmatter(markdown);
 
-                    console.log('Loaded project:', slug, '| Title:', frontmatter.title);
+
 
                     return {
                         slug,
@@ -37,7 +37,7 @@ export async function loadProjectsAsync() {
         );
 
         const validProjects = projects.filter(p => p && p.title);
-        console.log('Total projects loaded:', validProjects.length);
+
 
         return validProjects.length > 0 ? validProjects : getDefaultProjects();
     } catch (error) {

@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.d710201f.css",
+    "main.css": "/static/css/main.568a54fe.css",
     "main.js": "/static/js/main.3a4a30d1.js",
     "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
     "static/media/gt_logo2.png": "/static/media/gt_logo2.64e55f972db41b65cd10.png",
@@ -8,12 +8,12 @@
     "static/media/fiver_logo.png": "/static/media/fiver_logo.1718335177e2c2a261b2.png",
     "static/media/logo.png": "/static/media/logo.0f558661f2f3733d65c3.png",
     "index.html": "/index.html",
-    "main.d710201f.css.map": "/static/css/main.d710201f.css.map",
+    "main.568a54fe.css.map": "/static/css/main.568a54fe.css.map",
     "main.3a4a30d1.js.map": "/static/js/main.3a4a30d1.js.map",
     "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d710201f.css",
+    "static/css/main.568a54fe.css",
     "static/js/main.3a4a30d1.js"
   ]
 }

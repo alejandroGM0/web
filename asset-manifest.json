@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.568a54fe.css",
-    "main.js": "/static/js/main.3a4a30d1.js",
+    "main.js": "/static/js/main.52d477aa.js",
     "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
     "static/media/gt_logo2.png": "/static/media/gt_logo2.64e55f972db41b65cd10.png",
     "static/media/Upwork-Logo.png": "/static/media/Upwork-Logo.0bc2f59d3a8b5388feb0.png",
@@ -9,11 +9,11 @@
     "static/media/logo.png": "/static/media/logo.0f558661f2f3733d65c3.png",
     "index.html": "/index.html",
     "main.568a54fe.css.map": "/static/css/main.568a54fe.css.map",
-    "main.3a4a30d1.js.map": "/static/js/main.3a4a30d1.js.map",
+    "main.52d477aa.js.map": "/static/js/main.52d477aa.js.map",
     "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.568a54fe.css",
-    "static/js/main.3a4a30d1.js"
+    "static/js/main.52d477aa.js"
   ]
 }

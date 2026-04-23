@@ -68,6 +68,7 @@ export default function Project(props) {
                             component="a"
                             href={props.githubUrl}
                             target="_blank"
+                            rel="noopener noreferrer"
                             size="small"
                             startIcon={<GitHubIcon />}
                         >
@@ -79,6 +80,7 @@ export default function Project(props) {
                             component="a"
                             href={props.liveUrl}
                             target="_blank"
+                            rel="noopener noreferrer"
                             size="small"
                             startIcon={<LaunchIcon />}
                         >

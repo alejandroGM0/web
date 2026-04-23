@@ -150,6 +150,8 @@ export default function Contact({ page, onShowNotification }) {
             <IconButton
               href="https://github.com/alejandroGM0"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
               sx={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -164,6 +166,8 @@ export default function Contact({ page, onShowNotification }) {
             <IconButton
               href="https://www.linkedin.com/in/alejandro-gasca-72608136b/"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
               sx={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',

@@ -86,9 +86,12 @@ export default function ProjectDetail({ projects = [] }) {
     const slides = useMemo(() => {
         if (!project) return [];
         const prefix = process.env.PUBLIC_URL || '';
+        // Fix: when PUBLIC_URL is '.', paths resolve relative to current route
+        // For images, we always want root-relative paths
+        const imagePrefix = (prefix === '.' || prefix === '') ? '' : prefix;
         const arr = [];
         if (project.coverImage) {
-            const url = project.coverImage.startsWith('http') ? project.coverImage : `${prefix}${project.coverImage}`;
+            const url = project.coverImage.startsWith('http') ? project.coverImage : `${imagePrefix}${project.coverImage}`;
             arr.push({ url, caption: project.title });
         }
         if (project.images?.length > 0) {
@@ -96,7 +99,7 @@ export default function ProjectDetail({ projects = [] }) {
                 const isObj = typeof img === 'object';
                 const rawUrl = isObj ? img.url : img;
                 const caption = isObj ? img.caption : `Screenshot ${i + 1}`;
-                const url = rawUrl.startsWith('http') ? rawUrl : `${prefix}${rawUrl}`;
+                const url = rawUrl.startsWith('http') ? rawUrl : `${imagePrefix}${rawUrl}`;
                 arr.push({ url, caption });
             });
         }
@@ -118,9 +121,17 @@ export default function ProjectDetail({ projects = [] }) {
         };
     }, [slug]);
 
-    useEffect(() => { setCurrentSlide(0); }, [slug]);
+    useEffect(() => {
+        setCurrentSlide(0);
+        setActiveCodeTab(0);
+    }, [slug]);
+
+    const safeCodeTab = project?.codeSnippets?.length
+        ? Math.min(activeCodeTab, project.codeSnippets.length - 1)
+        : 0;
 
     const changeSlide = (dir) => {
+        if (slides.length === 0) return;
         let idx = currentSlide + dir;
         if (idx < 0) idx = slides.length - 1;
         if (idx >= slides.length) idx = 0;
@@ -424,8 +435,8 @@ export default function ProjectDetail({ projects = [] }) {
                                                                 fontWeight: 500,
                                                                 borderRadius: '6px',
                                                                 minWidth: 'auto',
-                                                                backgroundColor: activeCodeTab === idx ? 'rgba(255,255,255,0.1)' : 'transparent',
-                                                                color: activeCodeTab === idx ? 'white' : 'rgba(255,255,255,0.5)',
+                                                                backgroundColor: safeCodeTab === idx ? 'rgba(255,255,255,0.1)' : 'transparent',
+                                                                color: safeCodeTab === idx ? 'white' : 'rgba(255,255,255,0.5)',
                                                                 '&:hover': { color: 'white' }
                                                             }}
                                                         >
@@ -436,12 +447,12 @@ export default function ProjectDetail({ projects = [] }) {
                                             </Box>
                                             <Box sx={{ p: { xs: 2, md: 3 }, backgroundColor: 'rgba(0,0,0,0.2)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                                 <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.875rem' } }}>
-                                                    {project.codeSnippets[activeCodeTab || 0].description}
+                                                    {project.codeSnippets[safeCodeTab]?.description}
                                                 </Typography>
                                             </Box>
                                             <Box sx={{ p: { xs: 2, md: 3 }, backgroundColor: 'rgba(0,0,0,0.4)', fontFamily: 'monospace', fontSize: { xs: '0.7rem', md: '0.8rem' }, color: '#60a5fa', overflowX: 'auto' }}>
                                                 <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                                                    {project.codeSnippets[activeCodeTab || 0].code}
+                                                    {project.codeSnippets[safeCodeTab]?.code}
                                                 </pre>
                                             </Box>
                                         </TiltCard>
@@ -496,6 +507,7 @@ export default function ProjectDetail({ projects = [] }) {
                                                     startIcon={project.demoDisabled ? <RocketLaunchIcon sx={{ opacity: 0.5 }} /> : <RocketLaunchIcon />}
                                                     href={project.demoDisabled ? undefined : (project.demoUrl || project.liveUrl)}
                                                     target={project.demoDisabled ? undefined : "_blank"}
+                                                    rel={project.demoDisabled ? undefined : "noopener noreferrer"}
                                                     disabled={!!project.demoDisabled}
                                                     fullWidth
                                                     sx={{
@@ -516,7 +528,7 @@ export default function ProjectDetail({ projects = [] }) {
                                                 </PrimaryButton>
                                             )}
                                             {project.githubUrl && (
-                                                <SecondaryButton startIcon={<CodeIcon />} href={project.githubUrl} target="_blank" fullWidth sx={{ py: 1.5 }}>Source Code</SecondaryButton>
+                                                <SecondaryButton startIcon={<CodeIcon />} href={project.githubUrl} target="_blank" rel="noopener noreferrer" fullWidth sx={{ py: 1.5 }}>Source Code</SecondaryButton>
                                             )}
                                         </Box>
                                     </Box>

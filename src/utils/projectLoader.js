@@ -5,32 +5,34 @@ const PROJECT_SLUGS = ['entity-swarm', 'drone-delivery', 'blablacar-clone', 'mus
 /**
  * Load all projects asynchronously from public folder
  */
+const isDev = process.env.NODE_ENV !== 'production';
+
 export async function loadProjectsAsync() {
     try {
+        // Cache buster to avoid CDN serving stale files
+        const cacheBuster = `?v=${Date.now()}`;
+
         const projects = await Promise.all(
             PROJECT_SLUGS.map(async (slug) => {
                 try {
-                    // Use process.env.PUBLIC_URL for correct path in production
                     const basePath = process.env.PUBLIC_URL || '';
-                    const response = await fetch(`${basePath}/content/projects/${slug}.txt`);
+                    const url = `${basePath}/content/projects/${slug}-v3.json${cacheBuster}`;
+
+                    const response = await fetch(url);
 
                     if (!response.ok) {
-                        console.warn(`Failed to load ${slug}: ${response.status}`);
+                        if (isDev) console.error(`[ProjectLoader] Failed to load ${slug}: ${response.status}`);
                         return null;
                     }
 
-                    const markdown = await response.text();
-                    const frontmatter = parseFrontmatter(markdown);
-
-
+                    const jsonData = await response.json();
 
                     return {
                         slug,
-                        ...frontmatter,
-                        content: getContent(markdown),
+                        ...jsonData,
                     };
                 } catch (err) {
-                    console.warn(`Error loading ${slug}:`, err);
+                    if (isDev) console.error(`[ProjectLoader] Error loading ${slug}:`, err);
                     return null;
                 }
             })
@@ -38,10 +40,13 @@ export async function loadProjectsAsync() {
 
         const validProjects = projects.filter(p => p && p.title);
 
+        if (validProjects.length === 0 && isDev) {
+            console.warn('[ProjectLoader] No valid projects, using defaults');
+        }
 
         return validProjects.length > 0 ? validProjects : getDefaultProjects();
     } catch (error) {
-        console.warn('Could not load projects:', error);
+        if (isDev) console.error('[ProjectLoader] Fatal error:', error);
         return getDefaultProjects();
     }
 }
@@ -75,7 +80,7 @@ function parseFrontmatter(markdown) {
                     const parsed = new Function('return ' + buffer)();
                     frontmatter[currentKey] = parsed;
                 } catch (e) {
-                    console.warn('Error parsing frontmatter array:', buffer, e);
+                    if (isDev) console.warn('Error parsing frontmatter array:', buffer, e);
                     frontmatter[currentKey] = [];
                 }
                 inArray = false;

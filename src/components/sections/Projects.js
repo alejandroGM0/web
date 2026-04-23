@@ -35,7 +35,7 @@ function ProjectCard({ project, index, isVisible }) {
         navigate(`/project/${project.slug}`);
     };
 
-    const badgeType = project.badgeType || project.technologies[0] || 'Project';
+    const badgeType = project.badgeType || project.technologies?.[0] || 'Project';
     const badgeStyle = getBadgeStyle(badgeType);
 
     return (

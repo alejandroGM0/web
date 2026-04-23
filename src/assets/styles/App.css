@@ -932,35 +932,20 @@
 
 /* ==========================================
    FIREFOX-SPECIFIC FIXES
-   Firefox has issues with fullpage.js scroll detection
+   Firefox needs proper scroll handling for fullpage.js
    ========================================== */
 
-/* Firefox scroll fix */
+/* Firefox: ensure smooth wheel event handling */
 @-moz-document url-prefix() {
-    .fp-overflow {
-        overflow: visible !important;
-    }
-    
-    .section {
-        overflow: visible !important;
-    }
-    
-    /* Ensure proper scroll behavior in Firefox */
-    html, body {
+
+    html,
+    body {
         scroll-behavior: auto !important;
     }
-}
 
-/* Alternative Firefox detection */
-@supports (-moz-appearance: none) {
-    .fp-overflow {
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 100vh;
-    }
-    
-    .section .fp-overflow {
-        overflow: visible !important;
+    /* Firefox needs explicit touch-action for proper scroll detection */
+    .section {
+        touch-action: none;
     }
 }
 

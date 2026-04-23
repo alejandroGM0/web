@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { useTheme } from '@mui/material/styles';
@@ -94,15 +94,20 @@ function HomePage({ projects }) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-    // Rebuild fullpage.js after projects load to recalculate section heights
-    // This fixes mobile truncation issue where fp-overflow height is calculated before content loads
+    // scrollOverflow helps mobile internal section scrolling.
+    // Firefox has known bugs with scrollOverflow - always disable for Firefox.
+    const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().includes('firefox');
+    const enableScrollOverflow = isFirefox ? false : isMobile;
+
+    // Rebuild fullpage.js after projects load to recalculate section heights.
+    // Fixes mobile truncation where fp-overflow height is calculated before content loads.
     useEffect(() => {
         if (projects.length > 0 && fpApiRef.current && !hasRebuiltRef.current) {
             hasRebuiltRef.current = true;
-            // Small delay to let React render the projects first
-            setTimeout(() => {
-                fpApiRef.current.reBuild();
+            const timeoutId = setTimeout(() => {
+                if (fpApiRef.current) fpApiRef.current.reBuild();
             }, 150);
+            return () => clearTimeout(timeoutId);
         }
     }, [projects]);
 
@@ -152,16 +157,16 @@ function HomePage({ projects }) {
                     responsiveHeight={0}
                     responsiveWidth={0}
                     slidesNavPosition='bottom'
-                    scrollOverflow={true}
-                    scrollOverflowReset={true}
+                    scrollOverflow={enableScrollOverflow}
+                    scrollOverflowReset={enableScrollOverflow}
                     scrollBar={false}
                     autoScrolling={true}
                     keyboardScrolling={true}
                     animateAnchor={true}
                     recordHistory={true}
-                    scrollingSpeed={700}
+                    scrollingSpeed={900}
                     fitToSectionDelay={1000}
-                    touchSensitivity={15}
+                    touchSensitivity={10}
                     bigSectionsDestination={'top'}
                     anchors={SECTION_ANCHORS}
                     render={({ fullpageApi }) => {
@@ -209,7 +214,6 @@ function HomePage({ projects }) {
                 />
             </div>
 
-            {/* Global Notification - OUTSIDE of fullpage wrapper */}
             <GlobalNotification
                 open={notification.open}
                 onClose={closeNotification}

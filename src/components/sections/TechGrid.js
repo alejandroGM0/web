@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
-import Fade from '@mui/material/Fade';
 import SectionHeader from '../ui/SectionHeader';
 import { sectionSpacing } from '../../config/layout';
 
@@ -86,14 +85,7 @@ const ROW_3 = [
     { title: "Cassandra", iconName: "cassandra", color: "#1287B1" },
 ];
 
-export default function TechGrid({ page }) {
-    const isActive = page === 2;
-    const [show, setShow] = React.useState(isActive || page === undefined);
-
-    React.useEffect(() => {
-        if (isActive) setShow(true);
-    }, [isActive]);
-
+export default function TechGrid() {
     return (
         <Container
             maxWidth="xl"

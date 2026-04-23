@@ -35,7 +35,7 @@ export default function Hero({ isMobile, onContactClick, onScrollDown }) {
                         )}
                     </div>
                     <p className="hero-description">
-                        I bridge the gap between hardware and software. specializing in building
+                        I bridge the gap between hardware and software, specializing in building
                         creative solutions that matter.
                     </p>
                     <div className="hero-buttons">

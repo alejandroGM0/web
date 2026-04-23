@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Container } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { SecondaryButton } from './ui/Buttons';
-import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import CodeIcon from '@mui/icons-material/Code';
 import PsychologyIcon from '@mui/icons-material/Psychology';
@@ -110,8 +109,65 @@ export default function About(props) {
                                 </Typography>
                             </Typography>
 
+                            {/* Open Source Contributor Badge - eye-catching */}
+                            <Box
+                                component="a"
+                                href="https://github.com/alejandroGM0"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: 1.25,
+                                    mt: 1,
+                                    mb: 2.5,
+                                    px: 2,
+                                    py: 1,
+                                    borderRadius: '999px',
+                                    textDecoration: 'none',
+                                    cursor: 'pointer',
+                                    position: 'relative',
+                                    background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.18), rgba(251, 146, 60, 0.08))',
+                                    border: '1px solid rgba(249, 115, 22, 0.45)',
+                                    boxShadow: '0 0 24px rgba(249, 115, 22, 0.15)',
+                                    transition: 'all 0.3s ease',
+                                    '&:hover': {
+                                        transform: 'translateY(-2px)',
+                                        background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.28), rgba(251, 146, 60, 0.15))',
+                                        borderColor: 'rgba(249, 115, 22, 0.7)',
+                                        boxShadow: '0 0 32px rgba(249, 115, 22, 0.3)',
+                                    },
+                                    '@keyframes pulseDot': {
+                                        '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                                        '50%': { opacity: 0.6, transform: 'scale(1.25)' },
+                                    },
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        width: 8,
+                                        height: 8,
+                                        borderRadius: '50%',
+                                        backgroundColor: '#4ade80',
+                                        boxShadow: '0 0 8px #4ade80',
+                                        animation: 'pulseDot 1.8s ease-in-out infinite',
+                                    }}
+                                />
+                                <GitHubIcon sx={{ fontSize: 18, color: '#fb923c' }} />
+                                <Typography
+                                    sx={{
+                                        color: 'white',
+                                        fontWeight: 600,
+                                        fontSize: { xs: '0.8rem', md: '0.875rem' },
+                                        letterSpacing: '0.02em',
+                                    }}
+                                >
+                                    Open Source Contributor
+                                </Typography>
+                            </Box>
+
                             {/* Stats section - like reference */}
-                            <Grid container spacing={{ xs: 2, md: 3 }} sx={{ pt: 2, mb: 3 }}>
+                            <Grid container spacing={{ xs: 2, md: 3 }} sx={{ pt: 1, mb: 3 }}>
                                 {stats.map((stat, index) => (
                                     <Grid item xs={6} key={index}>
                                         <Typography

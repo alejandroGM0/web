@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.568a54fe.css",
-    "main.js": "/static/js/main.52d477aa.js",
+    "main.css": "/static/css/main.3ff87347.css",
+    "main.js": "/static/js/main.24c84fb9.js",
+    "static/js/911.66e90bf0.chunk.js": "/static/js/911.66e90bf0.chunk.js",
     "static/js/787.1ed0c42c.chunk.js": "/static/js/787.1ed0c42c.chunk.js",
-    "static/media/gt_logo2.png": "/static/media/gt_logo2.64e55f972db41b65cd10.png",
-    "static/media/Upwork-Logo.png": "/static/media/Upwork-Logo.0bc2f59d3a8b5388feb0.png",
-    "static/media/fiver_logo.png": "/static/media/fiver_logo.1718335177e2c2a261b2.png",
-    "static/media/logo.png": "/static/media/logo.0f558661f2f3733d65c3.png",
+    "static/js/488.018a9a9c.chunk.js": "/static/js/488.018a9a9c.chunk.js",
     "index.html": "/index.html",
-    "main.568a54fe.css.map": "/static/css/main.568a54fe.css.map",
-    "main.52d477aa.js.map": "/static/js/main.52d477aa.js.map",
-    "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map"
+    "main.3ff87347.css.map": "/static/css/main.3ff87347.css.map",
+    "main.24c84fb9.js.map": "/static/js/main.24c84fb9.js.map",
+    "911.66e90bf0.chunk.js.map": "/static/js/911.66e90bf0.chunk.js.map",
+    "787.1ed0c42c.chunk.js.map": "/static/js/787.1ed0c42c.chunk.js.map",
+    "488.018a9a9c.chunk.js.map": "/static/js/488.018a9a9c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.568a54fe.css",
-    "static/js/main.52d477aa.js"
+    "static/css/main.3ff87347.css",
+    "static/js/main.24c84fb9.js"
   ]
 }

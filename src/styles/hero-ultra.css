@@ -1,0 +1,196 @@
+/* ── Ultra signature animation ── */
+.hero-ultra__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #060607;
+}
+
+.hero-ultra__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-ultra__orb--1 {
+  width: min(55vw, 520px);
+  height: min(55vw, 520px);
+  top: -8%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(255, 122, 24, 0.22), transparent 68%);
+}
+
+.hero-ultra__orb--2 {
+  width: min(48vw, 460px);
+  height: min(48vw, 460px);
+  bottom: -12%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(255, 158, 60, 0.12), transparent 70%);
+}
+
+.hero-ultra__mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 122, 24, 0.04), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(120, 80, 255, 0.03), transparent 50%);
+  animation: ultraMeshPulse 14s ease-in-out infinite alternate;
+}
+
+.hero-ultra__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.hero-ultra__shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 180, 100, 0.025) 45%,
+    rgba(255, 122, 24, 0.05) 50%,
+    rgba(255, 180, 100, 0.025) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+@keyframes ultraMeshPulse {
+  0% { opacity: 0.85; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.03); }
+}
+
+.hero-ultra__wrap {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-ultra__wrap .btn {
+  pointer-events: auto;
+}
+
+.hero-ultra__wrap--editorial,
+.hero-ultra__wrap--split .hero__split-copy {
+  text-align: left;
+}
+
+.hero-ultra__wrap--center {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-ultra__rule {
+  width: clamp(64px, 10vw, 100px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform-origin: left;
+  margin-bottom: 1.6rem;
+}
+
+.hero-ultra__wrap--center .hero-ultra__rule {
+  transform-origin: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-ultra__rule-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(64px, 10vw, 100px);
+  height: 8px;
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 24, 0.35), transparent);
+  filter: blur(6px);
+  transform-origin: left;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero-ultra__eyebrow {
+  margin-bottom: 1.4rem;
+}
+
+.hero-ultra__title {
+  font-size: clamp(3.2rem, 11vw, 8.2rem);
+  line-height: 0.94;
+  margin: 0 0 1.2rem;
+  transform-style: preserve-3d;
+}
+
+.hero-ultra__char {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  text-shadow: 0 0 40px rgba(255, 122, 24, 0.08);
+}
+
+.hero-ultra__char--accent {
+  background: linear-gradient(
+    120deg,
+    #ffd0a0 0%,
+    #ff7a18 40%,
+    #ff5e3a 70%,
+    #ffb56b 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ultraAccentShift 6s ease-in-out infinite;
+}
+
+@keyframes ultraAccentShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.hero-ultra__tagline {
+  font-family: "Inter Tight", sans-serif;
+  font-size: clamp(1.3rem, 3.2vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  max-width: 22ch;
+}
+
+.hero-ultra__wrap--center .hero-ultra__tagline {
+  max-width: none;
+}
+
+.hero-ultra__word {
+  display: inline-block;
+  margin-right: 0.28em;
+}
+
+.hero-ultra__sub {
+  max-width: 52ch;
+  margin: 0 0 1.6rem;
+  line-height: 1.6;
+}
+
+.hero--has-ultra .hero__veil {
+  background:
+    radial-gradient(55% 50% at 50% 45%, rgba(6, 6, 7, 0.35) 0%, transparent 65%),
+    linear-gradient(180deg, rgba(6, 6, 7, 0.45) 0%, transparent 28%, rgba(6, 6, 7, 0.9) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ultra__mesh,
+  .hero-ultra__shimmer,
+  .hero-ultra__char--accent {
+    animation: none !important;
+  }
+}

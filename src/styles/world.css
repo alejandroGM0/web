@@ -1,0 +1,512 @@
+/* ============================================================
+   Single 3D-world experience — HUD + in-world content panels
+   ============================================================ */
+
+.experience {
+  position: relative;
+  width: 100%;
+}
+
+/* Fixed canvas the whole journey plays on */
+.experience__stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.experience__stage canvas {
+  display: block;
+}
+
+/* Tall invisible spacer that turns page scroll into journey progress */
+.experience__scroll {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ---------- In-world HTML content ---------- */
+
+.station-wrapper {
+  pointer-events: none;
+  user-select: none;
+}
+
+.station {
+  transition: opacity 0.18s linear, transform 0.18s linear;
+  will-change: opacity, transform;
+  text-align: left;
+}
+
+.accent {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* shared panel typography */
+.panel {
+  color: var(--text);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+.panel__eyebrow,
+.panel__tag {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 18px;
+}
+
+/* Hero */
+.panel--hero {
+  text-align: center;
+}
+.panel--hero .panel__eyebrow {
+  letter-spacing: 0.4em;
+}
+.panel__name {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+.panel__tagline {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  margin: 22px 0 10px;
+}
+.panel__sub {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 auto;
+}
+.panel__hint {
+  display: inline-block;
+  margin-top: 34px;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* About */
+.panel--about .panel__line {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+.panel__joke {
+  font-size: 17px;
+  color: var(--text-faint);
+  font-style: italic;
+  margin: 18px 0 26px;
+}
+.panel__exp {
+  border-left: 2px solid var(--glass-border-strong);
+  padding-left: 18px;
+}
+.panel__exp-label {
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+}
+.panel__exp-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+.panel__exp-org {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.panel__exp-item p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 6px 0 0;
+}
+
+/* Project card — denser, gets a glass surface */
+.card {
+  --accent: #ff7a18;
+  background: linear-gradient(
+    160deg,
+    rgba(20, 20, 26, 0.72),
+    rgba(10, 10, 14, 0.62)
+  );
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  padding: 22px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 55%, transparent), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.card__media {
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid var(--glass-border);
+  aspect-ratio: 16 / 9;
+}
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.card__kind {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+.card__period {
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+}
+.card__title {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  margin: 0 0 12px;
+}
+.card__blurb {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0 0 16px;
+}
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.tagchip {
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-dim);
+}
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  transition: gap 0.2s var(--ease);
+}
+.card__link:hover {
+  gap: 12px;
+}
+
+/* Stack */
+.panel--stack {
+  text-align: center;
+}
+.panel__h2 {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: -0.03em;
+  margin: 0 0 26px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: rgba(15, 15, 22, 0.55);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  font-size: 15px;
+  font-weight: 500;
+}
+.chip i {
+  font-size: 19px;
+  color: var(--accent-soft);
+}
+
+/* Contact */
+.panel--contact {
+  text-align: center;
+}
+.panel__cta {
+  display: block;
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin: 6px 0 22px;
+  color: var(--text);
+}
+.panel__email {
+  display: inline-block;
+  font-size: 20px;
+  color: var(--text);
+  border-bottom: 1px solid var(--glass-border-strong);
+  padding-bottom: 3px;
+  margin: 8px 0 24px;
+  transition: color 0.2s var(--ease);
+}
+.panel__email:hover {
+  color: var(--accent);
+}
+.panel__links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.panel__links a {
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.panel__links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.panel__footer {
+  margin-top: 30px;
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- HUD ---------- */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  font-feature-settings: "ss01";
+}
+.hud a,
+.hud button {
+  pointer-events: auto;
+}
+
+.hud__brand {
+  position: absolute;
+  top: 26px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hud__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px 2px var(--accent);
+  animation: hudPulse 3s ease-in-out infinite;
+}
+@keyframes hudPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.8); }
+}
+.hud__brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.hud__brand-text strong {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.hud__brand-text em {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.hud__links {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  display: flex;
+  gap: 22px;
+}
+.hud__links a {
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  transition: color 0.2s var(--ease);
+}
+.hud__links a:hover {
+  color: var(--text);
+}
+
+.hud__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 96px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.6s var(--ease);
+}
+.hud__hint.is-hidden {
+  opacity: 0;
+}
+.hud__hint-text {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.hud__hint-arrow {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(var(--accent), transparent);
+  animation: hintDrop 1.8s ease-in-out infinite;
+}
+@keyframes hintDrop {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  40% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+.hud__dock {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 26px;
+}
+.hud__readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  font-family: "Inter Tight", "Inter", sans-serif;
+}
+.hud__chapter {
+  font-size: 13px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.hud__pct {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.hud__rail {
+  position: relative;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+.hud__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-grad);
+  transform-origin: left;
+  border-radius: 2px;
+  box-shadow: 0 0 12px var(--accent);
+}
+.hud__tick {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+}
+.hud__tick::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+.hud__tick:hover {
+  background: var(--text);
+  transform: scale(1.2);
+}
+.hud__tick.is-active {
+  background: var(--accent);
+  transform: scale(1.5);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+@media (max-width: 720px) {
+  .panel__name { font-size: 54px; }
+  .panel__cta { font-size: 38px; }
+  .panel__tagline { font-size: 22px; }
+  .panel--about .panel__line { font-size: 22px; }
+  .panel__h2 { font-size: 28px; }
+  .hud__links { gap: 14px; }
+  .hud__links a { font-size: 12px; }
+  .hud__brand { top: 18px; left: 18px; }
+  .hud__links { top: 20px; right: 18px; }
+  .hud__dock { left: 18px; right: 18px; }
+}

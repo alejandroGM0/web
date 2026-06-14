@@ -1,0 +1,636 @@
+/* ============================================================
+   Scroll-driven cinematic experience
+   ============================================================ */
+
+.scroll-xp {
+  position: relative;
+  width: 100%;
+  min-height: 550vh;
+}
+
+.scroll-xp__anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.scroll-xp__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.scroll-xp__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 50% at 50% 45%, rgba(6, 6, 7, 0.2) 0%, transparent 62%),
+    linear-gradient(180deg, rgba(6, 6, 7, 0.55) 0%, transparent 22%, rgba(6, 6, 7, 0.75) 100%);
+}
+
+.scroll-xp__stage {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(5rem, 12vh, 7rem) clamp(1.25rem, 4vw, 2.5rem) 2rem;
+}
+
+/* ── Background scene ── */
+.scroll-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #060607;
+  overflow: hidden;
+}
+
+.scroll-scene__base {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.scroll-scene__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.scroll-scene__orb--1 {
+  width: min(52vw, 480px);
+  height: min(52vw, 480px);
+  background: radial-gradient(circle, rgba(255, 122, 24, 0.2), transparent 68%);
+}
+
+.scroll-scene__orb--2 {
+  width: min(44vw, 420px);
+  height: min(44vw, 420px);
+  background: radial-gradient(circle, rgba(120, 80, 255, 0.1), transparent 70%);
+}
+
+.scroll-scene__hue {
+  position: absolute;
+  width: min(70vw, 640px);
+  height: min(50vw, 420px);
+  border-radius: 50%;
+  filter: blur(100px);
+  background: radial-gradient(circle, rgba(255, 122, 24, 0.08), transparent 65%);
+  transform: translate(-50%, -50%);
+  will-change: left, top, opacity;
+}
+
+.scroll-scene__grid {
+  position: absolute;
+  inset: -20%;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.scroll-scene__grid svg {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-scene__horizon {
+  position: absolute;
+  left: 50%;
+  width: min(720px, 88vw);
+  height: 1px;
+  transform: translateX(-50%);
+  transform-origin: center;
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 24, 0.45), transparent);
+  box-shadow: 0 0 24px rgba(255, 122, 24, 0.15);
+}
+
+.scroll-scene__node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.scroll-scene__node-ring {
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(255, 122, 24, 0.25);
+  border-radius: 50%;
+}
+
+.scroll-scene__node-core {
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: rgba(255, 122, 24, 0.6);
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.35);
+}
+
+.scroll-scene__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ── Progress rail ── */
+.scroll-rail {
+  position: absolute;
+  right: clamp(0.75rem, 2.5vw, 1.5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.scroll-rail__track {
+  width: 2px;
+  height: clamp(80px, 18vh, 120px);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scroll-rail__fill {
+  width: 100%;
+  height: 100%;
+  background: var(--accent-grad);
+  transform-origin: top;
+  border-radius: 2px;
+}
+
+.scroll-rail__chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.scroll-rail__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.scroll-rail__pct {
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+/* ── Chapters (stacked, crossfade) ── */
+.scroll-chapter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  transition: opacity 0.15s linear;
+}
+
+.scroll-chapter a,
+.scroll-chapter button {
+  pointer-events: auto;
+}
+
+.scroll-chapter__rule {
+  width: clamp(56px, 8vw, 88px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform-origin: left;
+  margin-bottom: 1.4rem;
+}
+
+.scroll-chapter__eyebrow {
+  margin-bottom: 1rem;
+}
+
+.scroll-chapter__name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22em;
+  font-size: clamp(3rem, 12vw, 7.5rem);
+  line-height: 0.92;
+  margin: 0 0 1rem;
+}
+
+.scroll-chapter__name-part {
+  display: inline-block;
+  transition: transform 0.2s linear;
+}
+
+.scroll-chapter__tagline {
+  font-family: "Inter Tight", sans-serif;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.scroll-chapter__hint {
+  margin-top: 2.5rem;
+  color: var(--text-faint);
+  font-size: 0.9rem;
+}
+
+.scroll-chapter__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.scroll-chapter__meta--center {
+  justify-content: center;
+}
+
+.scroll-chapter__index {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.scroll-chapter__divider {
+  width: 24px;
+  height: 1px;
+  background: var(--glass-border-strong);
+}
+
+/* Intro visible immediately before JS hydrates progress */
+.scroll-chapter--intro {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-chapter--intro {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ── Work ── */
+.scroll-chapter--work {
+  justify-content: center;
+}
+
+.scroll-work {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-work__slide {
+  position: absolute;
+  width: min(100%, 720px);
+  max-height: min(62vh, 520px);
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  padding: 0;
+  transition: opacity 0.12s linear, transform 0.12s linear, filter 0.12s linear;
+}
+
+@media (min-width: 768px) {
+  .scroll-work__slide:has(.scroll-work__media) {
+    grid-template-columns: 1fr 1.1fr;
+  }
+}
+
+.scroll-work__media {
+  position: relative;
+  min-height: 160px;
+  max-height: 280px;
+  overflow: hidden;
+}
+
+.scroll-work__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.scroll-work__body {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.scroll-work__kind {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scroll-work__title {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.scroll-work__blurb {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.scroll-work__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.scroll-work__link {
+  margin-top: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.scroll-work__link:hover {
+  text-decoration: underline;
+}
+
+.scroll-work__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1.25rem;
+}
+
+.scroll-work__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── About ── */
+.scroll-chapter--about {
+  justify-content: center;
+}
+
+.scroll-about {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .scroll-about {
+    grid-template-columns: 1.2fr 0.9fr;
+    gap: 3rem;
+  }
+}
+
+.scroll-about__line {
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  line-height: 1.12;
+  margin: 0 0 0.75rem;
+}
+
+.scroll-about__line--faint {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-family: inherit;
+  font-weight: 400;
+  margin-top: 1.25rem;
+}
+
+.scroll-about__exp {
+  padding: 1.5rem;
+}
+
+.scroll-about__exp-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.88rem;
+}
+
+.scroll-about__exp-head span {
+  color: var(--text-faint);
+}
+
+.scroll-about__exp-org {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.scroll-about__exp-item .lead {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+/* ── Stack ── */
+.scroll-chapter--stack {
+  align-items: center;
+  text-align: center;
+}
+
+.scroll-chapter__stack-title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0 0 1rem;
+}
+
+.scroll-stack {
+  position: relative;
+  width: min(100%, 640px);
+  height: min(48vh, 380px);
+  margin: 0 auto;
+}
+
+.scroll-stack__orb {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--r-sm);
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.scroll-stack__icon {
+  font-size: 1.35rem;
+}
+
+/* ── Contact ── */
+.scroll-chapter--contact {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.scroll-contact {
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scroll-contact__big {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter Tight", sans-serif;
+  font-size: clamp(2.2rem, 8vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  color: var(--text);
+  transition: opacity 0.3s var(--ease);
+}
+
+.scroll-contact__big:hover {
+  opacity: 0.85;
+}
+
+.scroll-contact__sub {
+  max-width: 42ch;
+  margin: 0;
+}
+
+.scroll-contact__email {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--accent-soft);
+  text-decoration: none;
+}
+
+.scroll-contact__email:hover {
+  text-decoration: underline;
+}
+
+.scroll-contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.scroll-contact__footer {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+/* ── Mode toggle ── */
+.mode-toggle {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  z-index: 1001;
+  padding: 0.45rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--glass-border);
+  background: rgba(6, 6, 7, 0.72);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.mode-toggle:hover {
+  color: var(--text);
+  border-color: var(--glass-border-strong);
+}
+
+@media (max-width: 640px) {
+  .scroll-rail {
+    display: none;
+  }
+
+  .scroll-chapter__name {
+    font-size: clamp(2.4rem, 14vw, 3.5rem);
+  }
+
+  .scroll-work__slide {
+    max-height: 70vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-xp {
+    height: auto !important;
+  }
+
+  .scroll-xp__sticky {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .scroll-chapter {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    padding: 4rem 1.25rem;
+    min-height: 80vh;
+  }
+
+  .scroll-work__slide {
+    position: relative;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .scroll-work {
+    flex-direction: column;
+    display: block;
+  }
+
+  .scroll-stack__orb {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    display: inline-flex;
+    margin: 0.35rem;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .scroll-stack {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

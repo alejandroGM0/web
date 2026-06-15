@@ -78,7 +78,7 @@ export const projects = [
       "Carpooling platform with Stripe payments. Matches drivers and passengers on the same route.",
     tags: ["Python", "Stripe", "JavaScript"],
     accent: "#2dd4bf",
-    href: "https://github.com/alejandroGM0/charlacar",
+    href: "https://github.com/alejandroGM0/proyecto_software",
     image: null,
   },
 ];

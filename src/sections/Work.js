@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Reveal from "../components/Reveal";
 import { projects } from "../data/profile";
+
+const MotionLink = motion(Link);
 
 function ProjectCard({ project, index }) {
   const ref = useRef(null);
@@ -30,11 +33,9 @@ function ProjectCard({ project, index }) {
 
   return (
     <Reveal delay={(index % 2) * 0.1} className={wide ? "work__cell work__cell--wide" : "work__cell"}>
-      <motion.a
+      <MotionLink
         ref={ref}
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
+        to={`/project/${project.slug}`}
         className="card"
         onMouseMove={onMove}
         onMouseLeave={onLeave}
@@ -49,7 +50,12 @@ function ProjectCard({ project, index }) {
         />
         <div className="card__media">
           {project.image ? (
-            <img src={project.image} alt={project.title} loading="lazy" />
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              className={project.imageInvert ? "img-invert" : undefined}
+            />
           ) : (
             <div
               className="card__media-gradient"
@@ -77,9 +83,9 @@ function ProjectCard({ project, index }) {
         </div>
 
         <span className="card__arrow" style={{ color: project.accent }}>
-          ↗
+          →
         </span>
-      </motion.a>
+      </MotionLink>
     </Reveal>
   );
 }

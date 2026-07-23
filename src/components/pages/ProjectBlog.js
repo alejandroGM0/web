@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
+  AnimatePresence,
   motion,
   useMotionValue,
   useSpring,
@@ -12,8 +13,15 @@ import { projects } from "../../data/profile";
 
 const ease = [0.22, 1, 0.36, 1];
 
-// Same mouse-follow tilt as the work cards, applied to the cover image.
-function TiltFigure({ src, alt, invert }) {
+// Same mouse-follow tilt as the work cards, applied to cover + gallery.
+function TiltFigure({
+  src,
+  alt,
+  invert,
+  caption,
+  className = "blog__figure",
+  onOpen,
+}) {
   const ref = useRef(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -39,25 +47,187 @@ function TiltFigure({ src, alt, invert }) {
   return (
     <motion.figure
       ref={ref}
-      className="blog__figure glass"
+      className={`${className} glass${onOpen ? " blog__shot--clickable" : ""}`}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
+      onClick={
+        onOpen
+          ? (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onOpen();
+            }
+          : undefined
+      }
+      onKeyDown={
+        onOpen
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onOpen();
+              }
+            }
+          : undefined
+      }
+      role={onOpen ? "button" : undefined}
+      tabIndex={onOpen ? 0 : undefined}
+      aria-label={onOpen ? `View details: ${alt}` : undefined}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
-      <img src={src} alt={alt} className={invert ? "img-invert" : undefined} />
+      <img
+        src={src}
+        alt={alt}
+        className={invert ? "img-invert" : undefined}
+        draggable={false}
+      />
+      {caption && (
+        <figcaption className="blog__gallery-caption">{caption}</figcaption>
+      )}
     </motion.figure>
+  );
+}
+
+function Lightbox({ shots, index, onClose, onPrev, onNext }) {
+  const shot = shots[index];
+  if (!shot) return null;
+
+  return (
+    <motion.div
+      className="lightbox"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={shot.caption || shot.alt || "Image details"}
+    >
+      <button
+        type="button"
+        className="lightbox__close"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+      {shots.length > 1 && (
+        <>
+          <button
+            type="button"
+            className="lightbox__nav lightbox__nav--prev"
+            onClick={(e) => {
+              e.stopPropagation();
+              onPrev();
+            }}
+            aria-label="Previous image"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            className="lightbox__nav lightbox__nav--next"
+            onClick={(e) => {
+              e.stopPropagation();
+              onNext();
+            }}
+            aria-label="Next image"
+          >
+            →
+          </button>
+        </>
+      )}
+
+      <motion.div
+        className="lightbox__panel glass"
+        key={shot.src}
+        initial={{ opacity: 0, y: 18, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 12, scale: 0.98 }}
+        transition={{ duration: 0.35, ease }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={shot.src}
+          alt={shot.alt || shot.caption || ""}
+          className={shot.invert ? "img-invert" : undefined}
+          draggable={false}
+        />
+        <div className="lightbox__meta">
+          {shot.caption && <p className="lightbox__caption">{shot.caption}</p>}
+          <p className="lightbox__count">
+            {index + 1} / {shots.length}
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
 export default function ProjectBlog() {
   const { slug } = useParams();
   const project = projects.find((p) => p.slug === slug);
+  const [active, setActive] = useState(null);
+
+  const shots = useMemo(() => {
+    if (!project) return [];
+    const list = [];
+    if (project.image) {
+      list.push({
+        src: project.image,
+        alt: project.title,
+        caption: project.title,
+        invert: project.imageInvert,
+      });
+    }
+    (project.gallery || []).forEach((shot) => {
+      list.push({
+        src: shot.src,
+        alt: shot.caption || project.title,
+        caption: shot.caption,
+      });
+    });
+    return list;
+  }, [project]);
+
+  useEffect(() => {
+    if (active === null) return undefined;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") setActive(null);
+      if (e.key === "ArrowLeft") {
+        setActive((i) => (i === null ? i : (i - 1 + shots.length) % shots.length));
+      }
+      if (e.key === "ArrowRight") {
+        setActive((i) => (i === null ? i : (i + 1) % shots.length));
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [active, shots.length]);
 
   if (!project) return <Navigate to="/" replace />;
 
   const { post } = project;
+  const openShot = (src) => {
+    const i = shots.findIndex((s) => s.src === src);
+    if (i < 0) return;
+    // Defer so the opening click can't hit the freshly mounted backdrop.
+    window.setTimeout(() => setActive(i), 0);
+  };
 
   return (
     <>
@@ -128,8 +298,37 @@ export default function ProjectBlog() {
               src={project.image}
               alt={project.title}
               invert={project.imageInvert}
+              onOpen={() => openShot(project.image)}
             />
           </Reveal>
+        )}
+
+        {project.gallery?.length > 0 && (
+          <section className="section blog__gallery" aria-label="Project captures">
+            <Reveal>
+              <div className="section__head blog__gallery-head">
+                <p className="eyebrow">Captures</p>
+                <h2 className="display blog__gallery-title">From the engine.</h2>
+              </div>
+            </Reveal>
+            <div className="blog__gallery-grid">
+              {project.gallery.map((shot, i) => (
+                <Reveal
+                  key={shot.src}
+                  delay={(i % 2) * 0.08}
+                  className="blog__gallery-item"
+                >
+                  <TiltFigure
+                    className="blog__gallery-figure"
+                    src={shot.src}
+                    alt={shot.caption || project.title}
+                    caption={shot.caption}
+                    onOpen={() => openShot(shot.src)}
+                  />
+                </Reveal>
+              ))}
+            </div>
+          </section>
         )}
 
         <article className="section blog__article">
@@ -165,6 +364,20 @@ export default function ProjectBlog() {
           </Reveal>
         </article>
       </main>
+
+      <AnimatePresence>
+        {active !== null && (
+          <Lightbox
+            shots={shots}
+            index={active}
+            onClose={() => setActive(null)}
+            onPrev={() =>
+              setActive((i) => (i - 1 + shots.length) % shots.length)
+            }
+            onNext={() => setActive((i) => (i + 1) % shots.length)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

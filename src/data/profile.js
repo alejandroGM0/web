@@ -101,6 +101,22 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
     href: "https://github.com/alejandroGM0/project-top-down",
     linkLabel: "View on GitHub",
     image: "/images/entity-swarm.png",
+    gallery: [
+      {
+        src: "/images/proyectom-ecs.png",
+        caption:
+          "The game engine — hierarchy, inspector, systems, and live viewport with ECS components",
+      },
+      {
+        src: "/images/proyectom-navigation.png",
+        caption:
+          "Highly intelligent AI with advanced algorithms — flow fields, pathfinding, and navigation debug",
+      },
+      {
+        src: "/images/entity-swarm-lighting.png",
+        caption: "Dynamic lighting on a night street swarm",
+      },
+    ],
     post: {
       title: "Building an engine instead of a game",
       date: "06.2025 – Present",

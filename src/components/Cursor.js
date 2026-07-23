@@ -29,7 +29,7 @@ export default function Cursor() {
 
     const interactive = (e) =>
       e.target.closest(
-        "a, button, input, textarea, .card, .stack__item, .nav__link"
+        "a, button, input, textarea, .card, .stack__item, .nav__link, .blog__shot--clickable, .lightbox__close, .lightbox__nav"
       );
     const onOver = (e) => {
       if (interactive(e)) ringRef.current?.classList.add("cursor-ring--hover");

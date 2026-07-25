@@ -123,9 +123,14 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
     galleryTitle: "From the engine.",
     gallery: [
       {
-        src: "/images/proyectom-ecs.png",
+        src: "/images/proyectom-authoring.png",
         caption:
-          "The game engine — hierarchy, inspector, systems, and live viewport with ECS components",
+          "The game engine — scene hierarchy, inspector, gizmos, and live ECS components",
+      },
+      {
+        src: "/images/proyectom-menu.png",
+        caption:
+          "Menu flow authoring — main menu bindings, scene routing, and live preview",
       },
       {
         src: "/images/proyectom-navigation.png",

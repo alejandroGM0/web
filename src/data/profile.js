@@ -119,14 +119,9 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
     accent: "#ff7a18",
     href: "https://github.com/alejandroGM0/project-top-down",
     linkLabel: "View on GitHub",
-    image: "/images/entity-swarm.png",
+    image: "/images/proyectom-authoring.png",
     galleryTitle: "From the engine.",
     gallery: [
-      {
-        src: "/images/proyectom-authoring.png",
-        caption:
-          "The game engine — scene hierarchy, inspector, gizmos, and live ECS components",
-      },
       {
         src: "/images/proyectom-menu.png",
         caption:

@@ -67,6 +67,25 @@ This is ongoing work — I'll keep notes here as contributions land.`,
     href: "https://github.com/alejandroGM0/investments_belfort",
     linkLabel: "View on GitHub",
     image: "/images/belfort-chart.png",
+    galleryTitle: "From the platform.",
+    gallery: [
+      {
+        src: "/images/belfort-markets.png",
+        caption: "Market ranking — live prices ranked by technical signal clarity",
+      },
+      {
+        src: "/images/belfort-backtest.png",
+        caption: "Quick backtest — pattern ranking, Sharpe, equity curve",
+      },
+      {
+        src: "/images/belfort-setup.png",
+        caption: "Operational setup — entry, stop, take-profit, and confluence score",
+      },
+      {
+        src: "/images/belfort-context.png",
+        caption: "Market context — upcoming events and return correlations",
+      },
+    ],
     post: {
       title: "Why DuckDB is the right database for backtesting",
       date: "05.2026 – 06.2026",
@@ -101,6 +120,7 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
     href: "https://github.com/alejandroGM0/project-top-down",
     linkLabel: "View on GitHub",
     image: "/images/entity-swarm.png",
+    galleryTitle: "From the engine.",
     gallery: [
       {
         src: "/images/proyectom-ecs.png",

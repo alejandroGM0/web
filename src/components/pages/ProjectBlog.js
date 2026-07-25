@@ -308,7 +308,9 @@ export default function ProjectBlog() {
             <Reveal>
               <div className="section__head blog__gallery-head">
                 <p className="eyebrow">Captures</p>
-                <h2 className="display blog__gallery-title">From the engine.</h2>
+                <h2 className="display blog__gallery-title">
+                  {project.galleryTitle || "From the build."}
+                </h2>
               </div>
             </Reveal>
             <div className="blog__gallery-grid">

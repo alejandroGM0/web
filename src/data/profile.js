@@ -128,6 +128,11 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
           "Menu flow authoring — main menu bindings, scene routing, and live preview",
       },
       {
+        src: "/images/proyectom-flow.png",
+        caption:
+          "Visual menu flow — button press nodes wired to scenes and quit actions",
+      },
+      {
         src: "/images/proyectom-navigation.png",
         caption:
           "Highly intelligent AI with advanced algorithms — flow fields, pathfinding, and navigation debug",

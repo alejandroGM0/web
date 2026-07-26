@@ -123,6 +123,11 @@ Don't reach for a "real" database or a data warehouse first. An embedded analyti
     galleryTitle: "From the engine.",
     gallery: [
       {
+        src: "/images/proyectom-prefab.png",
+        caption:
+          "Prefab editor — zombie variant with health, damage, AI, and look-at components",
+      },
+      {
         src: "/images/proyectom-menu.png",
         caption:
           "Menu flow authoring — main menu bindings, scene routing, and live preview",
